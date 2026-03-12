@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Videos</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+overflow-x:hidden;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul a{
+text-decoration:none;
+color:white;
+font-size:14px;
+letter-spacing:1px;
+transition:.3s;
+}
+
+nav ul a:hover{
+color:#8a5cff;
+}
+
+/* HEADER */
+
+.header{
+padding-top:140px;
+padding-bottom:60px;
+text-align:center;
+}
+
+.header h1{
+font-size:60px;
+letter-spacing:4px;
+}
+
+.header p{
+color:#aaa;
+margin-top:10px;
+}
+
+/* VIDEO GRID */
+
+.video-grid{
+padding:0 10% 100px 10%;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:40px;
+}
+
+/* VIDEO CARD */
+
+.video-card{
+position:relative;
+cursor:pointer;
+border-radius:12px;
+overflow:hidden;
+}
+
+.video-card img{
+width:100%;
+display:block;
+transition:.4s;
+}
+
+.video-card:hover img{
+transform:scale(1.1);
+}
+
+.video-overlay{
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+padding:20px;
+background:linear-gradient(transparent,rgba(0,0,0,0.9));
+}
+
+.video-overlay h3{
+margin-bottom:10px;
+}
+
+/* MODAL VIDEO PLAYER */
+
+.video-modal{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.95);
+display:none;
+align-items:center;
+justify-content:center;
+z-index:2000;
+}
+
+.video-modal iframe{
+width:80%;
+height:60%;
+border:none;
+}
+
+.close-btn{
+position:absolute;
+top:40px;
+right:60px;
+font-size:30px;
+cursor:pointer;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:60px 10%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
+color:#777;
+}
+
+@media(max-width:800px){
+
+.header h1{
+font-size:40px;
+}
+
+.video-modal iframe{
+width:95%;
+height:50%;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">ARTIST</div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/music/">Music</a></li>
+<li><a href="/videos/">Videos</a></li>
+<li><a href="/tour/">Tour</a></li>
+<li><a href="/merch/">Merch</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/contact/">Contact</a></li>
+</ul>
+
+</nav>
+
+
+<section class="header">
+
+<h1>VIDEOS</h1>
+<p>Watch official music videos</p>
+
+</section>
+
+
+<section class="video-grid">
+
+<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/dQw4w9WgXcQ')">
+
+<img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg">
+
+<div class="video-overlay">
+
+<h3>Official Music Video</h3>
+
+</div>
+
+</div>
+
+
+<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/3JZ4pnNtyxQ')">
+
+<img src="https://img.youtube.com/vi/3JZ4pnNtyxQ/maxresdefault.jpg">
+
+<div class="video-overlay">
+
+<h3>Live Performance</h3>
+
+</div>
+
+</div>
+
+
+<div class="video-card" onclick="openVideo('https://www.youtube.com/embed/kXYiU_JCYtU')">
+
+<img src="https://img.youtube.com/vi/kXYiU_JCYtU/maxresdefault.jpg">
+
+<div class="video-overlay">
+
+<h3>Studio Session</h3>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="video-modal" id="videoModal">
+
+<span class="close-btn" onclick="closeVideo()">✕</span>
+
+<iframe id="videoFrame" src="" allowfullscreen></iframe>
+
+</div>
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+function openVideo(url){
+
+document.getElementById("videoModal").style.display="flex"
+document.getElementById("videoFrame").src=url
+
+}
+
+function closeVideo(){
+
+document.getElementById("videoModal").style.display="none"
+document.getElementById("videoFrame").src=""
+
+}
+
+</script>
+
+</body>
+</html>
