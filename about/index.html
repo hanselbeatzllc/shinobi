@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>About</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul a{
+text-decoration:none;
+color:white;
+font-size:14px;
+transition:.3s;
+}
+
+nav ul a:hover{
+color:#8a5cff;
+}
+
+/* HEADER */
+
+.header{
+padding-top:140px;
+text-align:center;
+padding-bottom:60px;
+}
+
+.header h1{
+font-size:60px;
+letter-spacing:4px;
+}
+
+/* ABOUT SECTION */
+
+.about{
+max-width:900px;
+margin:auto;
+padding:0 20px 100px 20px;
+text-align:center;
+}
+
+.about img{
+width:250px;
+border-radius:50%;
+margin-bottom:30px;
+}
+
+.about p{
+color:#aaa;
+line-height:1.7;
+margin-bottom:20px;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:60px 10%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
+color:#777;
+}
+
+@media(max-width:800px){
+
+.header h1{
+font-size:40px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">Shinobi</div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/music/">Music</a></li>
+<li><a href="/videos/">Videos</a></li>
+<li><a href="/tour/">Tour</a></li>
+<li><a href="/merch/">Merch</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/contact/">Contact</a></li>
+</ul>
+
+</nav>
+
+
+<section class="header">
+<h1>ABOUT</h1>
+</section>
+
+
+<section class="about">
+
+<img src="https://picsum.photos/300">
+
+<p>
+Shinobi is an independent musician pushing creative boundaries
+through sound, visuals and culture.
+</p>
+
+<p>
+Blending modern production with emotional storytelling,
+the artist continues to build a global fanbase through music,
+touring and digital experiences.
+</p>
+
+<p>
+Stay connected for upcoming releases, videos and live shows.
+</p>
+
+</section>
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+</body>
+</html>
