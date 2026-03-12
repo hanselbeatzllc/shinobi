@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Music</title>
 
 <style>
@@ -15,119 +16,202 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:#0a0a0a;
+background:#0b0b0b;
 color:white;
+overflow-x:hidden;
 }
 
+/* NAV */
+
 nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 10%;
-background:black;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:1000;
 }
 
-nav h1{
-color:#00ffc8;
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
 }
 
 nav ul{
 display:flex;
-gap:25px;
+gap:30px;
 list-style:none;
 }
 
-nav ul li a{
-color:white;
+nav ul a{
 text-decoration:none;
+color:white;
+font-size:14px;
+letter-spacing:1px;
 transition:.3s;
 }
 
-nav ul li a:hover{
-color:#00ffc8;
+nav ul a:hover{
+color:#8a5cff;
 }
+
+/* HEADER */
 
 .header{
+padding-top:140px;
 text-align:center;
-padding:80px 20px;
+padding-bottom:60px;
 }
 
-.header h2{
-font-size:50px;
-margin-bottom:10px;
+.header h1{
+font-size:60px;
+letter-spacing:4px;
 }
 
 .header p{
 color:#aaa;
+margin-top:10px;
 }
+
+/* MUSIC GRID */
 
 .music-grid{
+padding:0 10% 100px 10%;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:30px;
-padding:50px 10%;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:40px;
 }
 
-.card{
-background:#111;
-border-radius:10px;
+/* ALBUM CARD */
+
+.album{
+position:relative;
 overflow:hidden;
-transition:.3s;
+border-radius:12px;
+cursor:pointer;
 }
 
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 20px #00ffc8;
-}
-
-.card img{
+.album img{
 width:100%;
-height:250px;
-object-fit:cover;
+display:block;
+transition:.4s;
 }
 
-.card-content{
+.album:hover img{
+transform:scale(1.1);
+}
+
+.overlay{
+position:absolute;
+bottom:0;
+left:0;
+right:0;
 padding:20px;
-text-align:center;
+background:linear-gradient(transparent,rgba(0,0,0,0.9));
 }
 
-.card-content h3{
+.overlay h3{
 margin-bottom:10px;
 }
 
-.play-btn{
-padding:10px 20px;
-background:#00ffc8;
+.play{
+padding:8px 18px;
 border:none;
+background:#8a5cff;
+color:white;
+border-radius:20px;
 cursor:pointer;
-font-weight:bold;
+font-size:12px;
 }
+
+/* PLAYER */
 
 .player{
 position:fixed;
 bottom:0;
+left:0;
 width:100%;
-background:#111;
+background:#050505;
 padding:15px;
-text-align:center;
+display:flex;
+justify-content:center;
+border-top:1px solid #222;
 }
 
 audio{
-width:300px;
+width:350px;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:60px 10%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
+color:#777;
+}
+
+@media(max-width:800px){
+
+.header h1{
+font-size:40px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
 }
 
 </style>
-
 </head>
 
 <body>
 
 <nav>
 
-<h1>ARTIST</h1>
+<div class="logo">ARTIST</div>
 
 <ul>
-<li><a href="index.html">Home</a></li>
+<li><a href="/">Home</a></li>
 <li><a href="/music/">Music</a></li>
 <li><a href="/videos/">Videos</a></li>
 <li><a href="/tour/">Tour</a></li>
@@ -139,26 +223,25 @@ width:300px;
 </nav>
 
 
-<div class="header">
+<section class="header">
 
-<h2>Music</h2>
-<p>Listen to the latest releases</p>
+<h1>MUSIC</h1>
+<p>Stream the latest releases</p>
 
-</div>
-
-
-<div class="music-grid">
+</section>
 
 
-<div class="card">
+<section class="music-grid">
 
-<img src="https://picsum.photos/400/400?1">
+<div class="album">
 
-<div class="card-content">
+<img src="https://picsum.photos/500?1">
+
+<div class="overlay">
 
 <h3>Track One</h3>
 
-<button class="play-btn" onclick="playSong('song1.mp3')">
+<button class="play" onclick="playSong('song1.mp3')">
 Play
 </button>
 
@@ -167,15 +250,15 @@ Play
 </div>
 
 
-<div class="card">
+<div class="album">
 
-<img src="https://picsum.photos/400/400?2">
+<img src="https://picsum.photos/500?2">
 
-<div class="card-content">
+<div class="overlay">
 
 <h3>Track Two</h3>
 
-<button class="play-btn" onclick="playSong('song2.mp3')">
+<button class="play" onclick="playSong('song2.mp3')">
 Play
 </button>
 
@@ -184,15 +267,15 @@ Play
 </div>
 
 
-<div class="card">
+<div class="album">
 
-<img src="https://picsum.photos/400/400?3">
+<img src="https://picsum.photos/500?3">
 
-<div class="card-content">
+<div class="overlay">
 
 <h3>Track Three</h3>
 
-<button class="play-btn" onclick="playSong('song3.mp3')">
+<button class="play" onclick="playSong('song3.mp3')">
 Play
 </button>
 
@@ -200,7 +283,8 @@ Play
 
 </div>
 
-</div>
+
+</section>
 
 
 <div class="player">
@@ -208,6 +292,30 @@ Play
 <audio id="audioPlayer" controls></audio>
 
 </div>
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
 
 
 <script>
@@ -223,7 +331,6 @@ player.play()
 }
 
 </script>
-
 
 </body>
 </html>
