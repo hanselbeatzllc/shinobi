@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Tour</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+}
+
+/* NAV */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul a{
+text-decoration:none;
+color:white;
+font-size:14px;
+transition:.3s;
+}
+
+nav ul a:hover{
+color:#8a5cff;
+}
+
+/* HEADER */
+
+.header{
+padding-top:140px;
+text-align:center;
+padding-bottom:60px;
+}
+
+.header h1{
+font-size:60px;
+letter-spacing:4px;
+}
+
+.header p{
+color:#aaa;
+margin-top:10px;
+}
+
+/* TOUR LIST */
+
+.tour-list{
+max-width:900px;
+margin:auto;
+padding:0 20px 100px 20px;
+}
+
+.tour-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:25px;
+margin-bottom:20px;
+background:#111;
+border-radius:10px;
+transition:.3s;
+}
+
+.tour-item:hover{
+transform:scale(1.02);
+background:#151515;
+}
+
+.date{
+font-size:18px;
+font-weight:bold;
+color:#8a5cff;
+}
+
+.location{
+flex:1;
+margin-left:30px;
+}
+
+.location h3{
+font-size:18px;
+}
+
+.location p{
+font-size:14px;
+color:#aaa;
+}
+
+.ticket-btn{
+padding:10px 20px;
+border:none;
+background:#8a5cff;
+color:white;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+transition:.3s;
+}
+
+.ticket-btn:hover{
+background:#a381ff;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:60px 10%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
+color:#777;
+}
+
+@media(max-width:800px){
+
+.header h1{
+font-size:40px;
+}
+
+.tour-item{
+flex-direction:column;
+align-items:flex-start;
+gap:15px;
+}
+
+.location{
+margin-left:0;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">ARTIST</div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/music/">Music</a></li>
+<li><a href="/videos/">Videos</a></li>
+<li><a href="/tour/">Tour</a></li>
+<li><a href="/merch/">Merch</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/contact/">Contact</a></li>
+</ul>
+
+</nav>
+
+
+<section class="header">
+
+<h1>TOUR</h1>
+<p>Upcoming shows and live performances</p>
+
+</section>
+
+
+<section class="tour-list">
+
+<div class="tour-item">
+
+<div class="date">JUL 14</div>
+
+<div class="location">
+<h3>Los Angeles</h3>
+<p>Crypto Arena</p>
+</div>
+
+<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+
+</div>
+
+
+<div class="tour-item">
+
+<div class="date">AUG 02</div>
+
+<div class="location">
+<h3>New York</h3>
+<p>Madison Square Garden</p>
+</div>
+
+<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+
+</div>
+
+
+<div class="tour-item">
+
+<div class="date">AUG 21</div>
+
+<div class="location">
+<h3>London</h3>
+<p>O2 Arena</p>
+</div>
+
+<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+
+</div>
+
+
+<div class="tour-item">
+
+<div class="date">SEP 10</div>
+
+<div class="location">
+<h3>Tokyo</h3>
+<p>Tokyo Dome</p>
+</div>
+
+<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+function buyTicket(){
+alert("Ticket link coming soon 🎟️")
+}
+
+</script>
+
+</body>
+</html>
