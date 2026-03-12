@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Music</title>
+<title>Music | Shinobi</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
@@ -12,7 +19,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+font-family:'Montserrat',sans-serif;
 }
 
 body{
@@ -21,24 +28,24 @@ color:white;
 overflow-x:hidden;
 }
 
-/* NAV */
+/* NAVBAR */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
-padding:20px 8%;
+padding:18px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 background:rgba(0,0,0,0.7);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 z-index:1000;
 }
 
 .logo{
-font-size:20px;
-font-weight:bold;
+font-size:22px;
+font-weight:800;
 letter-spacing:2px;
 }
 
@@ -48,7 +55,7 @@ gap:30px;
 list-style:none;
 }
 
-nav ul a{
+nav ul li a{
 text-decoration:none;
 color:white;
 font-size:14px;
@@ -56,8 +63,14 @@ letter-spacing:1px;
 transition:.3s;
 }
 
-nav ul a:hover{
+nav ul li a:hover{
 color:#8a5cff;
+}
+
+.menu-toggle{
+display:none;
+font-size:26px;
+cursor:pointer;
 }
 
 /* HEADER */
@@ -71,20 +84,28 @@ padding-bottom:60px;
 .header h1{
 font-size:60px;
 letter-spacing:4px;
+margin-bottom:10px;
 }
 
 .header p{
 color:#aaa;
-margin-top:10px;
 }
 
 /* MUSIC GRID */
 
 .music-grid{
-padding:0 10% 100px 10%;
+padding:0 10% 120px 10%;
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:40px;
+grid-template-columns:repeat(2,1fr);
+gap:30px;
+}
+
+@media(min-width:1000px){
+
+.music-grid{
+grid-template-columns:repeat(6,1fr);
+}
+
 }
 
 /* ALBUM CARD */
@@ -111,16 +132,17 @@ position:absolute;
 bottom:0;
 left:0;
 right:0;
-padding:20px;
+padding:18px;
 background:linear-gradient(transparent,rgba(0,0,0,0.9));
 }
 
 .overlay h3{
-margin-bottom:10px;
+font-size:14px;
+margin-bottom:8px;
 }
 
 .play{
-padding:8px 18px;
+padding:6px 16px;
 border:none;
 background:#8a5cff;
 color:white;
@@ -141,10 +163,11 @@ padding:15px;
 display:flex;
 justify-content:center;
 border-top:1px solid #222;
+z-index:1000;
 }
 
 audio{
-width:350px;
+width:400px;
 }
 
 /* FOOTER */
@@ -152,6 +175,7 @@ width:350px;
 footer{
 background:#050505;
 padding:60px 10%;
+margin-top:80px;
 }
 
 .footer-grid{
@@ -166,15 +190,15 @@ gap:20px;
 }
 
 .socials a{
-text-decoration:none;
+font-size:22px;
 color:white;
 opacity:.7;
 transition:.3s;
 }
 
 .socials a:hover{
-opacity:1;
 color:#8a5cff;
+opacity:1;
 }
 
 .copyright{
@@ -183,7 +207,29 @@ font-size:13px;
 color:#777;
 }
 
-@media(max-width:800px){
+/* MOBILE */
+
+@media(max-width:900px){
+
+nav ul{
+position:fixed;
+top:70px;
+left:-100%;
+flex-direction:column;
+background:black;
+width:100%;
+padding:40px;
+transition:.4s;
+gap:20px;
+}
+
+nav ul.active{
+left:0;
+}
+
+.menu-toggle{
+display:block;
+}
 
 .header h1{
 font-size:40px;
@@ -191,7 +237,7 @@ font-size:40px;
 
 .footer-grid{
 grid-template-columns:1fr;
-gap:20px;
+gap:30px;
 text-align:center;
 }
 
@@ -199,28 +245,42 @@ text-align:center;
 text-align:center;
 }
 
+audio{
+width:90%;
+}
+
 }
 
 </style>
+
 </head>
 
+
 <body>
+
 
 <nav>
 
 <div class="logo">Shinobi</div>
 
-<ul>
-<li><a href="/">Home</a></li>
-<li><a href="/music/">Music</a></li>
-<li><a href="/videos/">Videos</a></li>
-<li><a href="/tour/">Tour</a></li>
-<li><a href="/merch/">Merch</a></li>
-<li><a href="/about/">About</a></li>
-<li><a href="/contact/">Contact</a></li>
+<div class="menu-toggle" id="menuToggle">
+<i class="fa-solid fa-bars"></i>
+</div>
+
+<ul id="navLinks">
+
+<li><a href="../">Home</a></li>
+<li><a href="../music/">Music</a></li>
+<li><a href="../videos/">Videos</a></li>
+<li><a href="../tour/">Tour</a></li>
+<li><a href="../merch/">Merch</a></li>
+<li><a href="../about/">About</a></li>
+<li><a href="../contact/">Contact</a></li>
+
 </ul>
 
 </nav>
+
 
 
 <section class="header">
@@ -231,7 +291,9 @@ text-align:center;
 </section>
 
 
+
 <section class="music-grid">
+
 
 <div class="album">
 
@@ -248,6 +310,7 @@ Play
 </div>
 
 </div>
+
 
 
 <div class="album">
@@ -267,6 +330,7 @@ Play
 </div>
 
 
+
 <div class="album">
 
 <img src="https://picsum.photos/500?3">
@@ -284,7 +348,63 @@ Play
 </div>
 
 
+
+<div class="album">
+
+<img src="https://picsum.photos/500?4">
+
+<div class="overlay">
+
+<h3>Track Four</h3>
+
+<button class="play" onclick="playSong('song4.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="album">
+
+<img src="https://picsum.photos/500?5">
+
+<div class="overlay">
+
+<h3>Track Five</h3>
+
+<button class="play" onclick="playSong('song5.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+
+<div class="album">
+
+<img src="https://picsum.photos/500?6">
+
+<div class="overlay">
+
+<h3>Track Six</h3>
+
+<button class="play" onclick="playSong('song6.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+
 </section>
+
 
 
 <div class="player">
@@ -294,28 +414,35 @@ Play
 </div>
 
 
+
 <footer>
 
 <div class="footer-grid">
 
+<div>
+
 <div class="socials">
 
-<a href="#">Instagram</a>
-<a href="#">Twitter</a>
-<a href="#">YouTube</a>
-<a href="#">Spotify</a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-spotify"></i></a>
+
+</div>
 
 </div>
 
 <div class="copyright">
 
-© 2026 Shinobi Slime. All Rights Reserved.
+© 2026 Shinobi Slime  
+All Rights Reserved
 
 </div>
 
 </div>
 
 </footer>
+
 
 
 <script>
@@ -330,7 +457,15 @@ player.play()
 
 }
 
+const toggle = document.getElementById("menuToggle")
+const nav = document.getElementById("navLinks")
+
+toggle.onclick = () =>{
+nav.classList.toggle("active")
+}
+
 </script>
+
 
 </body>
 </html>
