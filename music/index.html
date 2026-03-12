@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Music</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0a0a0a;
+color:white;
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 10%;
+background:black;
+}
+
+nav h1{
+color:#00ffc8;
+}
+
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+
+nav ul li a{
+color:white;
+text-decoration:none;
+transition:.3s;
+}
+
+nav ul li a:hover{
+color:#00ffc8;
+}
+
+.header{
+text-align:center;
+padding:80px 20px;
+}
+
+.header h2{
+font-size:50px;
+margin-bottom:10px;
+}
+
+.header p{
+color:#aaa;
+}
+
+.music-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+padding:50px 10%;
+}
+
+.card{
+background:#111;
+border-radius:10px;
+overflow:hidden;
+transition:.3s;
+}
+
+.card:hover{
+transform:translateY(-10px);
+box-shadow:0 0 20px #00ffc8;
+}
+
+.card img{
+width:100%;
+height:250px;
+object-fit:cover;
+}
+
+.card-content{
+padding:20px;
+text-align:center;
+}
+
+.card-content h3{
+margin-bottom:10px;
+}
+
+.play-btn{
+padding:10px 20px;
+background:#00ffc8;
+border:none;
+cursor:pointer;
+font-weight:bold;
+}
+
+.player{
+position:fixed;
+bottom:0;
+width:100%;
+background:#111;
+padding:15px;
+text-align:center;
+}
+
+audio{
+width:300px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+
+<h1>ARTIST</h1>
+
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="/music/">Music</a></li>
+<li><a href="/videos/">Videos</a></li>
+<li><a href="/tour/">Tour</a></li>
+<li><a href="/merch/">Merch</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/contact/">Contact</a></li>
+</ul>
+
+</nav>
+
+
+<div class="header">
+
+<h2>Music</h2>
+<p>Listen to the latest releases</p>
+
+</div>
+
+
+<div class="music-grid">
+
+
+<div class="card">
+
+<img src="https://picsum.photos/400/400?1">
+
+<div class="card-content">
+
+<h3>Track One</h3>
+
+<button class="play-btn" onclick="playSong('song1.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://picsum.photos/400/400?2">
+
+<div class="card-content">
+
+<h3>Track Two</h3>
+
+<button class="play-btn" onclick="playSong('song2.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<img src="https://picsum.photos/400/400?3">
+
+<div class="card-content">
+
+<h3>Track Three</h3>
+
+<button class="play-btn" onclick="playSong('song3.mp3')">
+Play
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="player">
+
+<audio id="audioPlayer" controls></audio>
+
+</div>
+
+
+<script>
+
+function playSong(song){
+
+const player = document.getElementById("audioPlayer")
+
+player.src = song
+
+player.play()
+
+}
+
+</script>
+
+
+</body>
+</html>
