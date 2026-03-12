@@ -1,10 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tour</title>
+<title>Tour | Shinobi</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 
@@ -12,7 +19,7 @@
 margin:0;
 padding:0;
 box-sizing:border-box;
-font-family:Arial, Helvetica, sans-serif;
+font-family:'Montserrat',sans-serif;
 }
 
 body{
@@ -20,24 +27,24 @@ background:#0b0b0b;
 color:white;
 }
 
-/* NAV */
+/* NAVBAR */
 
 nav{
 position:fixed;
 top:0;
 width:100%;
-padding:20px 8%;
+padding:18px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
 background:rgba(0,0,0,0.7);
-backdrop-filter:blur(10px);
+backdrop-filter:blur(12px);
 z-index:1000;
 }
 
 .logo{
-font-size:20px;
-font-weight:bold;
+font-size:22px;
+font-weight:800;
 letter-spacing:2px;
 }
 
@@ -47,15 +54,21 @@ gap:30px;
 list-style:none;
 }
 
-nav ul a{
+nav ul li a{
 text-decoration:none;
 color:white;
 font-size:14px;
 transition:.3s;
 }
 
-nav ul a:hover{
+nav ul li a:hover{
 color:#8a5cff;
+}
+
+.menu-toggle{
+display:none;
+font-size:26px;
+cursor:pointer;
 }
 
 /* HEADER */
@@ -74,6 +87,25 @@ letter-spacing:4px;
 .header p{
 color:#aaa;
 margin-top:10px;
+}
+
+/* FILTERS */
+
+.filters{
+max-width:900px;
+margin:auto;
+display:flex;
+gap:20px;
+padding:0 20px 40px 20px;
+}
+
+.filters input,
+.filters select{
+padding:10px 15px;
+border:none;
+border-radius:20px;
+background:#111;
+color:white;
 }
 
 /* TOUR LIST */
@@ -104,11 +136,11 @@ background:#151515;
 font-size:18px;
 font-weight:bold;
 color:#8a5cff;
+width:80px;
 }
 
 .location{
 flex:1;
-margin-left:30px;
 }
 
 .location h3{
@@ -120,6 +152,12 @@ font-size:14px;
 color:#aaa;
 }
 
+.countdown{
+font-size:13px;
+color:#aaa;
+margin-top:4px;
+}
+
 .ticket-btn{
 padding:10px 20px;
 border:none;
@@ -129,10 +167,16 @@ border-radius:20px;
 cursor:pointer;
 font-size:13px;
 transition:.3s;
+text-decoration:none;
 }
 
 .ticket-btn:hover{
 background:#a381ff;
+}
+
+.soldout{
+background:#444;
+cursor:not-allowed;
 }
 
 /* FOOTER */
@@ -154,15 +198,15 @@ gap:20px;
 }
 
 .socials a{
-text-decoration:none;
+font-size:22px;
 color:white;
 opacity:.7;
 transition:.3s;
 }
 
 .socials a:hover{
-opacity:1;
 color:#8a5cff;
+opacity:1;
 }
 
 .copyright{
@@ -171,7 +215,29 @@ font-size:13px;
 color:#777;
 }
 
-@media(max-width:800px){
+/* MOBILE */
+
+@media(max-width:900px){
+
+nav ul{
+position:fixed;
+top:70px;
+left:-100%;
+flex-direction:column;
+background:black;
+width:100%;
+padding:40px;
+transition:.4s;
+gap:20px;
+}
+
+nav ul.active{
+left:0;
+}
+
+.menu-toggle{
+display:block;
+}
 
 .header h1{
 font-size:40px;
@@ -183,13 +249,9 @@ align-items:flex-start;
 gap:15px;
 }
 
-.location{
-margin-left:0;
-}
-
 .footer-grid{
 grid-template-columns:1fr;
-gap:20px;
+gap:30px;
 text-align:center;
 }
 
@@ -200,25 +262,35 @@ text-align:center;
 }
 
 </style>
+
 </head>
 
+
 <body>
+
 
 <nav>
 
 <div class="logo">Shinobi</div>
 
-<ul>
-<li><a href="/">Home</a></li>
-<li><a href="/music/">Music</a></li>
-<li><a href="/videos/">Videos</a></li>
-<li><a href="/tour/">Tour</a></li>
-<li><a href="/merch/">Merch</a></li>
-<li><a href="/about/">About</a></li>
-<li><a href="/contact/">Contact</a></li>
+<div class="menu-toggle" id="menuToggle">
+<i class="fa-solid fa-bars"></i>
+</div>
+
+<ul id="navLinks">
+
+<li><a href="../">Home</a></li>
+<li><a href="../music/">Music</a></li>
+<li><a href="../videos/">Videos</a></li>
+<li><a href="../tour/">Tour</a></li>
+<li><a href="../merch/">Merch</a></li>
+<li><a href="../about/">About</a></li>
+<li><a href="../contact/">Contact</a></li>
+
 </ul>
 
 </nav>
+
 
 
 <section class="header">
@@ -229,82 +301,111 @@ text-align:center;
 </section>
 
 
-<section class="tour-list">
 
-<div class="tour-item">
+<div class="filters">
+
+<input type="text" id="searchCity" placeholder="Search city">
+
+<select id="monthFilter">
+<option value="">All Months</option>
+<option value="JUL">July</option>
+<option value="AUG">August</option>
+<option value="SEP">September</option>
+</select>
+
+</div>
+
+
+
+<section class="tour-list" id="tourList">
+
+<div class="tour-item" data-city="Los Angeles" data-month="JUL" data-date="2026-07-14">
 
 <div class="date">JUL 14</div>
 
 <div class="location">
 <h3>Los Angeles</h3>
 <p>Crypto Arena</p>
+<div class="countdown"></div>
 </div>
 
-<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+<a class="ticket-btn" href="https://ticketmaster.com" target="_blank">Tickets</a>
 
 </div>
 
 
-<div class="tour-item">
+
+<div class="tour-item" data-city="New York" data-month="AUG" data-date="2026-08-02">
 
 <div class="date">AUG 02</div>
 
 <div class="location">
 <h3>New York</h3>
 <p>Madison Square Garden</p>
+<div class="countdown"></div>
 </div>
 
-<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+<a class="ticket-btn" href="https://ticketmaster.com" target="_blank">Tickets</a>
 
 </div>
 
 
-<div class="tour-item">
+
+<div class="tour-item" data-city="London" data-month="AUG" data-date="2026-08-21">
 
 <div class="date">AUG 21</div>
 
 <div class="location">
 <h3>London</h3>
 <p>O2 Arena</p>
+<div class="countdown"></div>
 </div>
 
-<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+<a class="ticket-btn soldout">Sold Out</a>
 
 </div>
 
 
-<div class="tour-item">
+
+<div class="tour-item" data-city="Tokyo" data-month="SEP" data-date="2026-09-10">
 
 <div class="date">SEP 10</div>
 
 <div class="location">
 <h3>Tokyo</h3>
 <p>Tokyo Dome</p>
+<div class="countdown"></div>
 </div>
 
-<button class="ticket-btn" onclick="buyTicket()">Tickets</button>
+<a class="ticket-btn" href="https://ticketmaster.com" target="_blank">Tickets</a>
 
 </div>
 
 </section>
 
 
+
 <footer>
 
 <div class="footer-grid">
 
+<div>
+
 <div class="socials">
 
-<a href="#">Instagram</a>
-<a href="#">Twitter</a>
-<a href="#">YouTube</a>
-<a href="#">Spotify</a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-spotify"></i></a>
+
+</div>
 
 </div>
 
 <div class="copyright">
 
-© 2026 Shinobi Slime. All Rights Reserved.
+© 2026 Shinobi Slime  
+All Rights Reserved
 
 </div>
 
@@ -313,13 +414,74 @@ text-align:center;
 </footer>
 
 
+
 <script>
 
-function buyTicket(){
-alert("Ticket link coming soon 🎟️")
+/* MOBILE MENU */
+
+const toggle = document.getElementById("menuToggle")
+const nav = document.getElementById("navLinks")
+
+toggle.onclick = () =>{
+nav.classList.toggle("active")
 }
 
+/* SEARCH */
+
+const search = document.getElementById("searchCity")
+const month = document.getElementById("monthFilter")
+const tours = document.querySelectorAll(".tour-item")
+
+function filterTours(){
+
+const cityValue = search.value.toLowerCase()
+const monthValue = month.value
+
+tours.forEach(tour=>{
+
+const city = tour.dataset.city.toLowerCase()
+const tourMonth = tour.dataset.month
+
+const cityMatch = city.includes(cityValue)
+const monthMatch = monthValue === "" || monthValue === tourMonth
+
+tour.style.display = (cityMatch && monthMatch) ? "flex" : "none"
+
+})
+
+}
+
+search.addEventListener("input", filterTours)
+month.addEventListener("change", filterTours)
+
+/* COUNTDOWN */
+
+function updateCountdown(){
+
+const now = new Date()
+
+document.querySelectorAll(".tour-item").forEach(item=>{
+
+const date = new Date(item.dataset.date)
+const diff = date - now
+
+if(diff > 0){
+
+const days = Math.floor(diff / (1000*60*60*24))
+item.querySelector(".countdown").textContent =
+days + " days until show"
+
+}
+
+})
+
+}
+
+updateCountdown()
+setInterval(updateCountdown,60000)
+
 </script>
+
 
 </body>
 </html>
