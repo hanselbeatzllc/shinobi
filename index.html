@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Shinobi Slime</title>
 
 <style>
@@ -15,102 +16,164 @@ font-family:Arial, Helvetica, sans-serif;
 }
 
 body{
-background:black;
+background:#0b0b0b;
 color:white;
 overflow-x:hidden;
 }
 
+/* NAVBAR */
+
 nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 10%;
-background:rgba(0,0,0,0.9);
-position:fixed;
-width:100%;
-top:0;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
 z-index:1000;
 }
 
-nav h1{
-color:#00ffcc;
-font-size:24px;
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
 }
 
 nav ul{
 display:flex;
-list-style:none;
 gap:30px;
+list-style:none;
 }
 
-nav ul li a{
-color:white;
+nav ul a{
 text-decoration:none;
-font-size:16px;
-transition:0.3s;
+color:white;
+font-size:14px;
+letter-spacing:1px;
+transition:.3s;
 }
 
-nav ul li a:hover{
-color:#00ffcc;
+nav ul a:hover{
+color:#8a5cff;
 }
+
+/* HERO */
 
 .hero{
 height:100vh;
 display:flex;
-flex-direction:column;
 justify-content:center;
 align-items:center;
+flex-direction:column;
 text-align:center;
-background:linear-gradient(45deg,#000,#111,#000);
+padding:0 20px;
+background:radial-gradient(circle at center,#1b1b1b,#000);
 }
 
-.hero h2{
-font-size:60px;
+.hero h1{
+font-size:70px;
+letter-spacing:4px;
 margin-bottom:20px;
 }
 
 .hero p{
-font-size:20px;
-color:#aaa;
+color:#bbb;
+max-width:600px;
 margin-bottom:30px;
 }
 
-.btn{
-padding:12px 30px;
-background:#00ffcc;
+.hero button{
+padding:14px 40px;
 border:none;
-color:black;
+background:#8a5cff;
+color:white;
 font-weight:bold;
 cursor:pointer;
-transition:0.3s;
+border-radius:40px;
+font-size:14px;
+transition:.3s;
 }
 
-.btn:hover{
-background:white;
+.hero button:hover{
+transform:scale(1.05);
+background:#a381ff;
 }
+
+/* FEATURE SECTION */
 
 .section{
-padding:100px 10%;
+padding:120px 10%;
 text-align:center;
 }
 
 .section h2{
 font-size:40px;
 margin-bottom:20px;
-color:#00ffcc;
 }
 
 .section p{
-color:#aaa;
 max-width:700px;
 margin:auto;
+color:#aaa;
 }
 
+/* FOOTER */
+
 footer{
-padding:40px;
-text-align:center;
-background:#111;
+background:#050505;
+padding:60px 10%;
+margin-top:100px;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+font-size:14px;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
 color:#777;
+}
+
+@media(max-width:800px){
+
+.hero h1{
+font-size:40px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
 }
 
 </style>
@@ -119,10 +182,11 @@ color:#777;
 <body>
 
 <nav>
-<h1>ARTIST</h1>
+
+<div class="logo">ARTIST</div>
 
 <ul>
-<li><a href="index.html">Home</a></li>
+<li><a href="/">Home</a></li>
 <li><a href="/music/">Music</a></li>
 <li><a href="/videos/">Videos</a></li>
 <li><a href="/tour/">Tour</a></li>
@@ -130,15 +194,20 @@ color:#777;
 <li><a href="/about/">About</a></li>
 <li><a href="/contact/">Contact</a></li>
 </ul>
+
 </nav>
 
 
 <section class="hero">
 
-<h2>New Album Out Now</h2>
-<p>Stream the latest music from the artist</p>
+<h1>NEW ERA</h1>
 
-<button class="btn" onclick="playMusic()">Listen Now</button>
+<p>
+Official website of the artist. Listen to music, watch videos,
+get tour tickets and exclusive merch.
+</p>
+
+<button onclick="goMusic()">LISTEN NOW</button>
 
 </section>
 
@@ -148,7 +217,8 @@ color:#777;
 <h2>Latest Release</h2>
 
 <p>
-Experience the newest sound. Click below to explore music, videos and more from the artist.
+Stream the latest project now on all platforms and stay connected
+for new music, tour announcements and exclusive content.
 </p>
 
 </section>
@@ -156,20 +226,38 @@ Experience the newest sound. Click below to explore music, videos and more from 
 
 <footer>
 
-<p>© 2026 Shinobi Slime. All rights reserved.</p>
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
 
 </footer>
 
 
 <script>
 
-function playMusic(){
+function goMusic(){
 
-alert("Music page coming next 🚀")
+window.location.href="/music/"
 
 }
 
 </script>
+
 
 </body>
 </html>
