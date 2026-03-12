@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Merch</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0b0b0b;
+color:white;
+}
+
+/* NAVBAR */
+
+nav{
+position:fixed;
+top:0;
+width:100%;
+padding:20px 8%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(10px);
+z-index:1000;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+letter-spacing:2px;
+}
+
+nav ul{
+display:flex;
+gap:30px;
+list-style:none;
+}
+
+nav ul a{
+text-decoration:none;
+color:white;
+font-size:14px;
+transition:.3s;
+}
+
+nav ul a:hover{
+color:#8a5cff;
+}
+
+/* HEADER */
+
+.header{
+padding-top:140px;
+padding-bottom:60px;
+text-align:center;
+}
+
+.header h1{
+font-size:60px;
+letter-spacing:4px;
+}
+
+.header p{
+color:#aaa;
+margin-top:10px;
+}
+
+/* PRODUCT GRID */
+
+.products{
+padding:0 10% 100px 10%;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:40px;
+}
+
+/* PRODUCT CARD */
+
+.product{
+background:#111;
+border-radius:12px;
+overflow:hidden;
+transition:.3s;
+}
+
+.product:hover{
+transform:translateY(-6px);
+background:#151515;
+}
+
+.product img{
+width:100%;
+height:300px;
+object-fit:cover;
+}
+
+.product-info{
+padding:20px;
+}
+
+.product-info h3{
+margin-bottom:8px;
+}
+
+.price{
+color:#8a5cff;
+margin-bottom:12px;
+}
+
+.buy-btn{
+padding:10px 20px;
+border:none;
+background:#8a5cff;
+color:white;
+border-radius:20px;
+cursor:pointer;
+font-size:13px;
+transition:.3s;
+}
+
+.buy-btn:hover{
+background:#a381ff;
+}
+
+/* FOOTER */
+
+footer{
+background:#050505;
+padding:60px 10%;
+}
+
+.footer-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+align-items:center;
+}
+
+.socials{
+display:flex;
+gap:20px;
+}
+
+.socials a{
+text-decoration:none;
+color:white;
+opacity:.7;
+transition:.3s;
+}
+
+.socials a:hover{
+opacity:1;
+color:#8a5cff;
+}
+
+.copyright{
+text-align:right;
+font-size:13px;
+color:#777;
+}
+
+@media(max-width:800px){
+
+.header h1{
+font-size:40px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+gap:20px;
+text-align:center;
+}
+
+.copyright{
+text-align:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+
+<div class="logo">ARTIST</div>
+
+<ul>
+<li><a href="/">Home</a></li>
+<li><a href="/music/">Music</a></li>
+<li><a href="/videos/">Videos</a></li>
+<li><a href="/tour/">Tour</a></li>
+<li><a href="/merch/">Merch</a></li>
+<li><a href="/about/">About</a></li>
+<li><a href="/contact/">Contact</a></li>
+</ul>
+
+</nav>
+
+
+<section class="header">
+
+<h1>MERCH</h1>
+<p>Official artist merchandise</p>
+
+</section>
+
+
+<section class="products">
+
+<div class="product">
+
+<img src="https://picsum.photos/400?1">
+
+<div class="product-info">
+
+<h3>Artist Hoodie</h3>
+
+<div class="price">$65</div>
+
+<button class="buy-btn" onclick="buyItem()">Buy</button>
+
+</div>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://picsum.photos/400?2">
+
+<div class="product-info">
+
+<h3>Tour T-Shirt</h3>
+
+<div class="price">$35</div>
+
+<button class="buy-btn" onclick="buyItem()">Buy</button>
+
+</div>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://picsum.photos/400?3">
+
+<div class="product-info">
+
+<h3>Artist Hat</h3>
+
+<div class="price">$25</div>
+
+<button class="buy-btn" onclick="buyItem()">Buy</button>
+
+</div>
+
+</div>
+
+
+<div class="product">
+
+<img src="https://picsum.photos/400?4">
+
+<div class="product-info">
+
+<h3>Limited Vinyl</h3>
+
+<div class="price">$40</div>
+
+<button class="buy-btn" onclick="buyItem()">Buy</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<footer>
+
+<div class="footer-grid">
+
+<div class="socials">
+
+<a href="#">Instagram</a>
+<a href="#">Twitter</a>
+<a href="#">YouTube</a>
+<a href="#">Spotify</a>
+
+</div>
+
+<div class="copyright">
+
+© 2026 Shinobi Slime. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<script>
+
+function buyItem(){
+
+alert("Online store coming soon 🛒")
+
+}
+
+</script>
+
+</body>
+</html>
