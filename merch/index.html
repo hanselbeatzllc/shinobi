@@ -23,11 +23,11 @@ font-family:'Montserrat',sans-serif;
 }
 
 body{
-background:#0b0b0b;
-color:white;
+background:#f4f4f4;
+color:#111;
 }
 
-/* NAVBAR */
+/* NAV */
 
 nav{
 position:fixed;
@@ -37,119 +37,113 @@ padding:18px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(12px);
+background:#d81b60;
 z-index:1000;
 }
 
 .logo{
-font-size:22px;
+font-size:24px;
 font-weight:800;
-letter-spacing:2px;
-}
-
-nav ul{
-display:flex;
-gap:30px;
-list-style:none;
-}
-
-nav ul li a{
-text-decoration:none;
 color:white;
-font-size:14px;
-}
-
-nav ul li a:hover{
-color:#8a5cff;
 }
 
 .menu-toggle{
-display:none;
 font-size:26px;
+color:white;
 cursor:pointer;
 }
 
 /* CART ICON */
 
 .cart-icon{
-cursor:pointer;
 position:relative;
-font-size:20px;
+color:white;
+font-size:22px;
+cursor:pointer;
 }
 
 .cart-count{
 position:absolute;
 top:-8px;
 right:-10px;
-background:#8a5cff;
-font-size:11px;
-padding:3px 6px;
+background:white;
+color:#d81b60;
+font-size:12px;
+padding:3px 7px;
 border-radius:50%;
+}
+
+/* FULLSCREEN MENU */
+
+.menu{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#d81b60;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:30px;
+transform:translateY(-100%);
+transition:.4s;
+z-index:2000;
+}
+
+.menu.active{
+transform:translateY(0);
+}
+
+.menu a{
+color:white;
+font-size:28px;
+text-decoration:none;
+font-weight:700;
+}
+
+.menu .close{
+position:absolute;
+top:25px;
+right:30px;
+font-size:32px;
+cursor:pointer;
 }
 
 /* HEADER */
 
 .header{
 padding-top:140px;
-padding-bottom:40px;
 text-align:center;
+padding-bottom:50px;
 }
 
 .header h1{
-font-size:60px;
-letter-spacing:4px;
-}
-
-.header p{
-color:#aaa;
-margin-top:10px;
-}
-
-/* FILTERS */
-
-.filters{
-display:flex;
-gap:20px;
-justify-content:center;
-margin-bottom:40px;
-flex-wrap:wrap;
-}
-
-.filters input,
-.filters select{
-padding:10px 16px;
-border-radius:20px;
-border:none;
-background:#111;
-color:white;
+font-size:50px;
+color:#d81b60;
 }
 
 /* PRODUCTS */
 
 .products{
-padding:0 10% 100px 10%;
+max-width:1100px;
+margin:auto;
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:30px;
+padding:0 20px 100px 20px;
 }
 
 .product{
-background:#111;
-border-radius:12px;
+background:white;
+border-radius:14px;
 overflow:hidden;
-transition:.3s;
-}
-
-.product:hover{
-transform:translateY(-6px);
-background:#151515;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 }
 
 .product img{
 width:100%;
-height:260px;
-object-fit:cover;
 }
 
 .product-info{
@@ -157,36 +151,31 @@ padding:20px;
 }
 
 .product-info h3{
+color:#d81b60;
 margin-bottom:6px;
 }
 
 .price{
-color:#8a5cff;
+margin-bottom:12px;
+font-weight:600;
+}
+
+select{
+width:100%;
+padding:8px;
 margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ddd;
 }
 
-.buy-btn{
-padding:10px 18px;
+.add-btn{
+width:100%;
+padding:12px;
+background:#d81b60;
 border:none;
-background:#8a5cff;
 color:white;
-border-radius:20px;
+border-radius:30px;
 cursor:pointer;
-font-size:13px;
-}
-
-.buy-btn:hover{
-background:#a381ff;
-}
-
-/* DESKTOP */
-
-@media(min-width:1000px){
-
-.products{
-grid-template-columns:repeat(4,1fr);
-}
-
 }
 
 /* CART PANEL */
@@ -197,105 +186,82 @@ right:-350px;
 top:0;
 width:350px;
 height:100%;
-background:#111;
+background:white;
 padding:30px;
+box-shadow:-5px 0 20px rgba(0,0,0,.2);
 transition:.4s;
-z-index:2000;
+z-index:3000;
 }
 
 .cart-panel.active{
 right:0;
 }
 
+.cart-panel h2{
+margin-bottom:20px;
+}
+
 .cart-item{
 display:flex;
 justify-content:space-between;
-margin-bottom:12px;
+margin-bottom:10px;
 font-size:14px;
 }
 
 .checkout-btn{
 margin-top:20px;
-padding:12px;
-background:#8a5cff;
-border:none;
 width:100%;
-border-radius:20px;
+padding:14px;
+background:#d81b60;
+border:none;
 color:white;
+border-radius:30px;
 cursor:pointer;
 }
 
 /* FOOTER */
 
 footer{
-background:#050505;
-padding:60px 10%;
-}
-
-.footer-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-align-items:center;
-}
-
-.socials{
-display:flex;
-gap:20px;
-}
-
-.socials a{
-font-size:22px;
+background:#d81b60;
+padding:60px 20px;
+text-align:center;
 color:white;
-opacity:.7;
 }
 
-.socials a:hover{
-color:#8a5cff;
-opacity:1;
+.footer-icons{
+display:flex;
+justify-content:center;
+gap:26px;
+font-size:22px;
+margin-bottom:20px;
 }
 
-.copyright{
-text-align:right;
+.footer-links{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-bottom:10px;
+}
+
+.footer-links a{
+color:white;
+text-decoration:none;
+}
+
+.footer-copy{
 font-size:13px;
-color:#777;
 }
 
 /* MOBILE */
 
 @media(max-width:900px){
 
-nav ul{
-position:fixed;
-top:70px;
-left:-100%;
-flex-direction:column;
-background:black;
-width:100%;
-padding:40px;
-transition:.4s;
-gap:20px;
-}
-
-nav ul.active{
-left:0;
-}
-
-.menu-toggle{
-display:block;
+.products{
+grid-template-columns:1fr;
 }
 
 .header h1{
-font-size:40px;
-}
-
-.footer-grid{
-grid-template-columns:1fr;
-text-align:center;
-gap:20px;
-}
-
-.copyright{
-text-align:center;
+font-size:36px;
 }
 
 }
@@ -306,74 +272,80 @@ text-align:center;
 
 <body>
 
+
 <nav>
 
 <div class="logo">Shinobi</div>
 
-<div style="display:flex;gap:20px;align-items:center">
+<div style="display:flex;gap:20px">
 
 <div class="cart-icon" onclick="toggleCart()">
 <i class="fa-solid fa-shopping-cart"></i>
 <span class="cart-count" id="cartCount">0</span>
 </div>
 
-<div class="menu-toggle" id="menuToggle">
+<div class="menu-toggle" id="openMenu">
 <i class="fa-solid fa-bars"></i>
 </div>
 
 </div>
 
-<ul id="navLinks">
-
-<li><a href="../">Home</a></li>
-<li><a href="../music/">Music</a></li>
-<li><a href="../videos/">Videos</a></li>
-<li><a href="../tour/">Tour</a></li>
-<li><a href="../merch/">Merch</a></li>
-<li><a href="../about/">About</a></li>
-<li><a href="../contact/">Contact</a></li>
-
-</ul>
-
 </nav>
+
+
+<div class="menu" id="menu">
+
+<div class="close" id="closeMenu">
+<i class="fa-solid fa-xmark"></i>
+</div>
+
+<a href="../music/">Music</a>
+<a href="../videos/">Videos</a>
+<a href="../tour/">Tour</a>
+<a href="../merch/">Shop</a>
+<a href="../contact/">Sign Up</a>
+
+</div>
 
 
 <section class="header">
 
 <h1>MERCH</h1>
-<p>Official artist merchandise</p>
 
 </section>
 
 
-<div class="filters">
+<section class="products">
 
-<input id="searchProduct" placeholder="Search merch">
+<!-- PRODUCT -->
 
-<select id="categoryFilter">
-<option value="">All Categories</option>
-<option value="hoodie">Hoodies</option>
-<option value="shirt">Shirts</option>
-<option value="vinyl">Vinyl</option>
-<option value="accessory">Accessories</option>
-</select>
+<div class="product">
 
-</div>
-
-
-<section class="products" id="products">
-
-
-<div class="product" data-name="Artist Hoodie" data-category="hoodie">
-
-<img src="https://picsum.photos/400?1">
+<img src="merch1.jpg">
 
 <div class="product-info">
 
 <h3>Artist Hoodie</h3>
+
 <div class="price">$65</div>
 
-<button class="buy-btn" onclick="addToCart('Artist Hoodie','$65')">
+<select class="size">
+<option>Size</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+</select>
+
+<select class="color">
+<option>Color</option>
+<option>Black</option>
+<option>Pink</option>
+<option>White</option>
+</select>
+
+<button class="add-btn"
+onclick="addToCart('Artist Hoodie','$65',this)">
 Add to Cart
 </button>
 
@@ -382,16 +354,33 @@ Add to Cart
 </div>
 
 
-<div class="product" data-name="Tour Shirt" data-category="shirt">
+<div class="product">
 
-<img src="https://picsum.photos/400?2">
+<img src="merch2.jpg">
 
 <div class="product-info">
 
 <h3>Tour Shirt</h3>
+
 <div class="price">$35</div>
 
-<button class="buy-btn" onclick="addToCart('Tour Shirt','$35')">
+<select class="size">
+<option>Size</option>
+<option>S</option>
+<option>M</option>
+<option>L</option>
+<option>XL</option>
+</select>
+
+<select class="color">
+<option>Color</option>
+<option>Black</option>
+<option>Pink</option>
+<option>White</option>
+</select>
+
+<button class="add-btn"
+onclick="addToCart('Tour Shirt','$35',this)">
 Add to Cart
 </button>
 
@@ -400,16 +389,25 @@ Add to Cart
 </div>
 
 
-<div class="product" data-name="Artist Hat" data-category="accessory">
+<div class="product">
 
-<img src="https://picsum.photos/400?3">
+<img src="merch3.jpg">
 
 <div class="product-info">
 
 <h3>Artist Hat</h3>
+
 <div class="price">$25</div>
 
-<button class="buy-btn" onclick="addToCart('Artist Hat','$25')">
+<select class="color">
+<option>Color</option>
+<option>Black</option>
+<option>Pink</option>
+<option>White</option>
+</select>
+
+<button class="add-btn"
+onclick="addToCart('Artist Hat','$25',this)">
 Add to Cart
 </button>
 
@@ -418,16 +416,18 @@ Add to Cart
 </div>
 
 
-<div class="product" data-name="Limited Vinyl" data-category="vinyl">
+<div class="product">
 
-<img src="https://picsum.photos/400?4">
+<img src="merch4.jpg">
 
 <div class="product-info">
 
 <h3>Limited Vinyl</h3>
+
 <div class="price">$40</div>
 
-<button class="buy-btn" onclick="addToCart('Limited Vinyl','$40')">
+<button class="add-btn"
+onclick="addToCart('Limited Vinyl','$40',this)">
 Add to Cart
 </button>
 
@@ -435,9 +435,10 @@ Add to Cart
 
 </div>
 
-
 </section>
 
+
+<!-- CART -->
 
 <div class="cart-panel" id="cartPanel">
 
@@ -454,27 +455,28 @@ Checkout
 
 <footer>
 
-<div class="footer-grid">
+<div class="footer-icons">
 
-<div>
-
-<div class="socials">
-
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-x-twitter"></i></a>
-<a href="#"><i class="fab fa-youtube"></i></a>
-<a href="#"><i class="fab fa-spotify"></i></a>
-
-</div>
+<i class="fab fa-tiktok"></i>
+<i class="fab fa-instagram"></i>
+<i class="fab fa-x-twitter"></i>
+<i class="fab fa-facebook"></i>
+<i class="fab fa-youtube"></i>
+<i class="fab fa-spotify"></i>
+<i class="fab fa-apple"></i>
 
 </div>
 
-<div class="copyright">
+<div class="footer-links">
 
-© 2026 Shinobi Slime  
-All Rights Reserved
+<a href="#">Terms</a>
+<a href="#">Privacy</a>
 
 </div>
+
+<div class="footer-copy">
+
+© 2026 Shinobi Slime
 
 </div>
 
@@ -483,20 +485,28 @@ All Rights Reserved
 
 <script>
 
-/* MOBILE MENU */
+/* MENU */
 
-const toggle=document.getElementById("menuToggle")
-const nav=document.getElementById("navLinks")
+const open=document.getElementById("openMenu")
+const close=document.getElementById("closeMenu")
+const menu=document.getElementById("menu")
 
-toggle.onclick=()=>nav.classList.toggle("active")
+open.onclick=()=>menu.classList.add("active")
+close.onclick=()=>menu.classList.remove("active")
+
 
 /* CART */
 
 let cart=[]
 
-function addToCart(name,price){
+function addToCart(name,price,btn){
 
-cart.push({name,price})
+const product=btn.parentElement
+
+const size=product.querySelector(".size")?.value || ""
+const color=product.querySelector(".color")?.value || ""
+
+cart.push({name,price,size,color})
 
 updateCart()
 
@@ -511,7 +521,7 @@ cart.forEach((item,index)=>{
 
 list.innerHTML+=`
 <div class="cart-item">
-${item.name} - ${item.price}
+${item.name} ${item.size} ${item.color} - ${item.price}
 <span onclick="removeItem(${index})" style="cursor:pointer">✕</span>
 </div>
 `
@@ -525,6 +535,7 @@ document.getElementById("cartCount").textContent=cart.length
 function removeItem(index){
 
 cart.splice(index,1)
+
 updateCart()
 
 }
@@ -534,30 +545,6 @@ function toggleCart(){
 document.getElementById("cartPanel").classList.toggle("active")
 
 }
-
-/* FILTER */
-
-const search=document.getElementById("searchProduct")
-const category=document.getElementById("categoryFilter")
-
-function filterProducts(){
-
-const text=search.value.toLowerCase()
-const cat=category.value
-
-document.querySelectorAll(".product").forEach(p=>{
-
-const name=p.dataset.name.toLowerCase()
-const categoryMatch=cat===""||p.dataset.category===cat
-
-p.style.display=(name.includes(text)&&categoryMatch)?"block":"none"
-
-})
-
-}
-
-search.addEventListener("input",filterProducts)
-category.addEventListener("change",filterProducts)
 
 </script>
 
