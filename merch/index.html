@@ -25,6 +25,7 @@ font-family:'Montserrat',sans-serif;
 body{
 background:#f4f4f4;
 color:#111;
+overflow-x:hidden;
 }
 
 /* NAV */
@@ -47,8 +48,6 @@ font-weight:800;
 color:white;
 }
 
-/* CART ICON */
-
 .cart-icon{
 position:relative;
 color:white;
@@ -70,13 +69,13 @@ border-radius:50%;
 /* HEADER */
 
 .header{
-padding-top:140px;
+padding-top:120px;
 text-align:center;
-padding-bottom:50px;
+padding-bottom:40px;
 }
 
 .header h1{
-font-size:50px;
+font-size:44px;
 color:#d81b60;
 }
 
@@ -95,11 +94,14 @@ padding:0 20px 100px 20px;
 background:white;
 border-radius:14px;
 overflow:hidden;
-box-shadow:0 10px 30px rgba(0,0,0,.15);
+box-shadow:0 10px 25px rgba(0,0,0,.15);
 }
 
 .product img{
 width:100%;
+height:260px;
+object-fit:cover;
+display:block;
 }
 
 .product-info{
@@ -118,7 +120,7 @@ font-weight:600;
 
 select{
 width:100%;
-padding:8px;
+padding:10px;
 margin-bottom:10px;
 border-radius:6px;
 border:1px solid #ddd;
@@ -138,7 +140,7 @@ cursor:pointer;
 
 .cart-panel{
 position:fixed;
-right:-380px;
+right:-400px;
 top:0;
 width:380px;
 height:100%;
@@ -154,8 +156,6 @@ overflow:auto;
 right:0;
 }
 
-/* CART HEADER */
-
 .cart-header{
 display:flex;
 justify-content:space-between;
@@ -168,8 +168,6 @@ font-size:22px;
 cursor:pointer;
 color:#d81b60;
 }
-
-/* CART ITEMS */
 
 .cart-item{
 display:flex;
@@ -188,8 +186,6 @@ font-weight:bold;
 margin-left:10px;
 }
 
-/* CHECKOUT */
-
 .checkout-btn{
 margin-top:20px;
 width:100%;
@@ -205,7 +201,7 @@ cursor:pointer;
 
 footer{
 background:#d81b60;
-padding:60px 20px;
+padding:50px 20px;
 text-align:center;
 color:white;
 }
@@ -220,14 +216,33 @@ margin-bottom:20px;
 
 /* MOBILE */
 
-@media(max-width:900px){
+@media(max-width:768px){
 
 .products{
 grid-template-columns:1fr;
+gap:24px;
+padding:0 16px 80px 16px;
+}
+
+.product img{
+height:220px;
+}
+
+.header h1{
+font-size:36px;
 }
 
 .cart-panel{
 width:100%;
+right:-100%;
+}
+
+.cart-panel.active{
+right:0;
+}
+
+nav{
+padding:16px;
 }
 
 }
@@ -367,7 +382,7 @@ Add to Cart
 </section>
 
 
-<!-- CART PANEL -->
+<!-- CART -->
 
 <div class="cart-panel" id="cartPanel">
 
@@ -441,19 +456,15 @@ list.innerHTML+=`
 <span>
 
 ${item.name}
-
-${item.size ? "- "+item.size : ""}
-
-${item.color ? "- "+item.color : ""}
+${item.size ? " - "+item.size : ""}
+${item.color ? " - "+item.color : ""}
 
 </span>
 
 <span>
 
 ${item.price}
-
-<span class="remove"
-onclick="removeItem(${index})">✕</span>
+<span class="remove" onclick="removeItem(${index})">✕</span>
 
 </span>
 
