@@ -22,8 +22,8 @@ font-family:'Montserrat',sans-serif;
 }
 
 body{
-background:#0b0b0b;
-color:white;
+background:#f4f4f4;
+color:#111;
 overflow-x:hidden;
 }
 
@@ -37,68 +37,98 @@ padding:18px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(0,0,0,0.85);
-backdrop-filter:blur(12px);
+background:#d81b60;
 z-index:1000;
 }
 
 .logo{
-font-size:22px;
+font-size:24px;
 font-weight:800;
+color:white;
 letter-spacing:2px;
 }
 
-nav ul{
-display:flex;
-gap:30px;
-list-style:none;
-}
-
-nav ul li a{
-text-decoration:none;
-color:white;
-font-size:14px;
-}
-
-nav ul li a:hover{
-color:#8a5cff;
-}
-
 .menu-toggle{
-display:none;
-font-size:26px;
+font-size:28px;
+color:white;
+cursor:pointer;
+}
+
+/* FULLSCREEN MENU */
+
+.menu{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#d81b60;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:30px;
+transform:translateY(-100%);
+transition:.4s;
+z-index:2000;
+}
+
+.menu.active{
+transform:translateY(0);
+}
+
+.menu a{
+color:white;
+font-size:28px;
+text-decoration:none;
+font-weight:700;
+letter-spacing:2px;
+}
+
+.menu .close{
+position:absolute;
+top:25px;
+right:30px;
+font-size:30px;
 cursor:pointer;
 }
 
 /* SECTION */
 
 .section{
-padding:140px 8% 80px 8%;
+padding:120px 6% 60px 6%;
+max-width:900px;
+margin:auto;
 }
 
 .section h2{
-margin-bottom:30px;
 font-size:30px;
+margin-bottom:30px;
+color:#d81b60;
 }
 
-/* VIDEO GRID */
-
-.video-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:30px;
-}
+/* VIDEO CARD */
 
 .video-card{
-position:relative;
-border-radius:12px;
-overflow:hidden;
-background:#000;
+background:white;
+border-radius:14px;
+padding:25px;
+margin-bottom:40px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
+text-align:center;
+}
+
+.video-card h3{
+margin-bottom:20px;
+font-size:22px;
+color:#d81b60;
 }
 
 .video-wrapper{
 position:relative;
 padding-top:56.25%;
+border-radius:10px;
+overflow:hidden;
 }
 
 .video-wrapper iframe{
@@ -117,7 +147,7 @@ position:absolute;
 top:50%;
 left:50%;
 transform:translate(-50%,-50%);
-font-size:50px;
+font-size:60px;
 color:white;
 opacity:.9;
 pointer-events:none;
@@ -137,7 +167,7 @@ min-width:220px;
 height:380px;
 border-radius:12px;
 overflow:hidden;
-background:#000;
+background:black;
 }
 
 .short iframe{
@@ -158,14 +188,15 @@ border-radius:12px;
 /* FOOTER */
 
 footer{
-background:#050505;
+background:#111;
+color:white;
 padding:60px 10%;
 margin-top:80px;
 }
 
 .footer-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
+display:flex;
+justify-content:space-between;
 align-items:center;
 }
 
@@ -181,47 +212,7 @@ opacity:.7;
 }
 
 .socials a:hover{
-color:#8a5cff;
-}
-
-.copyright{
-text-align:right;
-font-size:13px;
-color:#777;
-}
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-nav ul{
-position:fixed;
-top:70px;
-left:-100%;
-flex-direction:column;
-background:black;
-width:100%;
-padding:40px;
-transition:.4s;
-gap:20px;
-}
-
-nav ul.active{
-left:0;
-}
-
-.menu-toggle{
-display:block;
-}
-
-.video-grid{
-grid-template-columns:1fr;
-}
-
-.section{
-padding:120px 6% 60px 6%;
-}
-
+opacity:1;
 }
 
 </style>
@@ -235,101 +226,95 @@ padding:120px 6% 60px 6%;
 
 <div class="logo">Shinobi</div>
 
-<div class="menu-toggle" id="menuToggle">
+<div class="menu-toggle" id="openMenu">
 <i class="fa-solid fa-bars"></i>
 </div>
-
-<ul id="navLinks">
-
-<li><a href="../">Home</a></li>
-<li><a href="../music/">Music</a></li>
-<li><a href="../videos/">Videos</a></li>
-<li><a href="../tour/">Tour</a></li>
-<li><a href="../merch/">Merch</a></li>
-<li><a href="../about/">About</a></li>
-<li><a href="../contact/">Contact</a></li>
-
-</ul>
 
 </nav>
 
 
-<!-- LATEST VIDEOS -->
+<!-- FULL MENU -->
+
+<div class="menu" id="menu">
+
+<div class="close" id="closeMenu">
+<i class="fa-solid fa-xmark"></i>
+</div>
+
+<a href="../music/">Music</a>
+<a href="../videos/">Videos</a>
+<a href="../tour/">Tour</a>
+<a href="../merch/">Shop</a>
+<a href="../contact/">Sign Up</a>
+
+<div class="socials">
+
+<a href="#"><i class="fab fa-tiktok"></i></a>
+<a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
+<a href="#"><i class="fab fa-youtube"></i></a>
+<a href="#"><i class="fab fa-spotify"></i></a>
+<a href="#"><i class="fab fa-apple"></i></a>
+
+</div>
+
+</div>
+
+
+<!-- VIDEOS -->
 
 <section class="section">
 
-<h2>Latest Videos</h2>
+<h2>VIDEOS</h2>
 
-<div class="video-grid">
 
 <div class="video-card">
+
+<h3>Shinobi – Official Video</h3>
+
 <div class="video-wrapper">
+
 <iframe src="https://www.youtube.com/embed/VsB5iWSARJU"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+
+<div class="play-overlay">
+<i class="fa-solid fa-play"></i>
 </div>
 
+</div>
+
+</div>
+
+
 <div class="video-card">
+
+<h3>Shinobi – Performance</h3>
+
 <div class="video-wrapper">
+
 <iframe src="https://www.youtube.com/embed/Z3nMMAJ4-sI"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+
+<div class="play-overlay">
+<i class="fa-solid fa-play"></i>
 </div>
 
+</div>
+
+</div>
+
+
 <div class="video-card">
+
+<h3>Shinobi – Visual</h3>
+
 <div class="video-wrapper">
+
 <iframe src="https://www.youtube.com/embed/0-GBCGuNoxo"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
+
+<div class="play-overlay">
+<i class="fa-solid fa-play"></i>
 </div>
 
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/XAj0Ys-xVEk"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/7-hEfvxf2Sc"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/Tvzpm2GAIVg"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/hfeJo-5DHPk"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/Ojr7Dubt_SA"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/F1Sb5YOyEgQ"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
-</div>
-
-<div class="video-card">
-<div class="video-wrapper">
-<iframe src="https://www.youtube.com/embed/E5q9Ku0rnc8"></iframe>
-</div>
-<div class="play-overlay"><i class="fa-solid fa-play"></i></div>
 </div>
 
 </div>
@@ -341,7 +326,7 @@ padding:120px 6% 60px 6%;
 
 <section class="section">
 
-<h2>Shorts</h2>
+<h2>SHORTS</h2>
 
 <div class="shorts">
 
@@ -357,14 +342,6 @@ padding:120px 6% 60px 6%;
 <iframe src="https://www.youtube.com/embed/WyYwGo_kmHw"></iframe>
 </div>
 
-<div class="short">
-<iframe src="https://www.youtube.com/embed/rUsgz0F3yZc"></iframe>
-</div>
-
-<div class="short">
-<iframe src="https://www.youtube.com/embed/GlnxdMDJobA"></iframe>
-</div>
-
 </div>
 
 </section>
@@ -374,7 +351,7 @@ padding:120px 6% 60px 6%;
 
 <section class="section playlist">
 
-<h2>Featured Playlist</h2>
+<h2>PLAYLIST</h2>
 
 <iframe src="https://www.youtube.com/embed/videoseries?list=PLWnNuLXLM302trYltN7a4bw-ToJdnWfku"></iframe>
 
@@ -385,18 +362,14 @@ padding:120px 6% 60px 6%;
 
 <div class="footer-grid">
 
-<div>
+<div>© 2026 Shinobi Slime</div>
+
 <div class="socials">
+
 <a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-x-twitter"></i></a>
 <a href="#"><i class="fab fa-youtube"></i></a>
 <a href="#"><i class="fab fa-spotify"></i></a>
-</div>
-</div>
 
-<div class="copyright">
-© 2026 Shinobi Slime  
-All Rights Reserved
 </div>
 
 </div>
@@ -406,14 +379,15 @@ All Rights Reserved
 
 <script>
 
-const toggle=document.getElementById("menuToggle")
-const nav=document.getElementById("navLinks")
+const open=document.getElementById("openMenu")
+const close=document.getElementById("closeMenu")
+const menu=document.getElementById("menu")
 
-toggle.onclick=()=>{
-nav.classList.toggle("active")
-}
+open.onclick=()=>menu.classList.add("active")
+close.onclick=()=>menu.classList.remove("active")
 
 </script>
+
 
 </body>
 </html>
