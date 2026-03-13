@@ -215,6 +215,63 @@ opacity:.7;
 opacity:1;
 }
 
+/* FOOTER */
+
+.footer{
+background:#d81b60;
+padding:60px 20px;
+margin-top:100px;
+text-align:center;
+color:white;
+}
+
+.footer-inner{
+max-width:1000px;
+margin:auto;
+}
+
+.footer-icons{
+display:flex;
+justify-content:center;
+gap:26px;
+font-size:22px;
+margin-bottom:30px;
+}
+
+.footer-icons a{
+color:white;
+opacity:.9;
+transition:.3s;
+}
+
+.footer-icons a:hover{
+opacity:1;
+transform:scale(1.15);
+}
+
+.footer-links{
+display:flex;
+justify-content:center;
+gap:30px;
+margin-bottom:20px;
+font-size:14px;
+}
+
+.footer-links a{
+color:white;
+text-decoration:none;
+opacity:.9;
+}
+
+.footer-links a:hover{
+opacity:1;
+}
+
+.footer-copy{
+font-size:13px;
+opacity:.8;
+}
+
 </style>
 
 </head>
@@ -358,24 +415,38 @@ opacity:1;
 </section>
 
 
-<footer>
+<footer class="footer">
 
-<div class="footer-grid">
+<div class="footer-inner">
 
-<div>© 2026 Shinobi Slime</div>
+<div class="footer-icons">
 
-<div class="socials">
-
+<a href="https://instagram.com/shinobi.slime"><i class="fab fa-instagram"></i></a>
 <a href="#"><i class="fab fa-instagram"></i></a>
+<a href="#"><i class="fab fa-x-twitter"></i></a>
+<a href="#"><i class="fab fa-facebook"></i></a>
 <a href="#"><i class="fab fa-youtube"></i></a>
 <a href="#"><i class="fab fa-spotify"></i></a>
+<a href="#"><i class="fab fa-apple"></i></a>
+
+</div>
+
+<div class="footer-links">
+
+<a href="#">Terms</a>
+<a href="#">Privacy</a>
+
+</div>
+
+<div class="footer-copy">
+
+© 2026 Shinobi Slime
 
 </div>
 
 </div>
 
 </footer>
-
 
 <script>
 
