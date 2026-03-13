@@ -73,44 +73,6 @@ padding:3px 7px;
 border-radius:50%;
 }
 
-/* FULLSCREEN MENU */
-
-.menu{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100vh;
-background:#d81b60;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:30px;
-transform:translateY(-100%);
-transition:.4s;
-z-index:2000;
-}
-
-.menu.active{
-transform:translateY(0);
-}
-
-.menu a{
-color:white;
-font-size:28px;
-text-decoration:none;
-font-weight:700;
-}
-
-.menu .close{
-position:absolute;
-top:25px;
-right:30px;
-font-size:32px;
-cursor:pointer;
-}
-
 /* HEADER */
 
 .header{
@@ -191,6 +153,7 @@ padding:30px;
 box-shadow:-5px 0 20px rgba(0,0,0,.2);
 transition:.4s;
 z-index:3000;
+overflow:auto;
 }
 
 .cart-panel.active{
@@ -204,8 +167,17 @@ margin-bottom:20px;
 .cart-item{
 display:flex;
 justify-content:space-between;
-margin-bottom:10px;
+align-items:center;
+margin-bottom:12px;
 font-size:14px;
+border-bottom:1px solid #eee;
+padding-bottom:8px;
+}
+
+.remove{
+color:red;
+cursor:pointer;
+font-weight:bold;
 }
 
 .checkout-btn{
@@ -264,6 +236,10 @@ grid-template-columns:1fr;
 font-size:36px;
 }
 
+.cart-panel{
+width:100%;
+}
+
 }
 
 </style>
@@ -277,35 +253,12 @@ font-size:36px;
 
 <div class="logo">Shinobi</div>
 
-<div style="display:flex;gap:20px">
-
 <div class="cart-icon" onclick="toggleCart()">
 <i class="fa-solid fa-shopping-cart"></i>
 <span class="cart-count" id="cartCount">0</span>
 </div>
 
-<div class="menu-toggle" id="openMenu">
-<i class="fa-solid fa-bars"></i>
-</div>
-
-</div>
-
 </nav>
-
-
-<div class="menu" id="menu">
-
-<div class="close" id="closeMenu">
-<i class="fa-solid fa-xmark"></i>
-</div>
-
-<a href="../music/">Music</a>
-<a href="../videos/">Videos</a>
-<a href="../tour/">Tour</a>
-<a href="../merch/">Shop</a>
-<a href="../contact/">Sign Up</a>
-
-</div>
 
 
 <section class="header">
@@ -330,7 +283,7 @@ font-size:36px;
 <div class="price">$65</div>
 
 <select class="size">
-<option>Size</option>
+<option value="">Select Size</option>
 <option>S</option>
 <option>M</option>
 <option>L</option>
@@ -338,7 +291,7 @@ font-size:36px;
 </select>
 
 <select class="color">
-<option>Color</option>
+<option value="">Select Color</option>
 <option>Black</option>
 <option>Pink</option>
 <option>White</option>
@@ -365,7 +318,7 @@ Add to Cart
 <div class="price">$35</div>
 
 <select class="size">
-<option>Size</option>
+<option value="">Select Size</option>
 <option>S</option>
 <option>M</option>
 <option>L</option>
@@ -373,7 +326,7 @@ Add to Cart
 </select>
 
 <select class="color">
-<option>Color</option>
+<option value="">Select Color</option>
 <option>Black</option>
 <option>Pink</option>
 <option>White</option>
@@ -400,7 +353,7 @@ Add to Cart
 <div class="price">$25</div>
 
 <select class="color">
-<option>Color</option>
+<option value="">Select Color</option>
 <option>Black</option>
 <option>Pink</option>
 <option>White</option>
@@ -446,9 +399,7 @@ Add to Cart
 
 <div id="cartItems"></div>
 
-<button class="checkout-btn">
-Checkout
-</button>
+<button class="checkout-btn">Checkout</button>
 
 </div>
 
@@ -485,18 +436,6 @@ Checkout
 
 <script>
 
-/* MENU */
-
-const open=document.getElementById("openMenu")
-const close=document.getElementById("closeMenu")
-const menu=document.getElementById("menu")
-
-open.onclick=()=>menu.classList.add("active")
-close.onclick=()=>menu.classList.remove("active")
-
-
-/* CART */
-
 let cart=[]
 
 function addToCart(name,price,btn){
@@ -515,15 +454,36 @@ updateCart()
 function updateCart(){
 
 const list=document.getElementById("cartItems")
+
 list.innerHTML=""
 
 cart.forEach((item,index)=>{
 
 list.innerHTML+=`
+
 <div class="cart-item">
-${item.name} ${item.size} ${item.color} - ${item.price}
-<span onclick="removeItem(${index})" style="cursor:pointer">✕</span>
+
+<span>
+
+${item.name}
+
+${item.size ? "- "+item.size : ""}
+
+${item.color ? "- "+item.color : ""}
+
+</span>
+
+<span>
+
+${item.price}
+
+<span class="remove"
+onclick="removeItem(${index})">✕</span>
+
+</span>
+
 </div>
+
 `
 
 })
@@ -542,7 +502,8 @@ updateCart()
 
 function toggleCart(){
 
-document.getElementById("cartPanel").classList.toggle("active")
+document.getElementById("cartPanel")
+.classList.toggle("active")
 
 }
 
