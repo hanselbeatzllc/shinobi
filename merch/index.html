@@ -13,6 +13,8 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<script src="https://www.paypal.com/sdk/js?client-id=YOUR_PAYPAL_CLIENT_ID&currency=USD"></script>
+
 <style>
 
 *{
@@ -48,8 +50,10 @@ font-weight:800;
 color:white;
 }
 
-.cart-icon{
-position:relative;
+.nav-icons{
+display:flex;
+gap:20px;
+align-items:center;
 color:white;
 font-size:22px;
 cursor:pointer;
@@ -57,13 +61,52 @@ cursor:pointer;
 
 .cart-count{
 position:absolute;
-top:-8px;
-right:-10px;
+top:-6px;
+right:-8px;
 background:white;
 color:#d81b60;
-font-size:12px;
-padding:3px 7px;
+font-size:11px;
+padding:2px 6px;
 border-radius:50%;
+}
+
+/* FULLSCREEN MENU */
+
+.menu{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#d81b60;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:30px;
+transform:translateY(-100%);
+transition:.4s;
+z-index:2000;
+}
+
+.menu.active{
+transform:translateY(0);
+}
+
+.menu a{
+color:white;
+font-size:28px;
+text-decoration:none;
+font-weight:700;
+}
+
+.menu-close{
+position:absolute;
+top:30px;
+right:30px;
+font-size:28px;
+color:white;
+cursor:pointer;
 }
 
 /* HEADER */
@@ -87,7 +130,7 @@ margin:auto;
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:30px;
-padding:0 20px 100px 20px;
+padding:0 20px 100px;
 }
 
 .product{
@@ -99,9 +142,8 @@ box-shadow:0 10px 25px rgba(0,0,0,.15);
 
 .product img{
 width:100%;
-height:260px;
+height:240px;
 object-fit:cover;
-display:block;
 }
 
 .product-info{
@@ -136,7 +178,7 @@ border-radius:30px;
 cursor:pointer;
 }
 
-/* CART PANEL */
+/* CART */
 
 .cart-panel{
 position:fixed;
@@ -172,28 +214,13 @@ color:#d81b60;
 .cart-item{
 display:flex;
 justify-content:space-between;
-align-items:center;
-margin-bottom:12px;
-font-size:14px;
+margin-bottom:10px;
 border-bottom:1px solid #eee;
 padding-bottom:8px;
 }
 
 .remove{
 color:red;
-cursor:pointer;
-font-weight:bold;
-margin-left:10px;
-}
-
-.checkout-btn{
-margin-top:20px;
-width:100%;
-padding:14px;
-background:#d81b60;
-border:none;
-color:white;
-border-radius:30px;
 cursor:pointer;
 }
 
@@ -220,16 +247,6 @@ margin-bottom:20px;
 
 .products{
 grid-template-columns:1fr;
-gap:24px;
-padding:0 16px 80px 16px;
-}
-
-.product img{
-height:220px;
-}
-
-.header h1{
-font-size:36px;
 }
 
 .cart-panel{
@@ -241,10 +258,6 @@ right:-100%;
 right:0;
 }
 
-nav{
-padding:16px;
-}
-
 }
 
 </style>
@@ -253,17 +266,38 @@ padding:16px;
 
 <body>
 
+<!-- NAV -->
 
 <nav>
 
 <div class="logo">Shinobi</div>
 
-<div class="cart-icon" onclick="toggleCart()">
-<i class="fa-solid fa-shopping-cart"></i>
-<span class="cart-count" id="cartCount">0</span>
+<div class="nav-icons">
+
+<i class="fa-solid fa-shopping-cart" onclick="toggleCart()"></i>
+
+<i class="fa-solid fa-bars" onclick="openMenu()"></i>
+
 </div>
 
 </nav>
+
+
+<!-- MENU -->
+
+<div class="menu" id="menu">
+
+<div class="menu-close" onclick="closeMenu()">
+<i class="fa-solid fa-xmark"></i>
+</div>
+
+<a href="../music/">Music</a>
+<a href="../videos/">Videos</a>
+<a href="../tour/">Tour</a>
+<a href="../merch/">Shop</a>
+<a href="../contact/">Sign Up</a>
+
+</div>
 
 
 <section class="header">
@@ -285,7 +319,7 @@ padding:16px;
 <div class="price">$65</div>
 
 <select class="size">
-<option value="">Select Size</option>
+<option>Select Size</option>
 <option>S</option>
 <option>M</option>
 <option>L</option>
@@ -293,13 +327,13 @@ padding:16px;
 </select>
 
 <select class="color">
-<option value="">Select Color</option>
+<option>Select Color</option>
 <option>Black</option>
 <option>Pink</option>
 <option>White</option>
 </select>
 
-<button class="add-btn" onclick="addToCart('Artist Hoodie','$65',this)">
+<button class="add-btn" onclick="addToCart('Artist Hoodie',65)">
 Add to Cart
 </button>
 
@@ -317,7 +351,7 @@ Add to Cart
 <div class="price">$35</div>
 
 <select class="size">
-<option value="">Select Size</option>
+<option>Select Size</option>
 <option>S</option>
 <option>M</option>
 <option>L</option>
@@ -325,54 +359,13 @@ Add to Cart
 </select>
 
 <select class="color">
-<option value="">Select Color</option>
+<option>Select Color</option>
 <option>Black</option>
 <option>Pink</option>
 <option>White</option>
 </select>
 
-<button class="add-btn" onclick="addToCart('Tour Shirt','$35',this)">
-Add to Cart
-</button>
-
-</div>
-</div>
-
-
-<div class="product">
-
-<img src="merch3.jpg">
-
-<div class="product-info">
-
-<h3>Artist Hat</h3>
-<div class="price">$25</div>
-
-<select class="color">
-<option value="">Select Color</option>
-<option>Black</option>
-<option>Pink</option>
-<option>White</option>
-</select>
-
-<button class="add-btn" onclick="addToCart('Artist Hat','$25',this)">
-Add to Cart
-</button>
-
-</div>
-</div>
-
-
-<div class="product">
-
-<img src="merch4.jpg">
-
-<div class="product-info">
-
-<h3>Limited Vinyl</h3>
-<div class="price">$40</div>
-
-<button class="add-btn" onclick="addToCart('Limited Vinyl','$40',this)">
+<button class="add-btn" onclick="addToCart('Tour Shirt',35)">
 Add to Cart
 </button>
 
@@ -398,9 +391,9 @@ Add to Cart
 
 <div id="cartItems"></div>
 
-<button class="checkout-btn">
-Checkout
-</button>
+<h3>Total: $<span id="cartTotal">0</span></h3>
+
+<div id="paypal-button-container"></div>
 
 </div>
 
@@ -412,10 +405,8 @@ Checkout
 <i class="fab fa-tiktok"></i>
 <i class="fab fa-instagram"></i>
 <i class="fab fa-x-twitter"></i>
-<i class="fab fa-facebook"></i>
 <i class="fab fa-youtube"></i>
 <i class="fab fa-spotify"></i>
-<i class="fab fa-apple"></i>
 
 </div>
 
@@ -427,15 +418,12 @@ Checkout
 <script>
 
 let cart=[]
+let total=0
 
-function addToCart(name,price,btn){
+function addToCart(name,price){
 
-const product=btn.parentElement
-
-const size=product.querySelector(".size")?.value || ""
-const color=product.querySelector(".color")?.value || ""
-
-cart.push({name,price,size,color})
+cart.push({name,price})
+total+=price
 
 updateCart()
 
@@ -453,20 +441,9 @@ list.innerHTML+=`
 
 <div class="cart-item">
 
-<span>
+<span>${item.name}</span>
 
-${item.name}
-${item.size ? " - "+item.size : ""}
-${item.color ? " - "+item.color : ""}
-
-</span>
-
-<span>
-
-${item.price}
-<span class="remove" onclick="removeItem(${index})">✕</span>
-
-</span>
+<span>$${item.price} <span class="remove" onclick="removeItem(${index})">✕</span></span>
 
 </div>
 
@@ -474,11 +451,13 @@ ${item.price}
 
 })
 
-document.getElementById("cartCount").textContent=cart.length
+document.getElementById("cartTotal").innerText=total
 
 }
 
 function removeItem(index){
+
+total-=cart[index].price
 
 cart.splice(index,1)
 
@@ -488,10 +467,51 @@ updateCart()
 
 function toggleCart(){
 
-document.getElementById("cartPanel")
-.classList.toggle("active")
+document.getElementById("cartPanel").classList.toggle("active")
 
 }
+
+/* MENU */
+
+function openMenu(){
+document.getElementById("menu").classList.add("active")
+}
+
+function closeMenu(){
+document.getElementById("menu").classList.remove("active")
+}
+
+/* PAYPAL */
+
+paypal.Buttons({
+
+createOrder: function(data, actions) {
+
+return actions.order.create({
+purchase_units: [{
+amount: {
+value: total.toFixed(2)
+}
+}]
+});
+
+},
+
+onApprove: function(data, actions) {
+
+return actions.order.capture().then(function(details) {
+
+alert("Payment completed by " + details.payer.name.given_name);
+
+cart=[]
+total=0
+updateCart()
+
+});
+
+}
+
+}).render('#paypal-button-container');
 
 </script>
 
