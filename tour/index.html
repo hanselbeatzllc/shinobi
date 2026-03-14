@@ -380,8 +380,6 @@ gap:15px;
 
 <script>
 
-/* MENU */
-
 const open=document.getElementById("openMenu")
 const close=document.getElementById("closeMenu")
 const menu=document.getElementById("menu")
@@ -389,13 +387,79 @@ const menu=document.getElementById("menu")
 open.onclick=()=>menu.classList.add("active")
 close.onclick=()=>menu.classList.remove("active")
 
-/* SEARCH */
+</script>
+
+
+<!-- FIREBASE AUTO TOUR LOADER -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
+authDomain:"shinobi-merch.firebaseapp.com",
+projectId:"shinobi-merch",
+storageBucket:"shinobi-merch.firebasestorage.app",
+messagingSenderId:"142889938049",
+appId:"1:142889938049:web:61f3b6403a1a8e8daff180"
+}
+
+const app=initializeApp(firebaseConfig)
+const db=getFirestore(app)
+
+const list=document.getElementById("tourList")
+
+onSnapshot(collection(db,"tour"),snapshot=>{
+
+snapshot.forEach(doc=>{
+
+const t=doc.data()
+
+const dateObj=new Date(t.date)
+const month=dateObj.toLocaleString('en',{month:'short'}).toUpperCase()
+const day=dateObj.getDate()
+
+list.innerHTML+=`
+
+<div class="tour-item"
+data-city="${t.city}"
+data-month="${month}"
+data-date="${t.date}">
+
+<div class="date">${month} ${day}</div>
+
+<div class="location">
+<h3>${t.city}</h3>
+<p>${t.venue}</p>
+<div class="countdown"></div>
+</div>
+
+<a class="ticket-btn" href="${t.ticket}" target="_blank">Tickets</a>
+
+</div>
+
+`
+
+})
+
+})
+
+</script>
+
+
+
+<script>
+
+/* SEARCH + FILTER */
 
 const search=document.getElementById("searchCity")
 const month=document.getElementById("monthFilter")
-const tours=document.querySelectorAll(".tour-item")
 
 function filterTours(){
+
+const tours=document.querySelectorAll(".tour-item")
 
 const cityValue=search.value.toLowerCase()
 const monthValue=month.value
@@ -417,6 +481,7 @@ tour.style.display=(cityMatch&&monthMatch)?"flex":"none"
 search.addEventListener("input",filterTours)
 month.addEventListener("change",filterTours)
 
+
 /* COUNTDOWN */
 
 function updateCountdown(){
@@ -434,7 +499,7 @@ const days=Math.floor(diff/(1000*60*60*24))
 const hours=Math.floor((diff/(1000*60*60))%24)
 const mins=Math.floor((diff/(1000*60))%60)
 
-item.querySelector(".countdown").textContent =
+item.querySelector(".countdown").textContent=
 days+"d "+hours+"h "+mins+"m until show"
 
 }else{
@@ -451,7 +516,6 @@ updateCountdown()
 setInterval(updateCountdown,60000)
 
 </script>
-
 
 </body>
 </html>
