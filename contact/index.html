@@ -13,8 +13,6 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-
 <!-- MAILCHIMP -->
 
 <script id="mcjs">
@@ -117,7 +115,6 @@ padding-bottom:60px;
 .header h1{
 font-size:50px;
 color:#d81b60;
-margin-bottom:10px;
 }
 
 .header p{
@@ -175,11 +172,7 @@ cursor:pointer;
 font-weight:600;
 }
 
-button:hover{
-opacity:.9;
-}
-
-/* SOCIAL CTA */
+/* SOCIAL BUTTONS */
 
 .social-cta{
 display:flex;
@@ -195,13 +188,8 @@ text-decoration:none;
 font-weight:600;
 }
 
-.spotify{
-background:#1db954;
-}
-
-.instagram{
-background:#E1306C;
-}
+.spotify{background:#1db954;}
+.instagram{background:#E1306C;}
 
 /* FOOTER */
 
@@ -242,6 +230,7 @@ font-size:13px;
 
 <body>
 
+
 <nav>
 
 <a href="../" class="logo">Shinobi</a>
@@ -279,11 +268,9 @@ font-size:13px;
   
 </div>
 
-
 <section class="header">
 
 <h1>CONTACT</h1>
-
 <p>Bookings, press & fan updates</p>
 
 </section>
@@ -292,23 +279,25 @@ font-size:13px;
 <section class="section">
 
 
-<!-- FAN LIST -->
+<!-- FAN DATABASE -->
 
 <div class="card">
 
 <h2>Join the Fan List</h2>
 
-<p>Get updates about music, merch and tour dates.</p>
+<form id="fanForm">
 
-<input type="email" placeholder="Your email">
+<input type="email" id="fanEmail" placeholder="Your email" required>
 
-<button>Subscribe</button>
+<button type="submit">Subscribe</button>
+
+</form>
 
 </div>
 
 
 
-<!-- PROMOTER BOOKING -->
+<!-- BOOKING CRM -->
 
 <div class="card">
 
@@ -316,13 +305,13 @@ font-size:13px;
 
 <form id="bookingForm">
 
-<input type="text" name="name" placeholder="Promoter Name" required>
+<input type="text" id="promoter" placeholder="Promoter Name" required>
 
-<input type="email" name="email" placeholder="Email Address" required>
+<input type="email" id="email" placeholder="Email Address" required>
 
-<input type="text" name="city" placeholder="City / Venue" required>
+<input type="text" id="venue" placeholder="City / Venue" required>
 
-<select name="event">
+<select id="eventType">
 
 <option value="">Event Type</option>
 <option>Festival</option>
@@ -331,31 +320,13 @@ font-size:13px;
 
 </select>
 
-<textarea name="message" placeholder="Event Details"></textarea>
+<input type="number" id="budget" placeholder="Event Budget ($)" required>
+
+<input type="file" id="contract">
+
+<textarea id="details" placeholder="Event Details"></textarea>
 
 <button type="submit">Send Booking Request</button>
-
-</form>
-
-</div>
-
-
-
-<!-- PRESS REQUEST -->
-
-<div class="card">
-
-<h2>Press Request</h2>
-
-<form id="pressForm">
-
-<input type="text" name="name" placeholder="Publication Name" required>
-
-<input type="email" name="email" placeholder="Contact Email" required>
-
-<textarea name="message" placeholder="Interview / Media Request"></textarea>
-
-<button type="submit">Send Press Request</button>
 
 </form>
 
@@ -369,12 +340,10 @@ font-size:13px;
 
 <h2>Follow Shinobi</h2>
 
-<p>Stay connected on streaming and social media.</p>
-
 <div class="social-cta">
 
 <a class="social-btn spotify"
-href="https://open.spotify.com/artist/6MlC6xw3rWxj7lUTnqQCd7"
+href="https://open.spotify.com"
 target="_blank">
 
 <i class="fab fa-spotify"></i>
@@ -383,11 +352,11 @@ Follow on Spotify
 </a>
 
 <a class="social-btn instagram"
-href="https://instagram.com/shinobi.slime"
+href="https://instagram.com"
 target="_blank">
 
 <i class="fab fa-instagram"></i>
-Message on Instagram
+DM on Instagram
 
 </a>
 
@@ -429,7 +398,7 @@ Message on Instagram
 </footer>
 
 
-<script>
+<script type="module">
 
 /* MENU */
 
@@ -440,47 +409,85 @@ const menu=document.getElementById("menu")
 open.onclick=()=>menu.classList.add("active")
 close.onclick=()=>menu.classList.remove("active")
 
-/* EMAILJS INIT */
+/* FIREBASE */
 
-emailjs.init("EMAILJS_PUBLIC_KEY")
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, addDoc, collection } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getStorage, ref, uploadBytes } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 
-/* BOOKING FORM */
+const firebaseConfig = {
+apiKey: "AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
+authDomain: "shinobi-merch.firebaseapp.com",
+projectId: "shinobi-merch",
+storageBucket: "shinobi-merch.firebasestorage.app",
+messagingSenderId: "142889938049",
+appId: "1:142889938049:web:61f3b6403a1a8e8daff180"
+};
 
-document.getElementById("bookingForm").addEventListener("submit",function(e){
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
 
-e.preventDefault()
+/* FAN EMAIL DATABASE */
 
-emailjs.sendForm(
-"EMAILJS_SERVICE_ID",
-"EMAILJS_TEMPLATE_ID",
-this
-).then(()=>{
-
-alert("Booking request sent!")
-
-this.reset()
-
-})
-
-})
-
-/* PRESS FORM */
-
-document.getElementById("pressForm").addEventListener("submit",function(e){
+document.getElementById("fanForm").addEventListener("submit",async e=>{
 
 e.preventDefault()
 
-emailjs.sendForm(
-"EMAILJS_SERVICE_ID",
-"EMAILJS_TEMPLATE_ID",
-this
-).then(()=>{
+const email=document.getElementById("fanEmail").value
 
-alert("Press request sent!")
+await addDoc(collection(db,"fans"),{
 
-this.reset()
+email:email,
+date:Date.now()
 
 })
+
+alert("You joined the fan list!")
+
+})
+
+/* BOOKING CRM */
+
+document.getElementById("bookingForm").addEventListener("submit",async e=>{
+
+e.preventDefault()
+
+const promoter=document.getElementById("promoter").value
+const email=document.getElementById("email").value
+const venue=document.getElementById("venue").value
+const type=document.getElementById("eventType").value
+const budget=document.getElementById("budget").value
+const details=document.getElementById("details").value
+
+const file=document.getElementById("contract").files[0]
+
+let fileURL=""
+
+if(file){
+
+const storageRef=ref(storage,"contracts/"+file.name)
+
+await uploadBytes(storageRef,file)
+
+fileURL=file.name
+
+}
+
+await addDoc(collection(db,"booking_requests"),{
+
+promoter,
+email,
+venue,
+type,
+budget,
+details,
+contract:fileURL,
+date:Date.now()
+
+})
+
+alert("Booking request submitted!")
 
 })
 
