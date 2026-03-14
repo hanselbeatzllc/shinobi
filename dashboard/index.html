@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Shinobi Management Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Montserrat',sans-serif;
+}
+
+body{
+background:#f4f4f4;
+padding:40px;
+}
+
+/* HEADER */
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+}
+
+.header h1{
+color:#d81b60;
+}
+
+/* CARDS */
+
+.card{
+background:white;
+padding:30px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.1);
+margin-bottom:30px;
+}
+
+.card h2{
+margin-bottom:20px;
+color:#d81b60;
+}
+
+/* TABLE */
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+th,td{
+padding:12px;
+border-bottom:1px solid #eee;
+text-align:left;
+}
+
+th{
+background:#fafafa;
+}
+
+/* BUTTON */
+
+button{
+padding:8px 16px;
+border:none;
+border-radius:20px;
+cursor:pointer;
+}
+
+.approve{
+background:#1db954;
+color:white;
+}
+
+.reject{
+background:#e53935;
+color:white;
+}
+
+.reply{
+background:#d81b60;
+color:white;
+}
+
+/* EXPORT */
+
+.export-btn{
+margin-top:15px;
+padding:12px 24px;
+background:#d81b60;
+color:white;
+border-radius:30px;
+border:none;
+cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<h1>Shinobi Dashboard</h1>
+
+<a href="/" style="text-decoration:none;color:#d81b60;font-weight:600">
+Back to Website
+</a>
+
+</div>
+
+
+<!-- BOOKING REQUESTS -->
+
+<div class="card">
+
+<h2>Booking Requests</h2>
+
+<table id="bookingTable">
+
+<thead>
+
+<tr>
+<th>Promoter</th>
+<th>Email</th>
+<th>Venue</th>
+<th>Type</th>
+<th>Budget</th>
+<th>Actions</th>
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+</div>
+
+
+<!-- FAN EMAILS -->
+
+<div class="card">
+
+<h2>Fan Emails</h2>
+
+<table id="fanTable">
+
+<thead>
+
+<tr>
+<th>Email</th>
+<th>Date</th>
+</tr>
+
+</thead>
+
+<tbody></tbody>
+
+</table>
+
+<button class="export-btn" onclick="exportFans()">
+
+Export Fan Emails (CSV)
+
+</button>
+
+</div>
+
+
+<script type="module">
+
+/* FIREBASE */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+updateDoc,
+doc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+apiKey: "AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
+authDomain: "shinobi-merch.firebaseapp.com",
+projectId: "shinobi-merch",
+storageBucket: "shinobi-merch.firebasestorage.app",
+messagingSenderId: "142889938049",
+appId: "1:142889938049:web:61f3b6403a1a8e8daff180"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
+/* LOAD BOOKINGS */
+
+async function loadBookings(){
+
+const snapshot = await getDocs(collection(db,"booking_requests"))
+
+const table = document.querySelector("#bookingTable tbody")
+
+snapshot.forEach(docData=>{
+
+const data = docData.data()
+
+table.innerHTML += `
+
+<tr>
+
+<td>${data.promoter}</td>
+<td>${data.email}</td>
+<td>${data.venue}</td>
+<td>${data.type}</td>
+<td>$${data.budget}</td>
+
+<td>
+
+<button class="approve"
+onclick="approve('${docData.id}')">
+
+Approve
+
+</button>
+
+<button class="reject"
+onclick="reject('${docData.id}')">
+
+Reject
+
+</button>
+
+<button class="reply"
+onclick="reply('${data.email}')">
+
+Reply
+
+</button>
+
+</td>
+
+</tr>
+
+`
+
+})
+
+}
+
+loadBookings()
+
+
+/* LOAD FAN EMAILS */
+
+async function loadFans(){
+
+const snapshot = await getDocs(collection(db,"fans"))
+
+const table = document.querySelector("#fanTable tbody")
+
+snapshot.forEach(docData=>{
+
+const data = docData.data()
+
+table.innerHTML += `
+
+<tr>
+
+<td>${data.email}</td>
+<td>${new Date(data.date).toLocaleDateString()}</td>
+
+</tr>
+
+`
+
+})
+
+}
+
+loadFans()
+
+
+/* APPROVE */
+
+window.approve = async function(id){
+
+await updateDoc(doc(db,"booking_requests",id),{
+status:"approved"
+})
+
+alert("Show approved")
+
+}
+
+
+/* REJECT */
+
+window.reject = async function(id){
+
+await updateDoc(doc(db,"booking_requests",id),{
+status:"rejected"
+})
+
+alert("Show rejected")
+
+}
+
+
+/* REPLY */
+
+window.reply = function(email){
+
+window.location.href="mailto:"+email
+
+}
+
+
+/* EXPORT CSV */
+
+window.exportFans = function(){
+
+const rows = document.querySelectorAll("#fanTable tbody tr")
+
+let csv = "Email,Date\n"
+
+rows.forEach(r=>{
+
+const cols = r.querySelectorAll("td")
+
+csv += cols[0].innerText + "," + cols[1].innerText + "\n"
+
+})
+
+const blob = new Blob([csv],{type:'text/csv'})
+
+const a = document.createElement("a")
+
+a.href = URL.createObjectURL(blob)
+
+a.download = "fan_emails.csv"
+
+a.click()
+
+}
+
+</script>
+
+</body>
+</html>
