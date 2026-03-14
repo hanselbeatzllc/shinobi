@@ -23,11 +23,12 @@ font-family:'Montserrat',sans-serif;
 }
 
 body{
-background:#0b0b0b;
-color:white;
+background:#f4f4f4;
+color:#111;
+overflow-x:hidden;
 }
 
-/* NAVBAR */
+/* NAV */
 
 nav{
 position:fixed;
@@ -37,36 +38,58 @@ padding:18px 8%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-background:rgba(0,0,0,0.7);
-backdrop-filter:blur(12px);
+background:#d81b60;
 z-index:1000;
 }
 
 .logo{
-font-size:22px;
+font-size:24px;
 font-weight:800;
-letter-spacing:2px;
-}
-
-nav ul{
-display:flex;
-gap:30px;
-list-style:none;
-}
-
-nav ul li a{
-text-decoration:none;
 color:white;
-font-size:14px;
-}
-
-nav ul li a:hover{
-color:#8a5cff;
+text-decoration:none;
 }
 
 .menu-toggle{
-display:none;
-font-size:26px;
+font-size:28px;
+color:white;
+cursor:pointer;
+}
+
+/* FULL MENU */
+
+.menu{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100vh;
+background:#d81b60;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:30px;
+transform:translateY(-100%);
+transition:.4s;
+z-index:2000;
+}
+
+.menu.active{
+transform:translateY(0);
+}
+
+.menu a{
+color:white;
+font-size:28px;
+text-decoration:none;
+font-weight:700;
+}
+
+.menu .close{
+position:absolute;
+top:25px;
+right:30px;
+font-size:32px;
 cursor:pointer;
 }
 
@@ -79,8 +102,13 @@ padding-bottom:60px;
 }
 
 .header h1{
-font-size:60px;
-letter-spacing:4px;
+font-size:50px;
+color:#d81b60;
+margin-bottom:10px;
+}
+
+.header p{
+color:#666;
 }
 
 /* SECTION */
@@ -88,180 +116,116 @@ letter-spacing:4px;
 .section{
 max-width:900px;
 margin:auto;
-padding:0 20px 80px 20px;
+padding:0 20px 100px 20px;
 }
 
-/* FAN SIGNUP */
+/* CARDS */
 
-.signup{
-background:#111;
-padding:30px;
-border-radius:12px;
-text-align:center;
+.card{
+background:white;
+padding:35px;
+border-radius:14px;
+box-shadow:0 10px 30px rgba(0,0,0,.15);
 margin-bottom:40px;
 }
 
-.signup input{
-padding:12px;
-border:none;
-border-radius:20px;
-background:#222;
-color:white;
-width:60%;
-margin-right:10px;
+.card h2{
+color:#d81b60;
+margin-bottom:15px;
 }
 
-.signup button{
-padding:12px 22px;
-border:none;
-background:#8a5cff;
-color:white;
-border-radius:20px;
-cursor:pointer;
-}
+/* INPUTS */
 
-/* BOOKING FORM */
-
-.booking form{
-display:flex;
-flex-direction:column;
-gap:15px;
-}
-
-input, textarea, select{
+input,textarea,select{
+width:100%;
 padding:14px;
 border:none;
-background:#111;
-color:white;
-border-radius:6px;
+background:#eee;
+border-radius:30px;
+margin-top:10px;
 }
 
 textarea{
+border-radius:16px;
 min-height:120px;
 resize:none;
 }
 
+/* BUTTON */
+
 button{
-padding:14px;
+margin-top:15px;
+padding:14px 28px;
 border:none;
-background:#8a5cff;
+background:#d81b60;
 color:white;
-font-weight:bold;
-border-radius:20px;
+border-radius:30px;
 cursor:pointer;
+font-weight:600;
+}
+
+button:hover{
+opacity:.9;
 }
 
 /* PRESS KIT */
 
-.presskit{
-background:#111;
-padding:30px;
-border-radius:12px;
-margin-top:40px;
-text-align:center;
-}
-
-.presskit a{
+.download-btn{
 display:inline-block;
-margin-top:15px;
-padding:12px 20px;
-background:#8a5cff;
-border-radius:20px;
+padding:14px 28px;
+background:#d81b60;
 color:white;
+border-radius:30px;
 text-decoration:none;
+margin-top:15px;
 }
 
 /* MANAGER */
 
-.manager{
-background:#111;
-padding:30px;
-border-radius:12px;
-margin-top:40px;
-}
-
 .manager p{
-color:#aaa;
-margin-bottom:8px;
+color:#555;
+margin-bottom:6px;
 }
 
 /* FOOTER */
 
 footer{
-background:#050505;
-padding:60px 10%;
-margin-top:80px;
-}
-
-.footer-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-align-items:center;
-}
-
-.socials{
-display:flex;
-gap:20px;
-}
-
-.socials a{
-font-size:22px;
+background:#d81b60;
+padding:60px 20px;
+text-align:center;
 color:white;
-opacity:.7;
 }
 
-.socials a:hover{
-color:#8a5cff;
-opacity:1;
+.footer-icons{
+display:flex;
+justify-content:center;
+gap:26px;
+font-size:22px;
+margin-bottom:20px;
 }
 
-.copyright{
-text-align:right;
+.footer-links{
+display:flex;
+justify-content:center;
+gap:20px;
+margin-bottom:10px;
+}
+
+.footer-links a{
+color:white;
+text-decoration:none;
+}
+
+.footer-copy{
 font-size:13px;
-color:#777;
 }
 
 /* MOBILE */
 
 @media(max-width:900px){
 
-nav ul{
-position:fixed;
-top:70px;
-left:-100%;
-flex-direction:column;
-background:black;
-width:100%;
-padding:40px;
-transition:.4s;
-gap:20px;
-}
-
-nav ul.active{
-left:0;
-}
-
-.menu-toggle{
-display:block;
-}
-
 .header h1{
-font-size:40px;
-}
-
-.signup input{
-width:100%;
-margin-bottom:10px;
-}
-
-.footer-grid{
-grid-template-columns:1fr;
-text-align:center;
-gap:20px;
-}
-
-.copyright{
-text-align:center;
+font-size:36px;
 }
 
 }
@@ -272,67 +236,75 @@ text-align:center;
 
 <body>
 
+
 <nav>
 
-<div class="logo">Shinobi</div>
+<a href="../" class="logo">Shinobi</a>
 
-<div class="menu-toggle" id="menuToggle">
+<div class="menu-toggle" id="openMenu">
 <i class="fa-solid fa-bars"></i>
 </div>
 
-<ul id="navLinks">
-
-<li><a href="../">Home</a></li>
-<li><a href="../music/">Music</a></li>
-<li><a href="../videos/">Videos</a></li>
-<li><a href="../tour/">Tour</a></li>
-<li><a href="../merch/">Merch</a></li>
-<li><a href="../about/">About</a></li>
-<li><a href="../contact/">Contact</a></li>
-
-</ul>
-
 </nav>
+
+
+<div class="menu" id="menu">
+
+<div class="close" id="closeMenu">
+<i class="fa-solid fa-xmark"></i>
+</div>
+
+<a href="../music/">Music</a>
+<a href="../videos/">Videos</a>
+<a href="../tour/">Tour</a>
+<a href="../merch/">Shop</a>
+<a href="../contact/">Contact</a>
+
+</div>
 
 
 <section class="header">
 
 <h1>CONTACT</h1>
+<p>Bookings, press and fan updates</p>
 
 </section>
 
 
 <section class="section">
 
-<!-- FAN EMAIL SIGNUP -->
 
-<div class="signup">
+<!-- FAN LIST -->
+
+<div class="card">
 
 <h2>Join the Fan List</h2>
-<p>Get new music, tour updates and merch drops.</p>
 
-<br>
+<p>Get updates about new music, merch and tour dates.</p>
 
-<input type="email" placeholder="Your email">
+<form id="fanForm">
 
-<button onclick="signup()">Subscribe</button>
+<input type="email" placeholder="Your email" required>
+
+<button type="submit">Subscribe</button>
+
+</form>
 
 </div>
 
 
-<!-- BOOKING FORM -->
 
-<div class="booking">
+<!-- BOOKING -->
+
+<div class="card">
 
 <h2>Booking Requests</h2>
 
-<br>
-
-<form onsubmit="submitBooking(event)">
+<form id="bookingForm">
 
 <input type="text" placeholder="Promoter Name" required>
 
-<input type="email" placeholder="Email" required>
+<input type="email" placeholder="Email Address" required>
 
 <input type="text" placeholder="Event Location" required>
 
@@ -345,7 +317,7 @@ text-align:center;
 
 </select>
 
-<textarea placeholder="Event details"></textarea>
+<textarea placeholder="Event Details"></textarea>
 
 <button type="submit">Send Booking Request</button>
 
@@ -354,29 +326,30 @@ text-align:center;
 </div>
 
 
+
 <!-- PRESS KIT -->
 
-<div class="presskit">
+<div class="card">
 
 <h2>Press Kit</h2>
 
-<p>Download the official artist press kit including photos,
-bio and media assets.</p>
+<p>Download official photos, bio and media assets.</p>
 
-<a href="/presskit.zip" download>
+<a href="/presskit.zip" class="download-btn" download>
+
 Download Press Kit
+
 </a>
 
 </div>
 
 
-<!-- MANAGER CONTACT -->
 
-<div class="manager">
+<!-- MANAGEMENT -->
+
+<div class="card manager">
 
 <h2>Management</h2>
-
-<br>
 
 <p><strong>Manager:</strong> Alex Carter</p>
 <p><strong>Email:</strong> management@shinobi.com</p>
@@ -384,32 +357,35 @@ Download Press Kit
 
 </div>
 
+
 </section>
+
 
 
 <footer>
 
-<div class="footer-grid">
+<div class="footer-icons">
 
-<div>
-
-<div class="socials">
-
-<a href="#"><i class="fab fa-instagram"></i></a>
-<a href="#"><i class="fab fa-x-twitter"></i></a>
-<a href="#"><i class="fab fa-youtube"></i></a>
-<a href="#"><i class="fab fa-spotify"></i></a>
-
-</div>
+<i class="fab fa-tiktok"></i>
+<i class="fab fa-instagram"></i>
+<i class="fab fa-x-twitter"></i>
+<i class="fab fa-facebook"></i>
+<i class="fab fa-youtube"></i>
+<i class="fab fa-spotify"></i>
+<i class="fab fa-apple"></i>
 
 </div>
 
-<div class="copyright">
+<div class="footer-links">
 
-© 2026 Shinobi Slime  
-All Rights Reserved
+<a href="#">Terms</a>
+<a href="#">Privacy</a>
 
 </div>
+
+<div class="footer-copy">
+
+© 2026 Shinobi Slime
 
 </div>
 
@@ -418,32 +394,41 @@ All Rights Reserved
 
 <script>
 
-/* MOBILE MENU */
+/* MENU */
 
-const toggle=document.getElementById("menuToggle")
-const nav=document.getElementById("navLinks")
+const open=document.getElementById("openMenu")
+const close=document.getElementById("closeMenu")
+const menu=document.getElementById("menu")
 
-toggle.onclick=()=>{
-nav.classList.toggle("active")
-}
+open.onclick=()=>menu.classList.add("active")
+close.onclick=()=>menu.classList.remove("active")
 
-/* FAN SIGNUP */
+/* FAN LIST */
 
-function signup(){
+document.getElementById("fanForm").addEventListener("submit",function(e){
+
+e.preventDefault()
+
 alert("Thanks for joining the fan list!")
-}
+
+this.reset()
+
+})
 
 /* BOOKING */
 
-function submitBooking(e){
+document.getElementById("bookingForm").addEventListener("submit",function(e){
 
 e.preventDefault()
 
 alert("Booking request sent successfully!")
 
-}
+this.reset()
+
+})
 
 </script>
+
 
 </body>
 </html>
