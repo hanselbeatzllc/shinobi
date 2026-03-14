@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shinobi Dahboard</title>
+<title>Shinobi Dashboard</title>
 
 <style>
 
@@ -113,6 +113,24 @@ border-radius:20px;
 cursor:pointer;
 }
 
+.edit{
+background:#2196f3;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:20px;
+cursor:pointer;
+}
+
+.delete{
+background:#e53935;
+color:white;
+border:none;
+padding:6px 10px;
+border-radius:20px;
+cursor:pointer;
+}
+
 /* FORMS */
 
 input{
@@ -132,13 +150,28 @@ border-radius:30px;
 cursor:pointer;
 }
 
+.status{
+margin-top:10px;
+font-weight:bold;
+}
+
+.upload-list{
+margin-top:20px;
+}
+
+.upload-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:10px;
+border-bottom:1px solid #eee;
+}
+
 </style>
 
 </head>
 
 <body>
-
-<!-- SIDEBAR -->
 
 <div class="sidebar">
 
@@ -156,7 +189,6 @@ cursor:pointer;
 
 </div>
 
-<!-- CONTENT -->
 
 <div class="content">
 
@@ -186,7 +218,6 @@ cursor:pointer;
 <table>
 
 <thead>
-
 <tr>
 <th>Promoter</th>
 <th>Email</th>
@@ -194,7 +225,6 @@ cursor:pointer;
 <th>Budget</th>
 <th>Actions</th>
 </tr>
-
 </thead>
 
 <tbody id="bookingTable"></tbody>
@@ -205,7 +235,7 @@ cursor:pointer;
 
 </div>
 
-<!-- FAN DATABASE -->
+<!-- FANS -->
 
 <div id="fans" class="page">
 
@@ -216,12 +246,10 @@ cursor:pointer;
 <table>
 
 <thead>
-
 <tr>
 <th>Email</th>
 <th>Date</th>
 </tr>
-
 </thead>
 
 <tbody id="fanTable"></tbody>
@@ -232,7 +260,7 @@ cursor:pointer;
 
 </div>
 
-<!-- MUSIC UPLOAD -->
+<!-- MUSIC -->
 
 <div id="musicUpload" class="page">
 
@@ -244,13 +272,17 @@ cursor:pointer;
 <input id="musicCover" placeholder="Cover Image URL">
 <input id="musicLink" placeholder="Streaming Link">
 
-<button class="submit" onclick="uploadMusic()">Upload</button>
+<button id="musicBtn" class="submit" onclick="uploadMusic()">Upload</button>
+
+<div id="musicStatus" class="status"></div>
+
+<div class="upload-list" id="musicList"></div>
 
 </div>
 
 </div>
 
-<!-- VIDEO UPLOAD -->
+<!-- VIDEO -->
 
 <div id="videoUpload" class="page">
 
@@ -261,13 +293,17 @@ cursor:pointer;
 <input id="videoTitle" placeholder="Video Title">
 <input id="videoLink" placeholder="YouTube URL">
 
-<button class="submit" onclick="uploadVideo()">Upload</button>
+<button id="videoBtn" class="submit" onclick="uploadVideo()">Upload</button>
+
+<div id="videoStatus" class="status"></div>
+
+<div class="upload-list" id="videoList"></div>
 
 </div>
 
 </div>
 
-<!-- MERCH UPLOAD -->
+<!-- MERCH -->
 
 <div id="merchUpload" class="page">
 
@@ -279,13 +315,17 @@ cursor:pointer;
 <input id="merchPrice" placeholder="Price">
 <input id="merchImage" placeholder="Image URL">
 
-<button class="submit" onclick="uploadMerch()">Upload</button>
+<button id="merchBtn" class="submit" onclick="uploadMerch()">Upload</button>
+
+<div id="merchStatus" class="status"></div>
+
+<div class="upload-list" id="merchList"></div>
 
 </div>
 
 </div>
 
-<!-- TOUR UPLOAD -->
+<!-- TOUR -->
 
 <div id="tourUpload" class="page">
 
@@ -298,14 +338,17 @@ cursor:pointer;
 <input id="tourDate" type="date">
 <input id="tourTicket" placeholder="Ticket Link">
 
-<button class="submit" onclick="uploadTour()">Add Tour</button>
+<button id="tourBtn" class="submit" onclick="uploadTour()">Add Tour</button>
+
+<div id="tourStatus" class="status"></div>
+
+<div class="upload-list" id="tourList"></div>
 
 </div>
 
 </div>
 
 </div>
-
 
 <script type="module">
 
@@ -317,6 +360,7 @@ collection,
 addDoc,
 onSnapshot,
 updateDoc,
+deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -343,23 +387,11 @@ const db=getFirestore(app)
 const auth=getAuth(app)
 
 
-/* AUTH */
-
-onAuthStateChanged(auth,user=>{
-
-if(!user){
-window.location="login.html"
-}
-
-})
-
-
 /* PAGE SWITCH */
 
 window.showPage=function(page){
 
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
-
 document.getElementById(page).classList.add("active")
 
 }
@@ -374,7 +406,7 @@ signOut(auth)
 }
 
 
-/* LIVE BOOKINGS */
+/* BOOKINGS LIVE */
 
 onSnapshot(collection(db,"booking_requests"),snapshot=>{
 
@@ -384,31 +416,30 @@ table.innerHTML=""
 
 document.getElementById("bookingCount").innerText=snapshot.size
 
-snapshot.forEach(docData=>{
+snapshot.forEach(d=>{
 
-const d=docData.data()
-
-const status=d.status || "pending"
+const data=d.data()
+const status=data.status||"pending"
 
 table.innerHTML+=`
 
 <tr>
 
-<td>${d.promoter}</td>
-<td>${d.email}</td>
-<td>${d.venue}</td>
-<td>$${d.budget}</td>
+<td>${data.promoter}</td>
+<td>${data.email}</td>
+<td>${data.venue}</td>
+<td>$${data.budget}</td>
 
 <td>
 
-${status==="pending" ? `
+${status==="pending"?`
 
-<button class="approve" onclick="approve('${docData.id}')">Approve</button>
-<button class="reject" onclick="reject('${docData.id}')">Reject</button>
+<button class="approve" onclick="approve('${d.id}')">Approve</button>
+<button class="reject" onclick="reject('${d.id}')">Reject</button>
 
-` : status}
+`:status}
 
-<button class="reply" onclick="reply('${d.email}')">Reply</button>
+<button class="reply" onclick="reply('${data.email}')">Reply</button>
 
 </td>
 
@@ -421,7 +452,7 @@ ${status==="pending" ? `
 })
 
 
-/* LIVE FANS */
+/* FANS */
 
 onSnapshot(collection(db,"fans"),snapshot=>{
 
@@ -431,16 +462,16 @@ table.innerHTML=""
 
 document.getElementById("fanCount").innerText=snapshot.size
 
-snapshot.forEach(docData=>{
+snapshot.forEach(d=>{
 
-const d=docData.data()
+const data=d.data()
 
 table.innerHTML+=`
 
 <tr>
 
-<td>${d.email}</td>
-<td>${new Date(d.date).toLocaleDateString()}</td>
+<td>${data.email}</td>
+<td>${new Date(data.date).toLocaleDateString()}</td>
 
 </tr>
 
@@ -451,33 +482,139 @@ table.innerHTML+=`
 })
 
 
-/* APPROVE */
+/* MUSIC */
 
-window.approve=async function(id){
+onSnapshot(collection(db,"music"),snapshot=>{
 
-await updateDoc(doc(db,"booking_requests",id),{
-status:"approved"
+const list=document.getElementById("musicList")
+list.innerHTML=""
+
+snapshot.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+
+<div class="upload-item">
+
+${data.title}
+
+<div>
+
+<button class="delete" onclick="deleteItem('music','${d.id}')">Delete</button>
+
+</div>
+
+</div>
+
+`
+
 })
 
-}
-
-
-/* REJECT */
-
-window.reject=async function(id){
-
-await updateDoc(doc(db,"booking_requests",id),{
-status:"rejected"
 })
 
-}
+
+/* VIDEO */
+
+onSnapshot(collection(db,"videos"),snapshot=>{
+
+const list=document.getElementById("videoList")
+list.innerHTML=""
+
+snapshot.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+
+<div class="upload-item">
+
+${data.title}
+
+<div>
+
+<button class="delete" onclick="deleteItem('videos','${d.id}')">Delete</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+})
 
 
-/* REPLY */
+/* MERCH */
 
-window.reply=function(email){
+onSnapshot(collection(db,"merch"),snapshot=>{
 
-window.location="mailto:"+email
+const list=document.getElementById("merchList")
+list.innerHTML=""
+
+snapshot.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+
+<div class="upload-item">
+
+${data.name} - $${data.price}
+
+<div>
+
+<button class="delete" onclick="deleteItem('merch','${d.id}')">Delete</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+})
+
+
+/* TOUR */
+
+onSnapshot(collection(db,"tour"),snapshot=>{
+
+const list=document.getElementById("tourList")
+list.innerHTML=""
+
+snapshot.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+
+<div class="upload-item">
+
+${data.city} - ${data.venue}
+
+<div>
+
+<button class="delete" onclick="deleteItem('tour','${d.id}')">Delete</button>
+
+</div>
+
+</div>
+
+`
+
+})
+
+})
+
+
+/* DELETE */
+
+window.deleteItem=async function(col,id){
+
+await deleteDoc(doc(db,col,id))
 
 }
 
@@ -485,6 +622,11 @@ window.location="mailto:"+email
 /* UPLOAD MUSIC */
 
 window.uploadMusic=async function(){
+
+const btn=document.getElementById("musicBtn")
+const status=document.getElementById("musicStatus")
+
+btn.innerText="Uploading..."
 
 await addDoc(collection(db,"music"),{
 
@@ -494,7 +636,13 @@ link:musicLink.value
 
 })
 
-alert("Music uploaded")
+status.innerText="Upload Finished ✓"
+
+musicTitle.value=""
+musicCover.value=""
+musicLink.value=""
+
+btn.innerText="Upload"
 
 }
 
@@ -503,6 +651,11 @@ alert("Music uploaded")
 
 window.uploadVideo=async function(){
 
+const btn=document.getElementById("videoBtn")
+const status=document.getElementById("videoStatus")
+
+btn.innerText="Uploading..."
+
 await addDoc(collection(db,"videos"),{
 
 title:videoTitle.value,
@@ -510,7 +663,12 @@ youtube:videoLink.value
 
 })
 
-alert("Video uploaded")
+status.innerText="Upload Finished ✓"
+
+videoTitle.value=""
+videoLink.value=""
+
+btn.innerText="Upload"
 
 }
 
@@ -518,6 +676,11 @@ alert("Video uploaded")
 /* UPLOAD MERCH */
 
 window.uploadMerch=async function(){
+
+const btn=document.getElementById("merchBtn")
+const status=document.getElementById("merchStatus")
+
+btn.innerText="Uploading..."
 
 await addDoc(collection(db,"merch"),{
 
@@ -527,7 +690,13 @@ image:merchImage.value
 
 })
 
-alert("Merch uploaded")
+status.innerText="Upload Finished ✓"
+
+merchName.value=""
+merchPrice.value=""
+merchImage.value=""
+
+btn.innerText="Upload"
 
 }
 
@@ -535,6 +704,11 @@ alert("Merch uploaded")
 /* UPLOAD TOUR */
 
 window.uploadTour=async function(){
+
+const btn=document.getElementById("tourBtn")
+const status=document.getElementById("tourStatus")
+
+btn.innerText="Uploading..."
 
 await addDoc(collection(db,"tour"),{
 
@@ -545,7 +719,14 @@ ticket:tourTicket.value
 
 })
 
-alert("Tour added")
+status.innerText="Upload Finished ✓"
+
+tourCity.value=""
+tourVenue.value=""
+tourDate.value=""
+tourTicket.value=""
+
+btn.innerText="Add Tour"
 
 }
 
