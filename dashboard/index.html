@@ -16,9 +16,24 @@ background:#f4f4f4;
 padding:40px;
 }
 
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
 h1{
 color:#d81b60;
-margin-bottom:20px;
+}
+
+.logout{
+padding:10px 20px;
+background:#e53935;
+color:white;
+border:none;
+border-radius:30px;
+cursor:pointer;
 }
 
 .card{
@@ -77,7 +92,15 @@ cursor:pointer;
 
 <body>
 
+<div class="header">
+
 <h1>Shinobi Management</h1>
+
+<button class="logout" onclick="logout()">
+Logout
+</button>
+
+</div>
 
 
 <div class="card">
@@ -150,7 +173,8 @@ doc
 
 import {
 getAuth,
-onAuthStateChanged
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 
@@ -183,9 +207,22 @@ window.location="login.html"
 })
 
 
+/* LOGOUT */
+
+window.logout = function(){
+
+signOut(auth).then(()=>{
+
+window.location="login.html"
+
+})
+
+}
+
+
 /* LOAD BOOKINGS */
 
-const bookings=await getDocs(collection(db,"booking_requests"))
+const bookings = await getDocs(collection(db,"booking_requests"))
 
 const bookingTable=document.querySelector("#bookingTable tbody")
 
@@ -251,7 +288,7 @@ fanTable.innerHTML+=`
 
 /* APPROVE */
 
-window.approve=async id=>{
+window.approve = async function(id){
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"approved"
@@ -261,9 +298,10 @@ alert("Show approved")
 
 }
 
+
 /* REJECT */
 
-window.reject=async id=>{
+window.reject = async function(id){
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"rejected"
@@ -273,9 +311,10 @@ alert("Show rejected")
 
 }
 
+
 /* REPLY */
 
-window.reply=email=>{
+window.reply = function(email){
 
 window.location="mailto:"+email
 
