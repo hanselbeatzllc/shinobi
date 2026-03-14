@@ -6,43 +6,75 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shinobi Dashboard</title>
+<title>Shinobi Dahboard</title>
 
 <style>
 
 body{
+margin:0;
 font-family:Arial;
 background:#f4f4f4;
-padding:40px;
-}
-
-.header{
 display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:30px;
 }
 
-h1{
-color:#d81b60;
-}
+/* SIDEBAR */
 
-.logout{
-padding:10px 20px;
-background:#e53935;
+.sidebar{
+width:240px;
+background:#d81b60;
 color:white;
+height:100vh;
+padding:30px;
+display:flex;
+flex-direction:column;
+gap:18px;
+}
+
+.sidebar h2{
+margin-bottom:20px;
+}
+
+.sidebar button{
+padding:12px;
 border:none;
 border-radius:30px;
+background:white;
+color:#d81b60;
+font-weight:bold;
 cursor:pointer;
+}
+
+.sidebar .logout{
+margin-top:auto;
+background:#e53935;
+color:white;
+}
+
+/* CONTENT */
+
+.content{
+flex:1;
+padding:40px;
+overflow:auto;
+}
+
+.page{
+display:none;
+}
+
+.page.active{
+display:block;
 }
 
 .card{
 background:white;
 padding:30px;
 border-radius:10px;
-margin-bottom:30px;
 box-shadow:0 10px 20px rgba(0,0,0,.1);
+margin-bottom:30px;
 }
+
+/* TABLE */
 
 table{
 width:100%;
@@ -50,38 +82,52 @@ border-collapse:collapse;
 }
 
 th,td{
-padding:10px;
+padding:12px;
 border-bottom:1px solid #eee;
-}
-
-button{
-padding:8px 14px;
-border:none;
-border-radius:20px;
-cursor:pointer;
 }
 
 .approve{
 background:#1db954;
 color:white;
+border:none;
+padding:8px 12px;
+border-radius:20px;
+cursor:pointer;
 }
 
 .reject{
 background:#e53935;
 color:white;
+border:none;
+padding:8px 12px;
+border-radius:20px;
+cursor:pointer;
 }
 
 .reply{
 background:#d81b60;
 color:white;
+border:none;
+padding:8px 12px;
+border-radius:20px;
+cursor:pointer;
 }
 
-.export{
-margin-top:15px;
-padding:10px 20px;
+/* FORMS */
+
+input{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+border-radius:6px;
+border:1px solid #ddd;
+}
+
+button.submit{
 background:#d81b60;
 color:white;
 border:none;
+padding:12px;
 border-radius:30px;
 cursor:pointer;
 }
@@ -92,22 +138,52 @@ cursor:pointer;
 
 <body>
 
-<div class="header">
+<!-- SIDEBAR -->
 
-<h1>Shinobi Management</h1>
+<div class="sidebar">
 
-<button class="logout" onclick="logout()">
-Logout
-</button>
+<h2>Shinobi Admin</h2>
+
+<button onclick="showPage('overview')">Overview</button>
+<button onclick="showPage('bookings')">Booking Requests</button>
+<button onclick="showPage('fans')">Fan Database</button>
+<button onclick="showPage('musicUpload')">Upload Music</button>
+<button onclick="showPage('videoUpload')">Upload Video</button>
+<button onclick="showPage('merchUpload')">Upload Merch</button>
+<button onclick="showPage('tourUpload')">Add Tour Date</button>
+
+<button class="logout" onclick="logout()">Logout</button>
 
 </div>
 
+<!-- CONTENT -->
+
+<div class="content">
+
+<!-- OVERVIEW -->
+
+<div id="overview" class="page active">
+
+<div class="card">
+
+<h2>Dashboard Overview</h2>
+
+<p>Total Fans: <span id="fanCount">0</span></p>
+<p>Total Booking Requests: <span id="bookingCount">0</span></p>
+
+</div>
+
+</div>
+
+<!-- BOOKINGS -->
+
+<div id="bookings" class="page">
 
 <div class="card">
 
 <h2>Booking Requests</h2>
 
-<table id="bookingTable">
+<table>
 
 <thead>
 
@@ -121,23 +197,23 @@ Logout
 
 </thead>
 
-<tbody></tbody>
+<tbody id="bookingTable"></tbody>
 
 </table>
 
-<button class="export" onclick="exportPromoters()">
-Export Promoters CSV
-</button>
+</div>
 
 </div>
 
+<!-- FAN DATABASE -->
 
+<div id="fans" class="page">
 
 <div class="card">
 
 <h2>Fan Emails</h2>
 
-<table id="fanTable">
+<table>
 
 <thead>
 
@@ -148,13 +224,85 @@ Export Promoters CSV
 
 </thead>
 
-<tbody></tbody>
+<tbody id="fanTable"></tbody>
 
 </table>
 
-<button class="export" onclick="exportFans()">
-Export Fans CSV
-</button>
+</div>
+
+</div>
+
+<!-- MUSIC UPLOAD -->
+
+<div id="musicUpload" class="page">
+
+<div class="card">
+
+<h2>Upload Music</h2>
+
+<input id="musicTitle" placeholder="Song Title">
+<input id="musicCover" placeholder="Cover Image URL">
+<input id="musicLink" placeholder="Streaming Link">
+
+<button class="submit" onclick="uploadMusic()">Upload</button>
+
+</div>
+
+</div>
+
+<!-- VIDEO UPLOAD -->
+
+<div id="videoUpload" class="page">
+
+<div class="card">
+
+<h2>Upload Video</h2>
+
+<input id="videoTitle" placeholder="Video Title">
+<input id="videoLink" placeholder="YouTube URL">
+
+<button class="submit" onclick="uploadVideo()">Upload</button>
+
+</div>
+
+</div>
+
+<!-- MERCH UPLOAD -->
+
+<div id="merchUpload" class="page">
+
+<div class="card">
+
+<h2>Upload Merch</h2>
+
+<input id="merchName" placeholder="Product Name">
+<input id="merchPrice" placeholder="Price">
+<input id="merchImage" placeholder="Image URL">
+
+<button class="submit" onclick="uploadMerch()">Upload</button>
+
+</div>
+
+</div>
+
+<!-- TOUR UPLOAD -->
+
+<div id="tourUpload" class="page">
+
+<div class="card">
+
+<h2>Add Tour Date</h2>
+
+<input id="tourCity" placeholder="City">
+<input id="tourVenue" placeholder="Venue">
+<input id="tourDate" type="date">
+<input id="tourTicket" placeholder="Ticket Link">
+
+<button class="submit" onclick="uploadTour()">Add Tour</button>
+
+</div>
+
+</div>
 
 </div>
 
@@ -166,7 +314,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import {
 getFirestore,
 collection,
-getDocs,
+addDoc,
+onSnapshot,
 updateDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -179,67 +328,87 @@ signOut
 
 
 const firebaseConfig = {
-apiKey: "AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
-authDomain: "shinobi-merch.firebaseapp.com",
-projectId: "shinobi-merch",
-storageBucket: "shinobi-merch.firebasestorage.app",
-messagingSenderId: "142889938049",
-appId: "1:142889938049:web:61f3b6403a1a8e8daff180"
-};
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+apiKey:"AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
+authDomain:"shinobi-merch.firebaseapp.com",
+projectId:"shinobi-merch",
+storageBucket:"shinobi-merch.firebasestorage.app",
+messagingSenderId:"142889938049",
+appId:"1:142889938049:web:61f3b6403a1a8e8daff180"
+
+}
+
+const app=initializeApp(firebaseConfig)
+const db=getFirestore(app)
+const auth=getAuth(app)
 
 
+/* AUTH */
 
-/* =========================
-   LOGIN CHECK
-========================= */
-
-onAuthStateChanged(auth, async (user)=>{
+onAuthStateChanged(auth,user=>{
 
 if(!user){
 window.location="login.html"
-return
 }
 
-/* =========================
-   LOAD BOOKING REQUESTS
-========================= */
+})
 
-const bookingSnapshot = await getDocs(collection(db,"booking_requests"))
 
-const bookingTable=document.querySelector("#bookingTable tbody")
+/* PAGE SWITCH */
 
-bookingTable.innerHTML=""
+window.showPage=function(page){
 
-bookingSnapshot.forEach(docData=>{
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+
+document.getElementById(page).classList.add("active")
+
+}
+
+
+/* LOGOUT */
+
+window.logout=function(){
+
+signOut(auth)
+
+}
+
+
+/* LIVE BOOKINGS */
+
+onSnapshot(collection(db,"booking_requests"),snapshot=>{
+
+const table=document.getElementById("bookingTable")
+
+table.innerHTML=""
+
+document.getElementById("bookingCount").innerText=snapshot.size
+
+snapshot.forEach(docData=>{
 
 const d=docData.data()
 
-bookingTable.innerHTML+=`
+const status=d.status || "pending"
+
+table.innerHTML+=`
 
 <tr>
 
-<td>${d.promoter || "-"}</td>
-<td>${d.email || "-"}</td>
-<td>${d.venue || "-"}</td>
-<td>$${d.budget || "-"}</td>
+<td>${d.promoter}</td>
+<td>${d.email}</td>
+<td>${d.venue}</td>
+<td>$${d.budget}</td>
 
 <td>
 
-<button class="approve" onclick="approve('${docData.id}')">
-Approve
-</button>
+${status==="pending" ? `
 
-<button class="reject" onclick="reject('${docData.id}')">
-Reject
-</button>
+<button class="approve" onclick="approve('${docData.id}')">Approve</button>
+<button class="reject" onclick="reject('${docData.id}')">Reject</button>
 
-<button class="reply" onclick="reply('${d.email}')">
-Reply
-</button>
+` : status}
+
+<button class="reply" onclick="reply('${d.email}')">Reply</button>
 
 </td>
 
@@ -249,23 +418,24 @@ Reply
 
 })
 
+})
 
 
-/* =========================
-   LOAD FAN EMAILS
-========================= */
+/* LIVE FANS */
 
-const fanSnapshot = await getDocs(collection(db,"fans"))
+onSnapshot(collection(db,"fans"),snapshot=>{
 
-const fanTable=document.querySelector("#fanTable tbody")
+const table=document.getElementById("fanTable")
 
-fanTable.innerHTML=""
+table.innerHTML=""
 
-fanSnapshot.forEach(docData=>{
+document.getElementById("fanCount").innerText=snapshot.size
+
+snapshot.forEach(docData=>{
 
 const d=docData.data()
 
-fanTable.innerHTML+=`
+table.innerHTML+=`
 
 <tr>
 
@@ -281,60 +451,29 @@ fanTable.innerHTML+=`
 })
 
 
+/* APPROVE */
 
-/* =========================
-   LOGOUT
-========================= */
-
-window.logout=function(){
-
-signOut(auth).then(()=>{
-window.location="login.html"
-})
-
-}
-
-
-
-/* =========================
-   APPROVE
-========================= */
-
-window.approve = async function(id){
+window.approve=async function(id){
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"approved"
 })
 
-alert("Show approved")
-
-location.reload()
-
 }
 
 
+/* REJECT */
 
-/* =========================
-   REJECT
-========================= */
-
-window.reject = async function(id){
+window.reject=async function(id){
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"rejected"
 })
 
-alert("Show rejected")
-
-location.reload()
-
 }
 
 
-
-/* =========================
-   REPLY
-========================= */
+/* REPLY */
 
 window.reply=function(email){
 
@@ -343,70 +482,70 @@ window.location="mailto:"+email
 }
 
 
+/* UPLOAD MUSIC */
 
-/* =========================
-   EXPORT PROMOTERS CSV
-========================= */
+window.uploadMusic=async function(){
 
-window.exportPromoters=function(){
+await addDoc(collection(db,"music"),{
 
-const rows=document.querySelectorAll("#bookingTable tbody tr")
-
-let csv="Promoter,Email,Venue,Budget\n"
-
-rows.forEach(r=>{
-
-const cols=r.querySelectorAll("td")
-
-csv+=cols[0].innerText+","+cols[1].innerText+","+cols[2].innerText+","+cols[3].innerText+"\n"
+title:musicTitle.value,
+cover:musicCover.value,
+link:musicLink.value
 
 })
 
-downloadCSV(csv,"promoters.csv")
+alert("Music uploaded")
 
 }
 
 
+/* UPLOAD VIDEO */
 
-/* =========================
-   EXPORT FANS CSV
-========================= */
+window.uploadVideo=async function(){
 
-window.exportFans=function(){
+await addDoc(collection(db,"videos"),{
 
-const rows=document.querySelectorAll("#fanTable tbody tr")
-
-let csv="Email,Date\n"
-
-rows.forEach(r=>{
-
-const cols=r.querySelectorAll("td")
-
-csv+=cols[0].innerText+","+cols[1].innerText+"\n"
+title:videoTitle.value,
+youtube:videoLink.value
 
 })
 
-downloadCSV(csv,"fans.csv")
+alert("Video uploaded")
 
 }
 
 
+/* UPLOAD MERCH */
 
-/* =========================
-   DOWNLOAD CSV
-========================= */
+window.uploadMerch=async function(){
 
-function downloadCSV(data,name){
+await addDoc(collection(db,"merch"),{
 
-const blob=new Blob([data])
+name:merchName.value,
+price:merchPrice.value,
+image:merchImage.value
 
-const a=document.createElement("a")
+})
 
-a.href=URL.createObjectURL(blob)
+alert("Merch uploaded")
 
-a.download=name
+}
 
-a.click()
+
+/* UPLOAD TOUR */
+
+window.uploadTour=async function(){
+
+await addDoc(collection(db,"tour"),{
+
+city:tourCity.value,
+venue:tourVenue.value,
+date:tourDate.value,
+ticket:tourTicket.value
+
+})
+
+alert("Tour added")
 
 }
 
