@@ -13,6 +13,19 @@
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<!-- MAILCHIMP -->
+
+<script id="mcjs">
+!function(c,h,i,m,p){
+m=c.createElement(h),p=c.getElementsByTagName(h)[0],
+m.async=1,
+m.src=i,
+p.parentNode.insertBefore(m,p)
+}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/c9d2e3f926dcdd5d265321a6c/a7aca8d3f72c02130da9e9a49.js");
+</script>
+
 <style>
 
 *{
@@ -114,16 +127,16 @@ color:#666;
 /* SECTION */
 
 .section{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:0 20px 100px 20px;
 }
 
-/* CARDS */
+/* CARD */
 
 .card{
 background:white;
-padding:35px;
+padding:40px;
 border-radius:14px;
 box-shadow:0 10px 30px rgba(0,0,0,.15);
 margin-bottom:40px;
@@ -131,7 +144,7 @@ margin-bottom:40px;
 
 .card h2{
 color:#d81b60;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 /* INPUTS */
@@ -142,19 +155,17 @@ padding:14px;
 border:none;
 background:#eee;
 border-radius:30px;
-margin-top:10px;
+margin-bottom:12px;
 }
 
 textarea{
 border-radius:16px;
 min-height:120px;
-resize:none;
 }
 
 /* BUTTON */
 
 button{
-margin-top:15px;
 padding:14px 28px;
 border:none;
 background:#d81b60;
@@ -168,23 +179,28 @@ button:hover{
 opacity:.9;
 }
 
-/* PRESS KIT */
+/* SOCIAL CTA */
 
-.download-btn{
-display:inline-block;
-padding:14px 28px;
-background:#d81b60;
-color:white;
-border-radius:30px;
-text-decoration:none;
-margin-top:15px;
+.social-cta{
+display:flex;
+gap:20px;
+margin-top:20px;
 }
 
-/* MANAGER */
+.social-btn{
+padding:14px 26px;
+border-radius:30px;
+color:white;
+text-decoration:none;
+font-weight:600;
+}
 
-.manager p{
-color:#555;
-margin-bottom:6px;
+.spotify{
+background:#1db954;
+}
+
+.instagram{
+background:#E1306C;
 }
 
 /* FOOTER */
@@ -220,22 +236,11 @@ text-decoration:none;
 font-size:13px;
 }
 
-/* MOBILE */
-
-@media(max-width:900px){
-
-.header h1{
-font-size:36px;
-}
-
-}
-
 </style>
 
 </head>
 
 <body>
-
 
 <nav>
 
@@ -278,7 +283,8 @@ font-size:36px;
 <section class="header">
 
 <h1>CONTACT</h1>
-<p>Bookings, press and fan updates</p>
+
+<p>Bookings, press & fan updates</p>
 
 </section>
 
@@ -292,35 +298,31 @@ font-size:36px;
 
 <h2>Join the Fan List</h2>
 
-<p>Get updates about new music, merch and tour dates.</p>
+<p>Get updates about music, merch and tour dates.</p>
 
-<form id="fanForm">
+<input type="email" placeholder="Your email">
 
-<input type="email" placeholder="Your email" required>
-
-<button type="submit">Subscribe</button>
-
-</form>
+<button>Subscribe</button>
 
 </div>
 
 
 
-<!-- BOOKING -->
+<!-- PROMOTER BOOKING -->
 
 <div class="card">
 
-<h2>Booking Requests</h2>
+<h2>Promoter Booking Request</h2>
 
 <form id="bookingForm">
 
-<input type="text" placeholder="Promoter Name" required>
+<input type="text" name="name" placeholder="Promoter Name" required>
 
-<input type="email" placeholder="Email Address" required>
+<input type="email" name="email" placeholder="Email Address" required>
 
-<input type="text" placeholder="Event Location" required>
+<input type="text" name="city" placeholder="City / Venue" required>
 
-<select required>
+<select name="event">
 
 <option value="">Event Type</option>
 <option>Festival</option>
@@ -329,7 +331,7 @@ font-size:36px;
 
 </select>
 
-<textarea placeholder="Event Details"></textarea>
+<textarea name="message" placeholder="Event Details"></textarea>
 
 <button type="submit">Send Booking Request</button>
 
@@ -339,39 +341,62 @@ font-size:36px;
 
 
 
-<!-- PRESS KIT -->
+<!-- PRESS REQUEST -->
 
 <div class="card">
 
-<h2>Press Kit</h2>
+<h2>Press Request</h2>
 
-<p>Download official photos, bio and media assets.</p>
+<form id="pressForm">
 
-<a href="/presskit.zip" class="download-btn" download>
+<input type="text" name="name" placeholder="Publication Name" required>
 
-Download Press Kit
+<input type="email" name="email" placeholder="Contact Email" required>
+
+<textarea name="message" placeholder="Interview / Media Request"></textarea>
+
+<button type="submit">Send Press Request</button>
+
+</form>
+
+</div>
+
+
+
+<!-- FOLLOW -->
+
+<div class="card">
+
+<h2>Follow Shinobi</h2>
+
+<p>Stay connected on streaming and social media.</p>
+
+<div class="social-cta">
+
+<a class="social-btn spotify"
+href="https://open.spotify.com/artist/6MlC6xw3rWxj7lUTnqQCd7"
+target="_blank">
+
+<i class="fab fa-spotify"></i>
+Follow on Spotify
+
+</a>
+
+<a class="social-btn instagram"
+href="https://instagram.com/shinobi.slime"
+target="_blank">
+
+<i class="fab fa-instagram"></i>
+Message on Instagram
 
 </a>
 
 </div>
 
-
-
-<!-- MANAGEMENT -->
-
-<div class="card manager">
-
-<h2>Management</h2>
-
-<p><strong>Manager:</strong> Alex Carter</p>
-<p><strong>Email:</strong> management@shinobi.com</p>
-<p><strong>Booking:</strong> bookings@shinobi.com</p>
-
 </div>
 
 
 </section>
-
 
 
 <footer>
@@ -415,27 +440,47 @@ const menu=document.getElementById("menu")
 open.onclick=()=>menu.classList.add("active")
 close.onclick=()=>menu.classList.remove("active")
 
-/* FAN LIST */
+/* EMAILJS INIT */
 
-document.getElementById("fanForm").addEventListener("submit",function(e){
+emailjs.init("EMAILJS_PUBLIC_KEY")
 
-e.preventDefault()
-
-alert("Thanks for joining the fan list!")
-
-this.reset()
-
-})
-
-/* BOOKING */
+/* BOOKING FORM */
 
 document.getElementById("bookingForm").addEventListener("submit",function(e){
 
 e.preventDefault()
 
-alert("Booking request sent successfully!")
+emailjs.sendForm(
+"EMAILJS_SERVICE_ID",
+"EMAILJS_TEMPLATE_ID",
+this
+).then(()=>{
+
+alert("Booking request sent!")
 
 this.reset()
+
+})
+
+})
+
+/* PRESS FORM */
+
+document.getElementById("pressForm").addEventListener("submit",function(e){
+
+e.preventDefault()
+
+emailjs.sendForm(
+"EMAILJS_SERVICE_ID",
+"EMAILJS_TEMPLATE_ID",
+this
+).then(()=>{
+
+alert("Press request sent!")
+
+this.reset()
+
+})
 
 })
 
