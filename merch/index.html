@@ -57,6 +57,7 @@ z-index:1000;
 font-size:24px;
 font-weight:800;
 color:white;
+text-decoration:none;
 }
 
 .nav-icons{
@@ -271,7 +272,7 @@ right:0;
 
 <nav>
 
-<div class="logo">Shinobi</div>
+<a href="../" class="logo">Shinobi</a>
 
 <div class="nav-icons">
 
@@ -307,7 +308,9 @@ right:0;
 
 <!-- PRODUCTS -->
 
-<section class="products">
+<section class="products" id="productsContainer">
+
+<!-- ORIGINAL PRODUCTS KEPT -->
 
 <div class="product">
 
@@ -422,6 +425,8 @@ total+=price*qty
 
 updateCart()
 
+toggleCart()
+
 }
 
 function updateCart(){
@@ -481,6 +486,11 @@ document.getElementById("menu").classList.remove("active")
 paypal.Buttons({
 
 createOrder: function(data, actions) {
+
+if(total<=0){
+alert("Your cart is empty")
+return
+}
 
 return actions.order.create({
 purchase_units: [{
