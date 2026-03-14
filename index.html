@@ -46,6 +46,7 @@ z-index:1000;
 font-size:24px;
 font-weight:800;
 color:white;
+text-decoration:none;
 }
 
 .menu-toggle{
@@ -54,7 +55,7 @@ color:white;
 cursor:pointer;
 }
 
-/* FULLSCREEN MENU */
+/* MENU */
 
 .menu{
 position:fixed;
@@ -96,7 +97,7 @@ cursor:pointer;
 
 .hero{
 height:80vh;
-background:url("hero.jpg") center/cover no-repeat;
+background:url("hero.webp") center/cover no-repeat;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -153,12 +154,9 @@ font-weight:600;
 /* MUSIC */
 
 .music-grid{
-max-width:1100px;
-margin:auto;
 display:grid;
 grid-template-columns:repeat(2,1fr);
 gap:30px;
-padding:0 20px 100px 20px;
 }
 
 .music-card{
@@ -167,11 +165,6 @@ border-radius:14px;
 overflow:hidden;
 text-align:center;
 box-shadow:0 10px 30px rgba(0,0,0,.15);
-transition:.3s;
-}
-
-.music-card:hover{
-transform:translateY(-6px);
 }
 
 .music-card img{
@@ -181,28 +174,21 @@ object-fit:cover;
 }
 
 .music-info{
-padding:25px;
+padding:20px;
 }
 
 .music-info h3{
-margin-bottom:15px;
 color:#d81b60;
+margin-bottom:15px;
 }
 
 .stream-btn{
 display:inline-block;
-padding:12px 28px;
+padding:10px 26px;
 border:2px solid #d81b60;
 color:#d81b60;
 text-decoration:none;
 border-radius:30px;
-font-weight:600;
-transition:.25s;
-}
-
-.stream-btn:hover{
-background:#d81b60;
-color:white;
 }
 
 /* VIDEOS */
@@ -238,6 +224,8 @@ box-shadow:0 10px 30px rgba(0,0,0,.15);
 
 .merch img{
 width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
 }
 
 .buy-btn{
@@ -331,10 +319,9 @@ font-size:30px;
 
 <body>
 
-
 <nav>
 
-<div class="logo">Shinobi</div>
+<a href="/" class="logo">Shinobi</a>
 
 <div class="menu-toggle" id="openMenu">
 <i class="fa-solid fa-bars"></i>
@@ -354,18 +341,6 @@ font-size:30px;
 <a href="tour/">Tour</a>
 <a href="merch/">Shop</a>
 <a href="contact/">Sign Up</a>
-
-<div class="footer-icons">
-
-<i class="fab fa-tiktok"></i>
-<i class="fab fa-instagram"></i>
-<i class="fab fa-x-twitter"></i>
-<i class="fab fa-facebook"></i>
-<i class="fab fa-youtube"></i>
-<i class="fab fa-spotify"></i>
-<i class="fab fa-apple"></i>
-
-</div>
 
 </div>
 
@@ -398,32 +373,22 @@ LISTEN NOW
 
 </div>
 
+<div class="music-grid">
+
 <div class="music-card">
-
-<img src="../bingwa.webp">
-
+<img src="bingwa.webp" loading="lazy">
 <div class="music-info">
-
 <h3>Bingwa</h3>
-
-<a href="YOUR_STREAM_LINK" target="_blank" class="stream-btn">
-STREAM / DOWNLOAD
-</a>
-
+<a href="music/" class="stream-btn">STREAM / DOWNLOAD</a>
+</div>
 </div>
 
 <div class="music-card">
-
-<img src="../sweettingz.webp">
-
+<img src="sweettingz.webp" loading="lazy">
 <div class="music-info">
-
 <h3>Sweet Tingz</h3>
-
-<a href="YOUR_STREAM_LINK" target="_blank" class="stream-btn">
-STREAM / DOWNLOAD
-</a>
-
+<a href="music/" class="stream-btn">STREAM / DOWNLOAD</a>
+</div>
 </div>
 
 </div>
@@ -444,9 +409,11 @@ STREAM / DOWNLOAD
 
 <div class="video-grid">
 
-<iframe src="https://www.youtube.com/embed/VsB5iWSARJU"></iframe>
+<iframe loading="lazy"
+src="https://www.youtube-nocookie.com/embed/VsB5iWSARJU"></iframe>
 
-<iframe src="https://www.youtube.com/embed/Z3nMMAJ4-sI"></iframe>
+<iframe loading="lazy"
+src="https://www.youtube-nocookie.com/embed/Z3nMMAJ4-sI"></iframe>
 
 </div>
 
@@ -467,35 +434,23 @@ STREAM / DOWNLOAD
 <div class="merch-grid">
 
 <div class="merch">
-
-<img src="merch1.jpg">
-
-<a href="#" class="buy-btn">Buy</a>
-
+<img src="merch1.jpg" loading="lazy">
+<a href="merch/" class="buy-btn">Buy</a>
 </div>
 
 <div class="merch">
-
-<img src="merch2.jpg">
-
-<a href="#" class="buy-btn">Buy</a>
-
+<img src="merch2.jpg" loading="lazy">
+<a href="merch/" class="buy-btn">Buy</a>
 </div>
 
 <div class="merch">
-
-<img src="merch3.jpg">
-
-<a href="#" class="buy-btn">Buy</a>
-
+<img src="merch3.jpg" loading="lazy">
+<a href="merch/" class="buy-btn">Buy</a>
 </div>
 
 <div class="merch">
-
-<img src="merch4.jpg">
-
-<a href="#" class="buy-btn">Buy</a>
-
+<img src="merch4.jpg" loading="lazy">
+<a href="merch/" class="buy-btn">Buy</a>
 </div>
 
 </div>
