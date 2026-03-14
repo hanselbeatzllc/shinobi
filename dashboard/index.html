@@ -188,45 +188,33 @@ appId: "1:142889938049:web:61f3b6403a1a8e8daff180"
 };
 
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-
 const auth = getAuth(app);
 
 
-/* LOGIN PROTECTION */
 
-onAuthStateChanged(auth,user=>{
+/* =========================
+   LOGIN CHECK
+========================= */
+
+onAuthStateChanged(auth, async (user)=>{
 
 if(!user){
-
 window.location="login.html"
-
+return
 }
 
-})
+/* =========================
+   LOAD BOOKING REQUESTS
+========================= */
 
-
-/* LOGOUT */
-
-window.logout = function(){
-
-signOut(auth).then(()=>{
-
-window.location="login.html"
-
-})
-
-}
-
-
-/* LOAD BOOKINGS */
-
-const bookings = await getDocs(collection(db,"booking_requests"))
+const bookingSnapshot = await getDocs(collection(db,"booking_requests"))
 
 const bookingTable=document.querySelector("#bookingTable tbody")
 
-bookings.forEach(docData=>{
+bookingTable.innerHTML=""
+
+bookingSnapshot.forEach(docData=>{
 
 const d=docData.data()
 
@@ -234,10 +222,10 @@ bookingTable.innerHTML+=`
 
 <tr>
 
-<td>${d.promoter}</td>
-<td>${d.email}</td>
-<td>${d.venue}</td>
-<td>$${d.budget}</td>
+<td>${d.promoter || "-"}</td>
+<td>${d.email || "-"}</td>
+<td>${d.venue || "-"}</td>
+<td>$${d.budget || "-"}</td>
 
 <td>
 
@@ -262,13 +250,18 @@ Reply
 })
 
 
-/* LOAD FAN EMAILS */
 
-const fans=await getDocs(collection(db,"fans"))
+/* =========================
+   LOAD FAN EMAILS
+========================= */
+
+const fanSnapshot = await getDocs(collection(db,"fans"))
 
 const fanTable=document.querySelector("#fanTable tbody")
 
-fans.forEach(docData=>{
+fanTable.innerHTML=""
+
+fanSnapshot.forEach(docData=>{
 
 const d=docData.data()
 
@@ -285,8 +278,27 @@ fanTable.innerHTML+=`
 
 })
 
+})
 
-/* APPROVE */
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+window.logout=function(){
+
+signOut(auth).then(()=>{
+window.location="login.html"
+})
+
+}
+
+
+
+/* =========================
+   APPROVE
+========================= */
 
 window.approve = async function(id){
 
@@ -296,10 +308,15 @@ status:"approved"
 
 alert("Show approved")
 
+location.reload()
+
 }
 
 
-/* REJECT */
+
+/* =========================
+   REJECT
+========================= */
 
 window.reject = async function(id){
 
@@ -309,19 +326,27 @@ status:"rejected"
 
 alert("Show rejected")
 
+location.reload()
+
 }
 
 
-/* REPLY */
 
-window.reply = function(email){
+/* =========================
+   REPLY
+========================= */
+
+window.reply=function(email){
 
 window.location="mailto:"+email
 
 }
 
 
-/* EXPORT PROMOTERS */
+
+/* =========================
+   EXPORT PROMOTERS CSV
+========================= */
 
 window.exportPromoters=function(){
 
@@ -342,7 +367,10 @@ downloadCSV(csv,"promoters.csv")
 }
 
 
-/* EXPORT FANS */
+
+/* =========================
+   EXPORT FANS CSV
+========================= */
 
 window.exportFans=function(){
 
@@ -363,7 +391,10 @@ downloadCSV(csv,"fans.csv")
 }
 
 
-/* CSV DOWNLOAD */
+
+/* =========================
+   DOWNLOAD CSV
+========================= */
 
 function downloadCSV(data,name){
 
