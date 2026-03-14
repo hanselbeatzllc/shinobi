@@ -1,58 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shinobi Management Dashboard</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<title>Shinobi Dashboard</title>
 
 <style>
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Montserrat',sans-serif;
-}
-
 body{
+font-family:Arial;
 background:#f4f4f4;
 padding:40px;
 }
 
-/* HEADER */
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:40px;
-}
-
-.header h1{
+h1{
 color:#d81b60;
+margin-bottom:20px;
 }
-
-/* CARDS */
 
 .card{
 background:white;
 padding:30px;
-border-radius:14px;
-box-shadow:0 10px 30px rgba(0,0,0,.1);
+border-radius:10px;
 margin-bottom:30px;
+box-shadow:0 10px 20px rgba(0,0,0,.1);
 }
-
-.card h2{
-margin-bottom:20px;
-color:#d81b60;
-}
-
-/* TABLE */
 
 table{
 width:100%;
@@ -60,19 +35,12 @@ border-collapse:collapse;
 }
 
 th,td{
-padding:12px;
+padding:10px;
 border-bottom:1px solid #eee;
-text-align:left;
 }
-
-th{
-background:#fafafa;
-}
-
-/* BUTTON */
 
 button{
-padding:8px 16px;
+padding:8px 14px;
 border:none;
 border-radius:20px;
 cursor:pointer;
@@ -93,15 +61,13 @@ background:#d81b60;
 color:white;
 }
 
-/* EXPORT */
-
-.export-btn{
+.export{
 margin-top:15px;
-padding:12px 24px;
+padding:10px 20px;
 background:#d81b60;
 color:white;
-border-radius:30px;
 border:none;
+border-radius:30px;
 cursor:pointer;
 }
 
@@ -111,18 +77,8 @@ cursor:pointer;
 
 <body>
 
-<div class="header">
+<h1>Shinobi Management</h1>
 
-<h1>Shinobi Dashboard</h1>
-
-<a href="/" style="text-decoration:none;color:#d81b60;font-weight:600">
-Back to Website
-</a>
-
-</div>
-
-
-<!-- BOOKING REQUESTS -->
 
 <div class="card">
 
@@ -136,7 +92,6 @@ Back to Website
 <th>Promoter</th>
 <th>Email</th>
 <th>Venue</th>
-<th>Type</th>
 <th>Budget</th>
 <th>Actions</th>
 </tr>
@@ -147,10 +102,13 @@ Back to Website
 
 </table>
 
+<button class="export" onclick="exportPromoters()">
+Export Promoters CSV
+</button>
+
 </div>
 
 
-<!-- FAN EMAILS -->
 
 <div class="card">
 
@@ -171,18 +129,14 @@ Back to Website
 
 </table>
 
-<button class="export-btn" onclick="exportFans()">
-
-Export Fan Emails (CSV)
-
+<button class="export" onclick="exportFans()">
+Export Fans CSV
 </button>
 
 </div>
 
 
 <script type="module">
-
-/* FIREBASE */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 
@@ -194,6 +148,12 @@ updateDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+
 const firebaseConfig = {
 apiKey: "AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
 authDomain: "shinobi-merch.firebaseapp.com",
@@ -204,52 +164,56 @@ appId: "1:142889938049:web:61f3b6403a1a8e8daff180"
 };
 
 const app = initializeApp(firebaseConfig);
+
 const db = getFirestore(app);
+
+const auth = getAuth(app);
+
+
+/* LOGIN PROTECTION */
+
+onAuthStateChanged(auth,user=>{
+
+if(!user){
+
+window.location="login.html"
+
+}
+
+})
 
 
 /* LOAD BOOKINGS */
 
-async function loadBookings(){
+const bookings=await getDocs(collection(db,"booking_requests"))
 
-const snapshot = await getDocs(collection(db,"booking_requests"))
+const bookingTable=document.querySelector("#bookingTable tbody")
 
-const table = document.querySelector("#bookingTable tbody")
+bookings.forEach(docData=>{
 
-snapshot.forEach(docData=>{
+const d=docData.data()
 
-const data = docData.data()
-
-table.innerHTML += `
+bookingTable.innerHTML+=`
 
 <tr>
 
-<td>${data.promoter}</td>
-<td>${data.email}</td>
-<td>${data.venue}</td>
-<td>${data.type}</td>
-<td>$${data.budget}</td>
+<td>${d.promoter}</td>
+<td>${d.email}</td>
+<td>${d.venue}</td>
+<td>$${d.budget}</td>
 
 <td>
 
-<button class="approve"
-onclick="approve('${docData.id}')">
-
+<button class="approve" onclick="approve('${docData.id}')">
 Approve
-
 </button>
 
-<button class="reject"
-onclick="reject('${docData.id}')">
-
+<button class="reject" onclick="reject('${docData.id}')">
 Reject
-
 </button>
 
-<button class="reply"
-onclick="reply('${data.email}')">
-
+<button class="reply" onclick="reply('${d.email}')">
 Reply
-
 </button>
 
 </td>
@@ -260,29 +224,23 @@ Reply
 
 })
 
-}
-
-loadBookings()
-
 
 /* LOAD FAN EMAILS */
 
-async function loadFans(){
+const fans=await getDocs(collection(db,"fans"))
 
-const snapshot = await getDocs(collection(db,"fans"))
+const fanTable=document.querySelector("#fanTable tbody")
 
-const table = document.querySelector("#fanTable tbody")
+fans.forEach(docData=>{
 
-snapshot.forEach(docData=>{
+const d=docData.data()
 
-const data = docData.data()
-
-table.innerHTML += `
+fanTable.innerHTML+=`
 
 <tr>
 
-<td>${data.email}</td>
-<td>${new Date(data.date).toLocaleDateString()}</td>
+<td>${d.email}</td>
+<td>${new Date(d.date).toLocaleDateString()}</td>
 
 </tr>
 
@@ -290,14 +248,10 @@ table.innerHTML += `
 
 })
 
-}
-
-loadFans()
-
 
 /* APPROVE */
 
-window.approve = async function(id){
+window.approve=async id=>{
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"approved"
@@ -307,10 +261,9 @@ alert("Show approved")
 
 }
 
-
 /* REJECT */
 
-window.reject = async function(id){
+window.reject=async id=>{
 
 await updateDoc(doc(db,"booking_requests",id),{
 status:"rejected"
@@ -320,39 +273,68 @@ alert("Show rejected")
 
 }
 
-
 /* REPLY */
 
-window.reply = function(email){
+window.reply=email=>{
 
-window.location.href="mailto:"+email
+window.location="mailto:"+email
 
 }
 
 
-/* EXPORT CSV */
+/* EXPORT PROMOTERS */
 
-window.exportFans = function(){
+window.exportPromoters=function(){
 
-const rows = document.querySelectorAll("#fanTable tbody tr")
+const rows=document.querySelectorAll("#bookingTable tbody tr")
 
-let csv = "Email,Date\n"
+let csv="Promoter,Email,Venue,Budget\n"
 
 rows.forEach(r=>{
 
-const cols = r.querySelectorAll("td")
+const cols=r.querySelectorAll("td")
 
-csv += cols[0].innerText + "," + cols[1].innerText + "\n"
+csv+=cols[0].innerText+","+cols[1].innerText+","+cols[2].innerText+","+cols[3].innerText+"\n"
 
 })
 
-const blob = new Blob([csv],{type:'text/csv'})
+downloadCSV(csv,"promoters.csv")
 
-const a = document.createElement("a")
+}
 
-a.href = URL.createObjectURL(blob)
 
-a.download = "fan_emails.csv"
+/* EXPORT FANS */
+
+window.exportFans=function(){
+
+const rows=document.querySelectorAll("#fanTable tbody tr")
+
+let csv="Email,Date\n"
+
+rows.forEach(r=>{
+
+const cols=r.querySelectorAll("td")
+
+csv+=cols[0].innerText+","+cols[1].innerText+"\n"
+
+})
+
+downloadCSV(csv,"fans.csv")
+
+}
+
+
+/* CSV DOWNLOAD */
+
+function downloadCSV(data,name){
+
+const blob=new Blob([data])
+
+const a=document.createElement("a")
+
+a.href=URL.createObjectURL(blob)
+
+a.download=name
 
 a.click()
 
