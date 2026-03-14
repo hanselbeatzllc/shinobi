@@ -54,7 +54,7 @@ color:white;
 cursor:pointer;
 }
 
-/* FULLSCREEN MENU */
+/* MENU */
 
 .menu{
 position:fixed;
@@ -110,7 +110,7 @@ margin-bottom:10px;
 color:#666;
 }
 
-/* MUSIC GRID */
+/* GRID */
 
 .music-grid{
 max-width:1100px;
@@ -121,17 +121,31 @@ gap:30px;
 padding:0 20px 100px 20px;
 }
 
+/* CARD */
+
 .music-card{
 background:white;
 border-radius:14px;
 overflow:hidden;
 text-align:center;
 box-shadow:0 10px 30px rgba(0,0,0,.15);
+transition:.3s;
 }
 
-.music-card img{
-width:100%;
+.music-card:hover{
+transform:translateY(-6px);
 }
+
+/* COVER IMAGE */
+
+.cover{
+width:100%;
+aspect-ratio:1/1;
+object-fit:cover;
+display:block;
+}
+
+/* INFO */
 
 .music-info{
 padding:25px;
@@ -142,6 +156,8 @@ margin-bottom:15px;
 color:#d81b60;
 }
 
+/* BUTTON */
+
 .stream-btn{
 display:inline-block;
 padding:12px 28px;
@@ -150,6 +166,12 @@ color:#d81b60;
 text-decoration:none;
 border-radius:30px;
 font-weight:600;
+transition:.25s;
+}
+
+.stream-btn:hover{
+background:#d81b60;
+color:white;
 }
 
 /* FOOTER */
@@ -206,7 +228,6 @@ font-size:36px;
 
 <body>
 
-
 <nav>
 
 <div class="logo">Shinobi</div>
@@ -259,18 +280,24 @@ font-size:36px;
 <section class="music-grid">
 
 
+<!-- Bingwa -->
+
 <div class="music-card">
 
-<img src="bingwa.webp">
+<picture>
+
+<source srcset="bingwa.webp" type="image/webp">
+
+<img src="bingwa.jpg" class="cover" alt="Bingwa Cover">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Bingwa</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_YOUR_STREAM_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
@@ -279,18 +306,24 @@ STREAM / DOWNLOAD
 
 
 
+<!-- Sweet Tingz -->
+
 <div class="music-card">
 
-<img src="sweettingz.webp">
+<picture>
+
+<source srcset="sweettingz.webp" type="image/webp">
+
+<img src="sweettingz.jpg" class="cover" alt="Sweet Tingz Cover">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Sweet Tingz</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
@@ -299,18 +332,24 @@ STREAM / DOWNLOAD
 
 
 
+<!-- Porsche Date -->
+
 <div class="music-card">
 
-<img src="porschedate.webp">
+<picture>
+
+<source srcset="porschedate.webp" type="image/webp">
+
+<img src="porschedate.jpg" class="cover" alt="Porsche Date">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Porsche Date</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
@@ -319,18 +358,24 @@ STREAM / DOWNLOAD
 
 
 
+<!-- Vibe -->
+
 <div class="music-card">
 
-<img src="shinobivibeftemkay.webp">
+<picture>
+
+<source srcset="shinobivibeftemkay.webp" type="image/webp">
+
+<img src="shinobivibeftemkay.jpg" class="cover" alt="Vibe">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Vibe</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
@@ -339,18 +384,24 @@ STREAM / DOWNLOAD
 
 
 
+<!-- Different -->
+
 <div class="music-card">
 
-<img src="different.webp">
+<picture>
+
+<source srcset="different.webp" type="image/webp">
+
+<img src="different.jpg" class="cover" alt="Different">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Different</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
@@ -359,24 +410,29 @@ STREAM / DOWNLOAD
 
 
 
+<!-- Track Six -->
+
 <div class="music-card">
 
-<img src="cover6.jpg">
+<picture>
+
+<source srcset="cover6.webp" type="image/webp">
+
+<img src="cover6.jpg" class="cover" alt="Track Six">
+
+</picture>
 
 <div class="music-info">
 
 <h3>Track Six</h3>
 
-<a href="#" class="stream-btn">
-
+<a href="PASTE_LINK" target="_blank" class="stream-btn">
 STREAM / DOWNLOAD
-
 </a>
 
 </div>
 
 </div>
-
 
 
 </section>
