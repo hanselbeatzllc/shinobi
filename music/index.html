@@ -236,8 +236,6 @@ font-size:36px;
 <i class="fa-solid fa-xmark"></i>
 </div>
 
-<!-- FIXED LINKS -->
-
 <a href="../music/">Music</a>
 <a href="../videos/">Videos</a>
 <a href="../tour/">Tour</a>
@@ -267,8 +265,9 @@ font-size:36px;
 </section>
 
 
-<section class="music-grid">
+<section class="music-grid" id="musicGrid">
 
+<!-- EXISTING STATIC SONGS (kept as fallback) -->
 
 <div class="music-card">
 
@@ -354,7 +353,6 @@ STREAM / DOWNLOAD
 
 </div>
 
-
 </section>
 
 
@@ -396,6 +394,60 @@ const menu=document.getElementById("menu")
 
 open.onclick=()=>menu.classList.add("active")
 close.onclick=()=>menu.classList.remove("active")
+
+</script>
+
+
+<!-- FIREBASE AUTO MUSIC LOADER -->
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
+authDomain:"shinobi-merch.firebaseapp.com",
+projectId:"shinobi-merch",
+storageBucket:"shinobi-merch.firebasestorage.app",
+messagingSenderId:"142889938049",
+appId:"1:142889938049:web:61f3b6403a1a8e8daff180"
+}
+
+const app=initializeApp(firebaseConfig)
+const db=getFirestore(app)
+
+const grid=document.getElementById("musicGrid")
+
+onSnapshot(collection(db,"music"),snapshot=>{
+
+snapshot.forEach(doc=>{
+
+const d=doc.data()
+
+grid.innerHTML+=`
+
+<div class="music-card">
+
+<img src="${d.cover}" loading="lazy">
+
+<div class="music-info">
+
+<h3>${d.title}</h3>
+
+<a href="${d.link}" target="_blank" class="stream-btn">
+STREAM / DOWNLOAD
+</a>
+
+</div>
+
+</div>
+
+`
+
+})
+
+})
 
 </script>
 
