@@ -18,6 +18,7 @@ margin:0;
 font-family:Arial;
 background:#f4f4f4;
 display:flex;
+visibility:hidden; /* ADDED: hide dashboard until login check */
 }
 
 /* SIDEBAR */
@@ -156,7 +157,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- BOOKINGS -->
 
 <div id="bookings" class="page">
@@ -181,7 +181,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- FANS -->
 
 <div id="fans" class="page">
@@ -204,7 +203,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- MUSIC -->
 
 <div id="musicUpload" class="page">
@@ -223,7 +221,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- VIDEO -->
 
 <div id="videoUpload" class="page">
@@ -240,7 +237,6 @@ border-radius:20px;
 
 </div>
 </div>
-
 
 <!-- MERCH -->
 
@@ -261,7 +257,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- TOUR -->
 
 <div id="tourUpload" class="page">
@@ -281,7 +276,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- TICKET SCANNER -->
 
 <div id="tickets" class="page">
@@ -298,7 +292,6 @@ border-radius:20px;
 </div>
 </div>
 
-
 <!-- PROMOTER CRM -->
 
 <div id="crm" class="page">
@@ -312,8 +305,6 @@ border-radius:20px;
 </div>
 
 </div>
-
-
 
 <script type="module">
 
@@ -330,7 +321,8 @@ doc
 
 import {
 getAuth,
-signOut
+signOut,
+onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
 const firebaseConfig={
@@ -346,7 +338,21 @@ const app=initializeApp(firebaseConfig)
 const db=getFirestore(app)
 const auth=getAuth(app)
 
+/* AUTH GUARD ADDED */
 
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+window.location="login.html"
+
+}else{
+
+document.body.style.visibility="visible"
+
+}
+
+})
 
 /* PAGE SWITCH */
 
@@ -355,15 +361,11 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 document.getElementById(page).classList.add("active")
 }
 
-
-
 /* LOGOUT */
 
 window.logout=function(){
 signOut(auth)
 }
-
-
 
 /* BOOKINGS */
 
@@ -391,9 +393,7 @@ table.innerHTML+=`
 
 })
 
-
-
-/* FANS FIX */
+/* FANS */
 
 onSnapshot(collection(db,"fans"),snap=>{
 
@@ -417,9 +417,7 @@ table.innerHTML+=`
 
 })
 
-
-
-/* VIDEOS FIX */
+/* VIDEOS */
 
 onSnapshot(collection(db,"videos"),snap=>{
 
@@ -440,8 +438,6 @@ ${data.title}
 })
 
 })
-
-
 
 /* MUSIC */
 
@@ -465,9 +461,7 @@ ${data.title}
 
 })
 
-
-
-/* MERCH + INVENTORY */
+/* MERCH */
 
 onSnapshot(collection(db,"merch"),snap=>{
 
@@ -488,8 +482,6 @@ ${data.name} - Stock:${data.stock}
 })
 
 })
-
-
 
 /* TOUR */
 
@@ -513,15 +505,11 @@ ${data.city} - ${data.venue}
 
 })
 
-
-
 /* DELETE */
 
 window.deleteItem=async function(col,id){
 await deleteDoc(doc(db,col,id))
 }
-
-
 
 /* UPLOAD FUNCTIONS */
 
@@ -558,8 +546,6 @@ ticket:tourTicket.value
 })
 }
 
-
-
 /* TICKET SCANNER */
 
 window.scanTicket=function(){
@@ -573,8 +559,6 @@ ticketResult.innerText="INVALID"
 }
 
 }
-
-
 
 /* PROMOTER CRM */
 
@@ -597,8 +581,6 @@ ${data.promoter} - ${data.email}
 
 })
 
-
-
 /* PWA */
 
 let deferredPrompt
@@ -616,8 +598,6 @@ deferredPrompt.prompt()
 await deferredPrompt.userChoice
 deferredPrompt=null
 }
-
-
 
 /* SERVICE WORKER */
 
