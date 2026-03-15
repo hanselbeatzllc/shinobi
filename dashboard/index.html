@@ -8,10 +8,8 @@
 
 <title>Shinobi Dashboard</title>
 
-<!-- PWA SUPPORT -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#d81b60">
-<link rel="apple-touch-icon" href="icon-192.png">
 
 <style>
 
@@ -35,10 +33,6 @@ flex-direction:column;
 gap:18px;
 }
 
-.sidebar h2{
-margin-bottom:20px;
-}
-
 .sidebar button{
 padding:12px;
 border:none;
@@ -49,17 +43,23 @@ font-weight:bold;
 cursor:pointer;
 }
 
-.sidebar .logout{
-margin-top:auto;
-background:#e53935;
-color:white;
+/* MOBILE */
+
+@media(max-width:900px){
+
+body{flex-direction:column}
+
+.sidebar{
+width:100%;
+height:auto;
+flex-wrap:wrap;
+flex-direction:row;
 }
 
-/* INSTALL APP BUTTON */
+.sidebar button{
+flex:1 1 45%;
+}
 
-.install-btn{
-background:#1db954!important;
-color:white!important;
 }
 
 /* CONTENT */
@@ -70,13 +70,8 @@ padding:40px;
 overflow:auto;
 }
 
-.page{
-display:none;
-}
-
-.page.active{
-display:block;
-}
+.page{display:none}
+.page.active{display:block}
 
 .card{
 background:white;
@@ -85,8 +80,6 @@ border-radius:10px;
 box-shadow:0 10px 20px rgba(0,0,0,.1);
 margin-bottom:30px;
 }
-
-/* TABLE */
 
 table{
 width:100%;
@@ -98,59 +91,11 @@ padding:12px;
 border-bottom:1px solid #eee;
 }
 
-.approve{
-background:#1db954;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.reject{
-background:#e53935;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.reply{
-background:#d81b60;
-color:white;
-border:none;
-padding:8px 12px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.edit{
-background:#2196f3;
-color:white;
-border:none;
-padding:6px 10px;
-border-radius:20px;
-cursor:pointer;
-}
-
-.delete{
-background:#e53935;
-color:white;
-border:none;
-padding:6px 10px;
-border-radius:20px;
-cursor:pointer;
-}
-
-/* FORMS */
-
-input{
-width:100%;
-padding:12px;
-margin-bottom:10px;
-border-radius:6px;
-border:1px solid #ddd;
+.upload-item{
+display:flex;
+justify-content:space-between;
+padding:10px;
+border-bottom:1px solid #eee;
 }
 
 button.submit{
@@ -162,52 +107,12 @@ border-radius:30px;
 cursor:pointer;
 }
 
-.status{
-margin-top:10px;
-font-weight:bold;
-}
-
-.upload-list{
-margin-top:20px;
-}
-
-.upload-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:10px;
-border-bottom:1px solid #eee;
-}
-
-/* MOBILE DASHBOARD */
-
-@media(max-width:900px){
-
-body{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
-height:auto;
-flex-direction:row;
-flex-wrap:wrap;
-justify-content:center;
-gap:10px;
-}
-
-.sidebar button{
-flex:1 1 45%;
-}
-
-.content{
-padding:20px;
-}
-
-table{
-font-size:14px;
-}
-
+.delete{
+background:#e53935;
+color:white;
+border:none;
+padding:6px 12px;
+border-radius:20px;
 }
 
 </style>
@@ -227,21 +132,20 @@ font-size:14px;
 <button onclick="showPage('videoUpload')">Upload Video</button>
 <button onclick="showPage('merchUpload')">Upload Merch</button>
 <button onclick="showPage('tourUpload')">Add Tour Date</button>
+<button onclick="showPage('tickets')">Ticket Scanner</button>
+<button onclick="showPage('crm')">Promoter CRM</button>
 
-<!-- INSTALL APP BUTTON -->
-<button id="installApp" class="install-btn" style="display:none;">Install App</button>
+<button id="installApp" style="display:none">Install App</button>
 
-<button class="logout" onclick="logout()">Logout</button>
+<button onclick="logout()">Logout</button>
 
 </div>
-
 
 <div class="content">
 
 <!-- OVERVIEW -->
 
 <div id="overview" class="page active">
-
 <div class="card">
 
 <h2>Dashboard Overview</h2>
@@ -250,26 +154,23 @@ font-size:14px;
 <p>Total Booking Requests: <span id="bookingCount">0</span></p>
 
 </div>
-
 </div>
+
 
 <!-- BOOKINGS -->
 
 <div id="bookings" class="page">
-
 <div class="card">
 
 <h2>Booking Requests</h2>
 
 <table>
-
 <thead>
 <tr>
 <th>Promoter</th>
 <th>Email</th>
 <th>Venue</th>
 <th>Budget</th>
-<th>Actions</th>
 </tr>
 </thead>
 
@@ -278,19 +179,17 @@ font-size:14px;
 </table>
 
 </div>
-
 </div>
+
 
 <!-- FANS -->
 
 <div id="fans" class="page">
-
 <div class="card">
 
 <h2>Fan Emails</h2>
 
 <table>
-
 <thead>
 <tr>
 <th>Email</th>
@@ -303,35 +202,31 @@ font-size:14px;
 </table>
 
 </div>
-
 </div>
+
 
 <!-- MUSIC -->
 
 <div id="musicUpload" class="page">
-
 <div class="card">
 
 <h2>Upload Music</h2>
 
 <input id="musicTitle" placeholder="Song Title">
-<input id="musicCover" placeholder="Cover Image URL">
+<input id="musicCover" placeholder="Cover Image">
 <input id="musicLink" placeholder="Streaming Link">
 
-<button id="musicBtn" class="submit" onclick="uploadMusic()">Upload</button>
+<button class="submit" onclick="uploadMusic()">Upload</button>
 
-<div id="musicStatus" class="status"></div>
-
-<div class="upload-list" id="musicList"></div>
+<div id="musicList"></div>
 
 </div>
-
 </div>
+
 
 <!-- VIDEO -->
 
 <div id="videoUpload" class="page">
-
 <div class="card">
 
 <h2>Upload Video</h2>
@@ -339,20 +234,17 @@ font-size:14px;
 <input id="videoTitle" placeholder="Video Title">
 <input id="videoLink" placeholder="YouTube URL">
 
-<button id="videoBtn" class="submit" onclick="uploadVideo()">Upload</button>
+<button class="submit" onclick="uploadVideo()">Upload</button>
 
-<div id="videoStatus" class="status"></div>
-
-<div class="upload-list" id="videoList"></div>
+<div id="videoList"></div>
 
 </div>
-
 </div>
+
 
 <!-- MERCH -->
 
 <div id="merchUpload" class="page">
-
 <div class="card">
 
 <h2>Upload Merch</h2>
@@ -360,21 +252,19 @@ font-size:14px;
 <input id="merchName" placeholder="Product Name">
 <input id="merchPrice" placeholder="Price">
 <input id="merchImage" placeholder="Image URL">
+<input id="merchStock" placeholder="Inventory">
 
-<button id="merchBtn" class="submit" onclick="uploadMerch()">Upload</button>
+<button class="submit" onclick="uploadMerch()">Upload</button>
 
-<div id="merchStatus" class="status"></div>
-
-<div class="upload-list" id="merchList"></div>
-
-</div>
+<div id="merchList"></div>
 
 </div>
+</div>
+
 
 <!-- TOUR -->
 
 <div id="tourUpload" class="page">
-
 <div class="card">
 
 <h2>Add Tour Date</h2>
@@ -384,17 +274,45 @@ font-size:14px;
 <input id="tourDate" type="date">
 <input id="tourTicket" placeholder="Ticket Link">
 
-<button id="tourBtn" class="submit" onclick="uploadTour()">Add Tour</button>
+<button class="submit" onclick="uploadTour()">Add Tour</button>
 
-<div id="tourStatus" class="status"></div>
+<div id="tourList"></div>
 
-<div class="upload-list" id="tourList"></div>
+</div>
+</div>
 
+
+<!-- TICKET SCANNER -->
+
+<div id="tickets" class="page">
+<div class="card">
+
+<h2>Ticket Scanner</h2>
+
+<input id="ticketCode" placeholder="Scan ticket code">
+
+<button onclick="scanTicket()">Validate Ticket</button>
+
+<div id="ticketResult"></div>
+
+</div>
+</div>
+
+
+<!-- PROMOTER CRM -->
+
+<div id="crm" class="page">
+<div class="card">
+
+<h2>Promoter CRM</h2>
+
+<div id="crmList"></div>
+
+</div>
 </div>
 
 </div>
 
-</div>
 
 
 <script type="module">
@@ -406,27 +324,22 @@ getFirestore,
 collection,
 addDoc,
 onSnapshot,
-updateDoc,
 deleteDoc,
 doc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 import {
 getAuth,
-onAuthStateChanged,
 signOut
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-
-const firebaseConfig = {
-
+const firebaseConfig={
 apiKey:"AIzaSyDy_97tXbusM41DKQh8-I9kUUKShn6s9hM",
 authDomain:"shinobi-merch.firebaseapp.com",
 projectId:"shinobi-merch",
 storageBucket:"shinobi-merch.firebasestorage.app",
 messagingSenderId:"142889938049",
 appId:"1:142889938049:web:61f3b6403a1a8e8daff180"
-
 }
 
 const app=initializeApp(firebaseConfig)
@@ -434,64 +347,44 @@ const db=getFirestore(app)
 const auth=getAuth(app)
 
 
+
 /* PAGE SWITCH */
 
 window.showPage=function(page){
-
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
 document.getElementById(page).classList.add("active")
-
 }
+
 
 
 /* LOGOUT */
 
 window.logout=function(){
-
 signOut(auth)
-
 }
 
 
-/* BOOKINGS LIVE */
 
-onSnapshot(collection(db,"booking_requests"),snapshot=>{
+/* BOOKINGS */
+
+onSnapshot(collection(db,"booking_requests"),snap=>{
+
+bookingCount.innerText=snap.size
 
 const table=document.getElementById("bookingTable")
-
 table.innerHTML=""
 
-document.getElementById("bookingCount").innerText=snapshot.size
-
-snapshot.forEach(d=>{
+snap.forEach(d=>{
 
 const data=d.data()
-const status=data.status||"pending"
 
 table.innerHTML+=`
-
 <tr>
-
 <td>${data.promoter}</td>
 <td>${data.email}</td>
 <td>${data.venue}</td>
 <td>$${data.budget}</td>
-
-<td>
-
-${status==="pending"?`
-
-<button class="approve" onclick="approve('${d.id}')">Approve</button>
-<button class="reject" onclick="reject('${d.id}')">Reject</button>
-
-`:status}
-
-<button class="reply" onclick="reply('${data.email}')">Reply</button>
-
-</td>
-
 </tr>
-
 `
 
 })
@@ -499,65 +392,237 @@ ${status==="pending"?`
 })
 
 
-/* PUSH NOTIFICATIONS */
 
-if("Notification" in window){
+/* FANS FIX */
 
-Notification.requestPermission()
+onSnapshot(collection(db,"fans"),snap=>{
 
-}
+fanCount.innerText=snap.size
 
-onSnapshot(collection(db,"booking_requests"),snapshot=>{
+const table=document.getElementById("fanTable")
+table.innerHTML=""
 
-snapshot.docChanges().forEach(change=>{
+snap.forEach(d=>{
 
-if(change.type==="added"){
+const data=d.data()
 
-if(Notification.permission==="granted"){
-
-new Notification("New Booking Request",{
-body:"A promoter submitted a new show request",
-icon:"icon-192.png"
-})
-
-}
-
-}
+table.innerHTML+=`
+<tr>
+<td>${data.email}</td>
+<td>${new Date(data.date).toLocaleDateString()}</td>
+</tr>
+`
 
 })
 
 })
 
 
-/* SERVICE WORKER */
 
-if("serviceWorker" in navigator){
+/* VIDEOS FIX */
 
-navigator.serviceWorker.register("sw.js")
+onSnapshot(collection(db,"videos"),snap=>{
+
+const list=document.getElementById("videoList")
+list.innerHTML=""
+
+snap.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+<div class="upload-item">
+${data.title}
+<button class="delete" onclick="deleteItem('videos','${d.id}')">Delete</button>
+</div>
+`
+
+})
+
+})
+
+
+
+/* MUSIC */
+
+onSnapshot(collection(db,"music"),snap=>{
+
+const list=document.getElementById("musicList")
+list.innerHTML=""
+
+snap.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+<div class="upload-item">
+${data.title}
+<button class="delete" onclick="deleteItem('music','${d.id}')">Delete</button>
+</div>
+`
+
+})
+
+})
+
+
+
+/* MERCH + INVENTORY */
+
+onSnapshot(collection(db,"merch"),snap=>{
+
+const list=document.getElementById("merchList")
+list.innerHTML=""
+
+snap.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+<div class="upload-item">
+${data.name} - Stock:${data.stock}
+<button class="delete" onclick="deleteItem('merch','${d.id}')">Delete</button>
+</div>
+`
+
+})
+
+})
+
+
+
+/* TOUR */
+
+onSnapshot(collection(db,"tour"),snap=>{
+
+const list=document.getElementById("tourList")
+list.innerHTML=""
+
+snap.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+<div class="upload-item">
+${data.city} - ${data.venue}
+<button class="delete" onclick="deleteItem('tour','${d.id}')">Delete</button>
+</div>
+`
+
+})
+
+})
+
+
+
+/* DELETE */
+
+window.deleteItem=async function(col,id){
+await deleteDoc(doc(db,col,id))
+}
+
+
+
+/* UPLOAD FUNCTIONS */
+
+window.uploadMusic=async()=>{
+await addDoc(collection(db,"music"),{
+title:musicTitle.value,
+cover:musicCover.value,
+link:musicLink.value
+})
+}
+
+window.uploadVideo=async()=>{
+await addDoc(collection(db,"videos"),{
+title:videoTitle.value,
+youtube:videoLink.value
+})
+}
+
+window.uploadMerch=async()=>{
+await addDoc(collection(db,"merch"),{
+name:merchName.value,
+price:merchPrice.value,
+image:merchImage.value,
+stock:merchStock.value
+})
+}
+
+window.uploadTour=async()=>{
+await addDoc(collection(db,"tour"),{
+city:tourCity.value,
+venue:tourVenue.value,
+date:tourDate.value,
+ticket:tourTicket.value
+})
+}
+
+
+
+/* TICKET SCANNER */
+
+window.scanTicket=function(){
+
+const code=document.getElementById("ticketCode").value
+
+if(code==="VIP123"){
+ticketResult.innerText="VALID TICKET"
+}else{
+ticketResult.innerText="INVALID"
+}
 
 }
 
 
-/* INSTALL APP */
+
+/* PROMOTER CRM */
+
+onSnapshot(collection(db,"booking_requests"),snap=>{
+
+const list=document.getElementById("crmList")
+list.innerHTML=""
+
+snap.forEach(d=>{
+
+const data=d.data()
+
+list.innerHTML+=`
+<div class="upload-item">
+${data.promoter} - ${data.email}
+</div>
+`
+
+})
+
+})
+
+
+
+/* PWA */
 
 let deferredPrompt
 const installBtn=document.getElementById("installApp")
 
 window.addEventListener("beforeinstallprompt",e=>{
-
 e.preventDefault()
 deferredPrompt=e
 installBtn.style.display="block"
-
 })
 
 installBtn.onclick=async()=>{
-
 installBtn.style.display="none"
 deferredPrompt.prompt()
 await deferredPrompt.userChoice
 deferredPrompt=null
+}
 
+
+
+/* SERVICE WORKER */
+
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("sw.js")
 }
 
 </script>
