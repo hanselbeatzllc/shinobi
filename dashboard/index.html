@@ -8,6 +8,11 @@
 
 <title>Shinobi Dashboard</title>
 
+<!-- PWA SUPPORT -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#d81b60">
+<link rel="apple-touch-icon" href="icon-192.png">
+
 <style>
 
 body{
@@ -48,6 +53,13 @@ cursor:pointer;
 margin-top:auto;
 background:#e53935;
 color:white;
+}
+
+/* INSTALL APP BUTTON */
+
+.install-btn{
+background:#1db954!important;
+color:white!important;
 }
 
 /* CONTENT */
@@ -167,6 +179,37 @@ padding:10px;
 border-bottom:1px solid #eee;
 }
 
+/* MOBILE DASHBOARD */
+
+@media(max-width:900px){
+
+body{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+height:auto;
+flex-direction:row;
+flex-wrap:wrap;
+justify-content:center;
+gap:10px;
+}
+
+.sidebar button{
+flex:1 1 45%;
+}
+
+.content{
+padding:20px;
+}
+
+table{
+font-size:14px;
+}
+
+}
+
 </style>
 
 </head>
@@ -184,6 +227,9 @@ border-bottom:1px solid #eee;
 <button onclick="showPage('videoUpload')">Upload Video</button>
 <button onclick="showPage('merchUpload')">Upload Merch</button>
 <button onclick="showPage('tourUpload')">Add Tour Date</button>
+
+<!-- INSTALL APP BUTTON -->
+<button id="installApp" class="install-btn" style="display:none;">Install App</button>
 
 <button class="logout" onclick="logout()">Logout</button>
 
@@ -350,6 +396,7 @@ border-bottom:1px solid #eee;
 
 </div>
 
+
 <script type="module">
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -452,281 +499,64 @@ ${status==="pending"?`
 })
 
 
-/* FANS */
+/* PUSH NOTIFICATIONS */
 
-onSnapshot(collection(db,"fans"),snapshot=>{
+if("Notification" in window){
 
-const table=document.getElementById("fanTable")
+Notification.requestPermission()
 
-table.innerHTML=""
+}
 
-document.getElementById("fanCount").innerText=snapshot.size
+onSnapshot(collection(db,"booking_requests"),snapshot=>{
 
-snapshot.forEach(d=>{
+snapshot.docChanges().forEach(change=>{
 
-const data=d.data()
+if(change.type==="added"){
 
-table.innerHTML+=`
+if(Notification.permission==="granted"){
 
-<tr>
+new Notification("New Booking Request",{
+body:"A promoter submitted a new show request",
+icon:"icon-192.png"
+})
 
-<td>${data.email}</td>
-<td>${new Date(data.date).toLocaleDateString()}</td>
+}
 
-</tr>
-
-`
+}
 
 })
 
 })
 
 
-/* MUSIC */
+/* SERVICE WORKER */
 
-onSnapshot(collection(db,"music"),snapshot=>{
+if("serviceWorker" in navigator){
 
-const list=document.getElementById("musicList")
-list.innerHTML=""
-
-snapshot.forEach(d=>{
-
-const data=d.data()
-
-list.innerHTML+=`
-
-<div class="upload-item">
-
-${data.title}
-
-<div>
-
-<button class="delete" onclick="deleteItem('music','${d.id}')">Delete</button>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
-
-/* VIDEO */
-
-onSnapshot(collection(db,"videos"),snapshot=>{
-
-const list=document.getElementById("videoList")
-list.innerHTML=""
-
-snapshot.forEach(d=>{
-
-const data=d.data()
-
-list.innerHTML+=`
-
-<div class="upload-item">
-
-${data.title}
-
-<div>
-
-<button class="delete" onclick="deleteItem('videos','${d.id}')">Delete</button>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
-
-/* MERCH */
-
-onSnapshot(collection(db,"merch"),snapshot=>{
-
-const list=document.getElementById("merchList")
-list.innerHTML=""
-
-snapshot.forEach(d=>{
-
-const data=d.data()
-
-list.innerHTML+=`
-
-<div class="upload-item">
-
-${data.name} - $${data.price}
-
-<div>
-
-<button class="delete" onclick="deleteItem('merch','${d.id}')">Delete</button>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
-
-/* TOUR */
-
-onSnapshot(collection(db,"tour"),snapshot=>{
-
-const list=document.getElementById("tourList")
-list.innerHTML=""
-
-snapshot.forEach(d=>{
-
-const data=d.data()
-
-list.innerHTML+=`
-
-<div class="upload-item">
-
-${data.city} - ${data.venue}
-
-<div>
-
-<button class="delete" onclick="deleteItem('tour','${d.id}')">Delete</button>
-
-</div>
-
-</div>
-
-`
-
-})
-
-})
-
-
-/* DELETE */
-
-window.deleteItem=async function(col,id){
-
-await deleteDoc(doc(db,col,id))
+navigator.serviceWorker.register("sw.js")
 
 }
 
 
-/* UPLOAD MUSIC */
+/* INSTALL APP */
 
-window.uploadMusic=async function(){
+let deferredPrompt
+const installBtn=document.getElementById("installApp")
 
-const btn=document.getElementById("musicBtn")
-const status=document.getElementById("musicStatus")
+window.addEventListener("beforeinstallprompt",e=>{
 
-btn.innerText="Uploading..."
-
-await addDoc(collection(db,"music"),{
-
-title:musicTitle.value,
-cover:musicCover.value,
-link:musicLink.value
+e.preventDefault()
+deferredPrompt=e
+installBtn.style.display="block"
 
 })
 
-status.innerText="Upload Finished ✓"
+installBtn.onclick=async()=>{
 
-musicTitle.value=""
-musicCover.value=""
-musicLink.value=""
-
-btn.innerText="Upload"
-
-}
-
-
-/* UPLOAD VIDEO */
-
-window.uploadVideo=async function(){
-
-const btn=document.getElementById("videoBtn")
-const status=document.getElementById("videoStatus")
-
-btn.innerText="Uploading..."
-
-await addDoc(collection(db,"videos"),{
-
-title:videoTitle.value,
-youtube:videoLink.value
-
-})
-
-status.innerText="Upload Finished ✓"
-
-videoTitle.value=""
-videoLink.value=""
-
-btn.innerText="Upload"
-
-}
-
-
-/* UPLOAD MERCH */
-
-window.uploadMerch=async function(){
-
-const btn=document.getElementById("merchBtn")
-const status=document.getElementById("merchStatus")
-
-btn.innerText="Uploading..."
-
-await addDoc(collection(db,"merch"),{
-
-name:merchName.value,
-price:merchPrice.value,
-image:merchImage.value
-
-})
-
-status.innerText="Upload Finished ✓"
-
-merchName.value=""
-merchPrice.value=""
-merchImage.value=""
-
-btn.innerText="Upload"
-
-}
-
-
-/* UPLOAD TOUR */
-
-window.uploadTour=async function(){
-
-const btn=document.getElementById("tourBtn")
-const status=document.getElementById("tourStatus")
-
-btn.innerText="Uploading..."
-
-await addDoc(collection(db,"tour"),{
-
-city:tourCity.value,
-venue:tourVenue.value,
-date:tourDate.value,
-ticket:tourTicket.value
-
-})
-
-status.innerText="Upload Finished ✓"
-
-tourCity.value=""
-tourVenue.value=""
-tourDate.value=""
-tourTicket.value=""
-
-btn.innerText="Add Tour"
+installBtn.style.display="none"
+deferredPrompt.prompt()
+await deferredPrompt.userChoice
+deferredPrompt=null
 
 }
 
