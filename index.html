@@ -97,18 +97,22 @@ cursor:pointer;
 
 .hero{
 height:80vh;
-background:url("hero.webp") center/cover no-repeat;
+background:url("hero.webp") no-repeat;
+background-size:cover;
+background-position:top center; /* shows face */
 display:flex;
 align-items:center;
-justify-content:center;
+justify-content:flex-start; /* move content LEFT */
+padding-left:8%;
 }
 
 .hero-box{
 background:white;
 padding:40px;
 border-radius:14px;
-text-align:center;
+text-align:left; /* cleaner for left layout */
 box-shadow:0 10px 30px rgba(0,0,0,.2);
+max-width:320px;
 }
 
 .hero-box h1{
