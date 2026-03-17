@@ -148,8 +148,9 @@ box-shadow:0 20px 45px rgba(0,0,0,.18);
 .product img{
 width:100%;
 height:260px;
-object-fit:cover;
-background:#eee;
+object-fit:contain;
+padding:20px;
+background:#f9f9f9;
 }
 
 .product-info{
@@ -226,9 +227,11 @@ color:#d81b60;
 .cart-item{
 display:flex;
 justify-content:space-between;
-margin-bottom:12px;
+align-items:center;
+margin-bottom:14px;
 border-bottom:1px solid #eee;
-padding-bottom:6px;
+padding-bottom:10px;
+font-size:14px;
 }
 
 .remove{
@@ -300,8 +303,22 @@ right:0;
 
 <div class="nav-icons">
 
-<i class="fa-solid fa-shopping-cart" onclick="toggleCart()"></i>
-
+<div style="position:relative;">
+  <i class="fa-solid fa-shopping-cart" onclick="toggleCart()"></i>
+  <span id="cartCount" style="
+    position:absolute;
+    top:-8px;
+    right:-10px;
+    background:white;
+    color:#d81b60;
+    font-size:12px;
+    font-weight:700;
+    padding:2px 6px;
+    border-radius:50%;
+    display:none;
+  ">0</span>
+</div>
+  
 <i class="fa-solid fa-bars" onclick="openMenu()"></i>
 
 </div>
@@ -410,6 +427,20 @@ Add to Cart
 
 <h3>Total: $<span id="cartTotal">0</span></h3>
 
+<button onclick="toggleCart()" style="
+width:100%;
+padding:14px;
+margin-top:15px;
+background:#111;
+color:white;
+border:none;
+border-radius:30px;
+font-weight:600;
+cursor:pointer;
+">
+Checkout Now
+</button>
+
 <div id="paypal-button-container"></div>
 
 </div>
@@ -491,7 +522,20 @@ $${item.price*item.qty}
 
 })
 
+// ✅ update total
 document.getElementById("cartTotal").innerText=total.toFixed(2)
+
+// ✅ update cart count badge
+let count = cart.reduce((sum,item)=>sum+item.qty,0)
+let badge = document.getElementById("cartCount")
+
+badge.innerText = count
+
+if(count > 0){
+badge.style.display = "block"
+}else{
+badge.style.display = "none"
+}
 
 }
 
