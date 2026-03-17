@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Terms - Shinobi Slime</title>
 
+<!-- FONTS + ICONS -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+<script src="https://kit.fontawesome.com/your-kit-id.js" crossorigin="anonymous"></script>
+
 <style>
 *{
 margin:0;
@@ -14,12 +18,11 @@ font-family:'Montserrat',sans-serif;
 }
 
 body{
-background:#f4f4f4;
+background:#fff0f6;
 color:#111;
-overflow-x:hidden;
 }
 
- /* NAV */
+/* NAV */
 
 nav{
 position:fixed;
@@ -84,31 +87,62 @@ font-size:32px;
 cursor:pointer;
 }
 
-/* HEADER */
+/* MAIN CONTENT FIX */
 
-.header{
-padding-top:140px;
-text-align:center;
-padding-bottom:60px;
+.container{
+max-width:900px;
+margin:auto;
+padding:140px 20px 60px; /* fixes navbar overlap */
 }
 
-.header h1{
-font-size:50px;
+/* CARD UI */
+
+.card{
+background:white;
+border-radius:20px;
+padding:30px;
+box-shadow:0 15px 40px rgba(216,27,96,0.15);
+border:1px solid #ffd6ec;
+}
+
+/* TEXT */
+
+h1{
+font-size:32px;
 color:#d81b60;
-margin-bottom:10px;
+margin-bottom:15px;
 }
 
-.header p{
-color:#666;
+h2{
+margin-top:25px;
+color:#ff4db8;
+font-size:18px;
+}
+
+p{
+line-height:1.7;
+margin-top:8px;
+color:#444;
+}
+
+/* BACK LINK */
+
+.back{
+display:inline-block;
+margin-bottom:20px;
+color:#d81b60;
+text-decoration:none;
+font-weight:600;
 }
 
 /* FOOTER */
 
 footer{
 background:#d81b60;
-padding:60px 20px;
+padding:50px 20px;
 text-align:center;
 color:white;
+margin-top:60px;
 }
 
 .footer-icons{
@@ -137,39 +171,22 @@ font-size:13px;
 
 /* MOBILE */
 
-@media(max-width:900px){
-
-.filters{
-flex-direction:column;
+@media(max-width:768px){
+h1{font-size:26px;}
 }
-
-.tour-item{
-flex-direction:column;
-align-items:flex-start;
-gap:15px;
-}
-
-}
-  
 </style>
-  
 </head>
 
 <body>
 
 <nav>
-
 <a href="../" class="logo">Shinobi</a>
-
 <div class="menu-toggle" id="openMenu">
 <i class="fa-solid fa-bars"></i>
 </div>
-
 </nav>
 
-
 <div class="menu" id="menu">
-
 <div class="close" id="closeMenu">
 <i class="fa-solid fa-xmark"></i>
 </div>
@@ -181,7 +198,6 @@ gap:15px;
 <a href="../contact/">Sign Up</a>
 
 <div class="footer-icons">
-
 <i class="fab fa-tiktok"></i>
 <i class="fab fa-instagram"></i>
 <i class="fab fa-x-twitter"></i>
@@ -189,45 +205,46 @@ gap:15px;
 <i class="fab fa-youtube"></i>
 <i class="fab fa-spotify"></i>
 <i class="fab fa-apple"></i>
+</div>
+</div>
 
-</div>
-  
-</div>
+<!-- CONTENT -->
 
 <div class="container">
-  <a href="/" class="back">← Back to Home</a>
 
-  <div class="card">
-    <h1>Terms of Service</h1>
+<a href="/" class="back">← Back to Home</a>
 
-    <h2>1. Use of Platform</h2>
-    <p>By accessing Shinobi Slime, you agree to use the platform responsibly and lawfully. You must not attempt to hack, disrupt, or misuse any part of the service.</p>
+<div class="card">
 
-    <h2>2. Accounts</h2>
-    <p>You are responsible for your account and any activity under it. Keep your login details secure.</p>
+<h1>Terms of Service</h1>
 
-    <h2>3. Content Ownership</h2>
-    <p>All beats, music, visuals, and branding belong to Shinobi Slime unless stated otherwise. You may not resell or redistribute without permission.</p>
+<h2>1. Use of Platform</h2>
+<p>By accessing Shinobi Slime, you agree to use the platform responsibly and lawfully. You must not attempt to hack, disrupt, or misuse any part of the service.</p>
 
-    <h2>4. Purchases</h2>
-    <p>All purchases (beats, merch, digital products) are final unless clearly stated otherwise.</p>
+<h2>2. Accounts</h2>
+<p>You are responsible for your account and any activity under it. Keep your login details secure.</p>
 
-    <h2>5. Termination</h2>
-    <p>We reserve the right to suspend or terminate accounts that violate these terms.</p>
+<h2>3. Content Ownership</h2>
+<p>All beats, music, visuals, and branding belong to Shinobi Slime unless stated otherwise. You may not resell or redistribute without permission.</p>
 
-    <h2>6. Changes</h2>
-    <p>We may update these terms at any time. Continued use means you accept the updates.</p>
+<h2>4. Purchases</h2>
+<p>All purchases (beats, merch, digital products) are final unless clearly stated otherwise.</p>
 
-  </div>
+<h2>5. Termination</h2>
+<p>We reserve the right to suspend or terminate accounts that violate these terms.</p>
 
-  </section>
+<h2>6. Changes</h2>
+<p>We may update these terms at any time. Continued use means you accept the updates.</p>
 
+</div>
 
+</div>
+
+<!-- FOOTER -->
 
 <footer>
 
 <div class="footer-icons">
-
 <i class="fab fa-tiktok"></i>
 <i class="fab fa-instagram"></i>
 <i class="fab fa-x-twitter"></i>
@@ -235,25 +252,29 @@ gap:15px;
 <i class="fab fa-youtube"></i>
 <i class="fab fa-spotify"></i>
 <i class="fab fa-apple"></i>
-
 </div>
 
 <div class="footer-links">
-
-<a href="#">Terms</a>
-<a href="#">Privacy</a>
-
+<a href="/terms/">Terms</a>
+<a href="/privacy/">Privacy</a>
 </div>
 
 <div class="footer-copy">
-
 © 2026 Shinobi Slime
-
 </div>
 
 </footer>
-  
-</div>
+
+<!-- MENU SCRIPT -->
+
+<script>
+const openMenu = document.getElementById("openMenu");
+const closeMenu = document.getElementById("closeMenu");
+const menu = document.getElementById("menu");
+
+openMenu.onclick = () => menu.classList.add("active");
+closeMenu.onclick = () => menu.classList.remove("active");
+</script>
 
 </body>
 </html>
