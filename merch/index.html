@@ -131,16 +131,23 @@ gap:30px;
 padding:0 20px 100px;
 }
 
+/* 🔥 UPDATED PRODUCT CARD ONLY */
 .product{
 background:white;
-border-radius:14px;
+border-radius:18px;
 overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,.15);
+box-shadow:0 15px 35px rgba(0,0,0,.12);
+transition:.3s;
+}
+
+.product:hover{
+transform:translateY(-8px);
+box-shadow:0 20px 45px rgba(0,0,0,.18);
 }
 
 .product img{
 width:100%;
-height:240px;
+height:260px;
 object-fit:cover;
 background:#eee;
 }
@@ -152,6 +159,7 @@ padding:20px;
 .product-info h3{
 color:#d81b60;
 margin-bottom:6px;
+font-size:20px;
 }
 
 .price{
@@ -175,6 +183,11 @@ border:none;
 color:white;
 border-radius:30px;
 cursor:pointer;
+transition:.25s;
+}
+
+.add-btn:hover{
+background:#b9154d;
 }
 
 /* CART */
